@@ -67,49 +67,7 @@ const data = {
         },
         {
           title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          url: "#", 
         },
       ],
     },
@@ -117,6 +75,7 @@ const data = {
       title: "Settings",
       url: "#",
       icon: Settings2,
+      isActive: true,
       items: [
         {
           title: "User",
@@ -161,13 +120,14 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const currentPath = window.location.pathname;
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+      <NavMain items={data.navMain} currentPath={currentPath} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

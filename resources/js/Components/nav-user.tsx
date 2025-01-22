@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/Components/ui/sidebar"
-import { Inertia } from '@inertiajs/inertia';
 
 export function NavUser({
   user,
@@ -41,10 +40,6 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
-  const handleLogout = () => {
-    Inertia.post('/logout');
-  };
 
   return (
     <SidebarMenu>
@@ -107,7 +102,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem>
               <LogOut />
               Log out
             </DropdownMenuItem>

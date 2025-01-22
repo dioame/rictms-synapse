@@ -31,7 +31,7 @@ export default function Authenticated({
             </div>
           </div>
         </header>
-        <div className="flex overflow-y-auto flex-col flex-1 gap-4 p-4 pt-8">
+        <div className="flex overflow-y-auto flex-col flex-1 gap-4 p-4 pt-8" style={{padding:"20px"}}>
           {children}
         </div>
         <Toaster />

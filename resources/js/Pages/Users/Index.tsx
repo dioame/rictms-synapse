@@ -4,9 +4,12 @@ import { PageProps, User, UsersPageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { DataTableWrapper } from "@/Components/DataTable/DataTableWrapper";
 import { Badge } from "@/Components/ui/badge";
+import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
 import { CreateUserSheet } from "./Create";
+import { EditUserSheet } from "./Edit";
 import { getInitials } from "@/hooks/helpers";
 import { RowActions } from "@/Components/DataTable/RowActions";
+import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -23,6 +26,8 @@ export default function Users({ auth }: PageProps) {
   const { delete: destroy } = useForm();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [editData, setEditData]  = useState<User>();
 
   const handleDelete = (user: User) => {
     destroy(route("users.destroy", user.id), {
@@ -31,6 +36,11 @@ export default function Users({ auth }: PageProps) {
         toast.success(`User ${user.name} deleted successfully`);
       },
     });
+  };
+
+  const handleEdit = (user: User) => {
+    setIsSheetOpen(true);
+    setEditData(user);
   };
 
   const handleSelectionChange = (ids: number[]) => {
@@ -120,7 +130,7 @@ export default function Users({ auth }: PageProps) {
           actions={[
             {
               label: "Edit",
-              href: `/users/${user.id}`,
+              onClick: () => handleEdit(user),
             },
             {
               label: "Delete",
@@ -152,6 +162,22 @@ export default function Users({ auth }: PageProps) {
           sheet: <CreateUserSheet roles={roles} />,
         }}
       />
+
+      {isSheetOpen && (
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            className=""
+            onClick={() => setIsSheetOpen(true)}
+          >
+            <Plus className="mr-2 size-4" />
+            Edit User
+          </Button>
+        </SheetTrigger>
+        <EditUserSheet roles={roles} editData={editData}/>
+      </Sheet>
+      )}
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent>

@@ -55,6 +55,7 @@ export function CreateUserSheet({ roles }: CreateUserSheetProps) {
       <SheetHeader>
         <SheetTitle>Create User</SheetTitle>
         <SheetDescription>
+          <div>
           <form onSubmit={submit} className="mt-4 space-y-6">
             <div>
               <Label className="text-primary" htmlFor="name">
@@ -160,6 +161,7 @@ export function CreateUserSheet({ roles }: CreateUserSheetProps) {
               )}
             </Button>
           </form>
+          </div>
         </SheetDescription>
       </SheetHeader>
     </SheetContent>

@@ -1,5 +1,6 @@
 import { usePage, Link } from "@inertiajs/react"; // Import Link from Inertia
 import { Slash } from "lucide-react";
+import React from "react";
 
 import {
   Breadcrumb,
@@ -19,6 +20,7 @@ export function Breadcrumbs({ user }: { user: User }) {
   return (
     <Breadcrumb className="flex-shrink-0">
       <BreadcrumbList>
+        {/* Dashboard Breadcrumb */}
         <BreadcrumbItem>
           {isDashboard ? (
             <BreadcrumbPage>Dashboard</BreadcrumbPage>
@@ -28,48 +30,50 @@ export function Breadcrumbs({ user }: { user: User }) {
             </Link>
           )}
         </BreadcrumbItem>
-        {!isDashboard && (
-          <>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            {pathSegments.map((segment, index) => {
-              const isLast = index === pathSegments.length - 1; // Check if it's the last segment
-              const isUserSegment =
-                pathSegments[index - 1] === "users" && !isNaN(Number(segment)); // Check if it's a user segment
 
-              let displayText =
-                segment.charAt(0).toUpperCase() + segment.slice(1); // Construct display text
-              if (isUserSegment && user) {
-                displayText = user.name; // Use the user's name instead of the ID
-              }
+        {/* Additional Breadcrumbs */}
+        {!isDashboard &&
+          pathSegments.map((segment, index) => {
+            const isLast = index === pathSegments.length - 1; // Check if it's the last segment
+            const isUserSegment =
+              pathSegments[index - 1] === "users" &&
+              !isNaN(Number(segment)); // Check if it's a user segment
 
-              // Construct href with query params for the last segment
-              const href = isLast
-                ? `/${pathSegments.slice(0, index + 1).join("/")}${
-                    query ? `?${query}` : ""
-                  }`
-                : `/${pathSegments.slice(0, index + 1).join("/")}`;
+            let displayText =
+              segment.charAt(0).toUpperCase() + segment.slice(1); // Construct display text
+            if (isUserSegment && user) {
+              displayText = user.name; // Use the user's name instead of the ID
+            }
 
-              return (
-                <BreadcrumbItem key={index}>
+            // Construct href with query params for the last segment
+            const href = isLast
+              ? `/${pathSegments.slice(0, index + 1).join("/")}${
+                  query ? `?${query}` : ""
+                }`
+              : `/${pathSegments.slice(0, index + 1).join("/")}`;
+
+            return (
+              <React.Fragment key={index}>
+                {/* Breadcrumb Segment */}
+                <BreadcrumbItem>
                   {isLast ? (
                     <BreadcrumbPage>{displayText}</BreadcrumbPage>
                   ) : (
-                    <>
-                      <Link className="hover:underline" href={href}>
-                        <BreadcrumbPage>{displayText}</BreadcrumbPage>
-                      </Link>
-                      <BreadcrumbSeparator>
-                        <Slash />
-                      </BreadcrumbSeparator>
-                    </>
+                    <Link className="hover:underline" href={href}>
+                      <BreadcrumbPage>{displayText}</BreadcrumbPage>
+                    </Link>
                   )}
                 </BreadcrumbItem>
-              );
-            })}
-          </>
-        )}
+
+                {/* Separator (only if not the last segment) */}
+                {!isLast && (
+                  <BreadcrumbSeparator>
+                    <Slash />
+                  </BreadcrumbSeparator>
+                )}
+              </React.Fragment>
+            );
+          })}
       </BreadcrumbList>
     </Breadcrumb>
   );
