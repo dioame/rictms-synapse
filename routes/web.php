@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         //END SETTINGS
 
         // APPLICATIONS
-        Route::get('/application', [SoftwareApplicationController::class, 'index'])->name('application');
+        Route::resource('application',SoftwareApplicationController::class)->names('application');
 });
 
 require __DIR__ . '/auth.php';

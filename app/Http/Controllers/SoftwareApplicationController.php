@@ -30,4 +30,17 @@ class SoftwareApplicationController extends Controller
             ]
         );
     }
+
+    public function show($id)
+    {
+
+        $results = Application::find($id);
+
+        return Inertia::render(
+            'Application/View',
+            [
+                'results' => $results,
+            ]
+        );
+    }
 }

@@ -59,7 +59,7 @@ const data = {
       items: [
         {
           title: "Applications",
-          url: route('application'),
+          url: route('application.index'),
         },
         {
           title: "Starred",

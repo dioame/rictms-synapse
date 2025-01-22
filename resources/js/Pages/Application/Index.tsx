@@ -77,11 +77,11 @@ export default function Index({ auth }: any) {
       label: "Name",
       className: "hidden sm:table-cell text-right",
     },
-    {
-      key: "description",
-      label: "Description",
-      className: "hidden sm:table-cell text-right",
-    },
+    // {
+    //   key: "description",
+    //   label: "Description",
+    //   className: "hidden sm:table-cell text-right",
+    // },
     {
       key: "version",
       label: "Version",
@@ -112,26 +112,26 @@ export default function Index({ auth }: any) {
       label: "SQA Status",
       className: "hidden sm:table-cell text-right",
     },
-    {
-      key: "repository",
-      label: "Repository",
-      className: "hidden sm:table-cell text-right",
-    },
+    // {
+    //   key: "repository",
+    //   label: "Repository",
+    //   className: "hidden sm:table-cell text-right",
+    // },
     {
       key: "is_pia",
       label: "Is PIA?",
       className: "hidden sm:table-cell text-right",
     },
-    {
-      key: "author",
-      label: "Author?",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
-      key: "developer",
-      label: "Developer",
-      className: "hidden sm:table-cell text-right",
-    },
+    // {
+    //   key: "author",
+    //   label: "Author?",
+    //   className: "hidden sm:table-cell text-right",
+    // },
+    // {
+    //   key: "developer",
+    //   label: "Developer",
+    //   className: "hidden sm:table-cell text-right",
+    // },
     {
       key: "division",
       label: "Division",
@@ -142,21 +142,21 @@ export default function Index({ auth }: any) {
       label: "Section",
       className: "hidden sm:table-cell text-right",
     },
-    {
-      key: "region",
-      label: "Region",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
-      key: "url",
-      label: "Url",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
-      key: "deployment_date",
-      label: "Deployment Date",
-      className: "hidden sm:table-cell text-right",
-    },
+    // {
+    //   key: "region",
+    //   label: "Region",
+    //   className: "hidden sm:table-cell text-right",
+    // },
+    // {
+    //   key: "url",
+    //   label: "Url",
+    //   className: "hidden sm:table-cell text-right",
+    // },
+    // {
+    //   key: "deployment_date",
+    //   label: "Deployment Date",
+    //   className: "hidden sm:table-cell text-right",
+    // },
     {
       key: "status",
       label: "Status",
@@ -170,6 +170,10 @@ export default function Index({ auth }: any) {
         <RowActions
           item={user}
           actions={[
+            {
+              label: "View More",
+              href: route('application.show',{id:user.id})
+            },
             {
               label: "Edit",
               onClick: () => handleEdit(user),
@@ -200,7 +204,7 @@ export default function Index({ auth }: any) {
         onSelectionChange={handleSelectionChange}
         onBulkDelete={(ids:any) => setShowDeleteDialog(true)}
         createButton={{
-          label: "Create User",
+          label: "Add Applicaton",
           sheet: <CreateSheet />,
         }}
       />

@@ -51,12 +51,6 @@ interface DataTableProps<T> {
   onBulkDelete?: (selectedIds: number[]) => void;
 }
 
-const customStyles = {
-  padding: "4px",  // Adjust padding as needed
-  fontSize: "11px", // Adjust font size as needed
-  border: "1px solid #ededed", // Add border
-  textAlign: "center"
-};
 
 export function CustomDataTableWrapper({
   data,
@@ -142,7 +136,7 @@ export function CustomDataTableWrapper({
         <TableHeader style={{ backgroundColor: "black"}}>
           <TableRow>
             {selectable && (
-              <TableHead className="w-12" style={{color:"white",fontSize:"11px",padding:"4px",textAlign: "center"}}>
+              <TableHead className="w-12" style={{color:"white",padding:"4px",textAlign: "center"}}>
                 <Checkbox
                   checked={
                     data.data.length > 0 &&
@@ -154,7 +148,7 @@ export function CustomDataTableWrapper({
               </TableHead>
             )}
             {columns.map((column:any) => (
-              <TableHead key={column.key} className={column.className} style={{color:"white",fontSize:"11px",padding:"4px",textAlign: "center"}}>
+              <TableHead key={column.key} className={column.className} style={{color:"white",padding:"4px",textAlign: "center"}}>
                 {column.label}
               </TableHead>
             ))}
@@ -164,7 +158,7 @@ export function CustomDataTableWrapper({
           {data.data.map((item:any) => (
             <TableRow key={item.id}>
               {selectable && (
-                <TableCell className="w-12" style={customStyles}>
+                <TableCell className="w-12" >
                   <Checkbox
                     checked={selectedRows.includes(item.id)}
                     onCheckedChange={(checked: boolean) =>
@@ -178,7 +172,7 @@ export function CustomDataTableWrapper({
                 <TableCell
                   key={`${item.id}-${column.key}`}
                   className={column.className}
-                  style={customStyles}
+                  
                 >
                   {column.render ? column.render(item) : item[column.key]}
                 </TableCell>
