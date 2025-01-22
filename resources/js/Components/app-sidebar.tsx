@@ -52,7 +52,47 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Software Development",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "Applications",
+          url: route('application'),
+        },
+        {
+          title: "Starred",
+          url: "#",
+        },
+        {
+          title: "Settings",
+          url: "#", 
+        },
+      ],
+    },
+    {
+      title: "SQA",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "History",
+          url: "#",
+        },
+        {
+          title: "Starred",
+          url: "#",
+        },
+        {
+          title: "Settings",
+          url: "#", 
+        },
+      ],
+    },
+    {
+      title: "Maintenance",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
