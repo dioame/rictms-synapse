@@ -18,6 +18,10 @@ import {
 } from "@/Components/ui/sidebar";
 import { Link } from "@inertiajs/react";
 
+import {
+  LayoutDashboard
+} from "lucide-react"
+
 export function NavMain({
   items,
   currentPath,
@@ -37,8 +41,16 @@ export function NavMain({
   
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Modules</SidebarGroupLabel>
       <SidebarMenu>
+        <SidebarMenuItem>
+        <Link href={route('dashboard')} >
+          <SidebarMenuButton tooltip="Dashboard">
+            <LayoutDashboard />
+            <span>Dashboard</span>
+          </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
         {items.map((item) => {
           return (
             <Collapsible

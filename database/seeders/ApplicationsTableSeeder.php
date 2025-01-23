@@ -24,6 +24,7 @@ class ApplicationsTableSeeder extends Seeder
                 'id' => Str::uuid()->toString(),
                 'name' => $faker->company,
                 'description' => $faker->sentence,
+                'application_type' => $faker->randomElement(['web','mobile','desktop']),
                 'version' => $faker->randomElement(['1.0.0', '1.1.0', '2.0.0', '2.1.0', '3.0.0']),
                 'frontend_language' => $faker->randomElement(['JavaScript', 'TypeScript', 'Python', 'Ruby']),
                 'frontend_framework' => $faker->randomElement(['Vue.js', 'React', 'Angular', 'Svelte']),
@@ -32,6 +33,7 @@ class ApplicationsTableSeeder extends Seeder
                 'sqa_status' => $faker->randomElement(['pending', 'in_progress', 'passed', 'failed', 'flagged', 'not_applicable']),
                 'repository' => $faker->url,
                 'is_pia' => $faker->randomElement(['Yes', 'No']),
+                'is_km' => $faker->randomElement(['Yes', 'No']),
                 'author' => $faker->name,
                 'developer' => $faker->name,
                 'division' => $faker->randomElement(['PPD', 'PSD', 'HRMDD', '4PS', 'DRMD']),
@@ -40,6 +42,7 @@ class ApplicationsTableSeeder extends Seeder
                 'url' => $faker->url,
                 'deployment_date' => $faker->date(),
                 'status' => $faker->randomElement(['active', 'inactive']),
+                'request_status' => $faker->randomElement(['pending', 'approve']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

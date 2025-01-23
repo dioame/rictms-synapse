@@ -52,7 +52,7 @@ export default function Dashboard({
 
           {/* Applications by Region */}
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-lg font-bold text-gray-800">Applications by Region</h2>
+            <h2 className="text-lg font-bold text-gray-800">Applications per Division</h2>
             <ul className="mt-4 space-y-2">
               {applicationsByRegion.map((region:any, index:any) => (
                 <li

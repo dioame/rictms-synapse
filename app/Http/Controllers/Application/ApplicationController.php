@@ -24,6 +24,7 @@ class ApplicationController extends Controller
                     $query->where('name', 'like', "%{$search}%");
                 });
             })
+            ->where('request_status','approve')
             ->orderBy('created_at','desc')
             ->paginate(10);
 

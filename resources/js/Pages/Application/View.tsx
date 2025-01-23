@@ -8,7 +8,7 @@ export default function Index({ auth, results }: any) {
     <AuthenticatedLayout auth_user={auth.user} header="Application Details">
       <Head title="Application Details" />
 
-      <div className="container mx-auto mt-6 space-y-6">
+      <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* General Information */}
         <Card>
           <CardHeader>
@@ -25,6 +25,9 @@ export default function Index({ auth, results }: any) {
               </div>
               <div>
                 <span className="font-bold">Version:</span> {results.version}
+              </div>
+              <div>
+                <span className="font-bold">Type:</span> {results.application_type}
               </div>
               <div>
                 <span className="font-bold">Author:</span> {results.author}
@@ -106,6 +109,9 @@ export default function Index({ auth, results }: any) {
               </div>
               <div>
                 <span className="font-bold">PIA Compliance:</span> {results.is_pia}
+              </div>
+              <div>
+                <span className="font-bold">Is presented KM:</span> {results.is_pia}
               </div>
             </div>
           </CardContent>

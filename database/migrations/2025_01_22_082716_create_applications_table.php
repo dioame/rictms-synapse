@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name'); 
             $table->text('description')->nullable(); 
             $table->string('version')->nullable(); 
+            $table->string('application_type')->nullable(); 
             $table->string('frontend_language')->nullable(); 
             $table->string('frontend_framework')->nullable();
             $table->string('backend_language')->nullable(); 
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('sqa_status')->nullable();
             $table->string('repository')->nullable(); 
             $table->string('is_pia')->nullable();
+            $table->string('is_km')->nullable();
             $table->string('author')->nullable();
             $table->string('developer')->nullable();
             $table->string('division')->nullable(); 
@@ -31,6 +33,7 @@ return new class extends Migration
             $table->string('url')->nullable(); 
             $table->date('deployment_date')->nullable(); 
             $table->string('status')->nullable(); 
+            $table->string('request_status')->default("pending"); 
             $table->timestamps();
             $table->softdeletes();
         });

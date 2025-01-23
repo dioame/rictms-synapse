@@ -96,6 +96,25 @@ export function CustomDataTableWrapper({
     <div className="space-y-4">
       <div className="flex gap-4 justify-between">
         <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-md">
+            <svg
+              className="w-5 h-5 text-gray-600 dark:text-gray-300"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+            <p className="text-xs font-medium text-gray-800 dark:text-gray-200">
+              {data.meta.total} Results Found
+            </p>
+          </div>
           <Input
             type="text"
             placeholder={searchPlaceholder}

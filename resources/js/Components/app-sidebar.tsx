@@ -10,6 +10,9 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  Dock,
+  ShieldCheck,
+  Construction
 } from "lucide-react"
 
 import { NavMain } from "@/Components/nav-main"
@@ -54,7 +57,7 @@ const data = {
     {
       title: "Software Development",
       url: "#",
-      icon: SquareTerminal,
+      icon: Dock,
       isActive: true,
       items: [
         {
@@ -74,7 +77,7 @@ const data = {
     {
       title: "SQA",
       url: "#",
-      icon: SquareTerminal,
+      icon: ShieldCheck,
       isActive: true,
       items: [
         {
@@ -94,7 +97,7 @@ const data = {
     {
       title: "Maintenance",
       url: "#",
-      icon: SquareTerminal,
+      icon: Construction,
       isActive: true,
       items: [
         {

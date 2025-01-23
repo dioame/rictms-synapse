@@ -24,6 +24,7 @@ class Application extends Model
         'name',
         'description',
         'version',
+        'application_type',
         'frontend_language',
         'frontend_framework',
         'backend_language',
@@ -31,6 +32,7 @@ class Application extends Model
         'sqa_status',
         'repository',
         'is_pia',
+        'is_km',
         'author',
         'developer',
         'division',
@@ -39,6 +41,7 @@ class Application extends Model
         'url',
         'deployment_date',
         'status',
+        'request_status',
     ];
 
     // Define the dates (for casting to Carbon instances)

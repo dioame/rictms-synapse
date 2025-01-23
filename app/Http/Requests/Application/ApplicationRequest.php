@@ -18,6 +18,7 @@ class ApplicationRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
+            'application_type' => ['required'],
         ];
     }
 }

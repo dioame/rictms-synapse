@@ -50,6 +50,11 @@ export default function Index({ auth }: any) {
       className: "hidden sm:table-cell text-right",
     },
     {
+      key: "application_type",
+      label: "Type",
+      className: "hidden sm:table-cell text-right",
+    },
+    {
       key: "frontend_framework",
       label: "Frontend Framework",
       className: "hidden sm:table-cell text-right",

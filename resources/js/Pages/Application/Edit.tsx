@@ -5,10 +5,11 @@ import {
   SheetDescription
 } from "@/Components/ui/sheet";
 import { useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Form } from "./Form";
 
 import { Input } from "@/Components/ui/input";
+import { Select,SelectTrigger,SelectSeparator,SelectValue,SelectItem,SelectContent } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
 import { Label } from "@/Components/ui/label";
 import InputError from "@/Components/InputError";
@@ -36,6 +37,49 @@ export function EditSheet(props : any) {
         </div>
       ),
     },
+      {
+          name: "version",
+          render: (labelName:any, formModel:any) => (
+            <div key={labelName}>
+              <Label className="text-primary" htmlFor={labelName}>
+                {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+              </Label>
+              <Input
+                  className="mt-1"
+                  id={labelName}
+                  value={formModel.data[labelName]}
+                  onChange={(e) => formModel.setData(labelName, e.target.value)}
+                  placeholder={labelName}
+                  required
+                />
+              <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+            </div>
+          ),
+        },
+        {
+          name: "application_type",
+          render: (labelName:any, formModel:any) => (
+            <div key={labelName}>
+              <Label className="text-primary" htmlFor={labelName}>
+                {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+              </Label>
+              <Select
+              value={formModel.data[labelName]}
+                onValueChange={(value) => formModel.setData(labelName, value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="web">Web</SelectItem>
+                  <SelectItem value="mobile">Mobile</SelectItem>
+                  <SelectItem value="desktop">Desktop</SelectItem>
+                </SelectContent>
+              </Select>
+              <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+            </div>
+          ),
+        },
     {
       name: "description",
       render: (labelName:any, formModel:any) => (
@@ -346,12 +390,12 @@ export function EditSheet(props : any) {
   ];
 
   const columnNames = columns.reduce((acc:any, column) => {
-    // Check if the column name exists in props. and assign the value
     acc[column.name] = props.editData[column.name] || ""; // Default to an empty string if the key doesn't exist
     return acc;
   }, {});
 
   const form = useForm(columnNames);
+
 
   useEffect(() => {
     if (form.wasSuccessful) {
@@ -370,6 +414,7 @@ export function EditSheet(props : any) {
         description: `${props.config.title} updated successfully`,
         position: "top-center",
       });
+      form.reset();
   };
 
   return (

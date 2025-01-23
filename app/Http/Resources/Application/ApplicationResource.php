@@ -20,6 +20,7 @@ class ApplicationResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'version' => $this->version,
+            'application_type' => $this->application_type,
             'frontend_language' => $this->frontend_language,
             'frontend_framework' => $this->frontend_framework,
             'backend_language' => $this->backend_language,
@@ -27,6 +28,7 @@ class ApplicationResource extends JsonResource
             'sqa_status' => $this->sqa_status,
             'repository' => $this->repository,
             'is_pia' => $this->is_pia,
+            'is_km' => $this->is_km,
             'author' => $this->author,
             'developer' => $this->developer,
             'division' => $this->division,
@@ -34,6 +36,7 @@ class ApplicationResource extends JsonResource
             'region' => $this->region,
             'url' => $this->url,
             'deployment_date' => $this->deployment_date,
+            'request_status' => $this->request_status,
             'status' => $this->status,
          ];
     }
