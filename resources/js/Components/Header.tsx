@@ -39,7 +39,7 @@ export function Header({ user }: { user: User }) {
                 className="flex gap-2 items-center text-lg font-semibold" // Added hover effect
               >
                 <Package className="w-6 h-6" />
-                <span className="sr-only">Acme Inc</span>
+                <span className="sr-only">SyNAPSE</span>
               </Link>
               {/* Repeat Links for Dashboard, Orders, etc. */}
             </nav>
