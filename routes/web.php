@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SoftwareApplicationController;
+use App\Http\Controllers\Application\ApplicationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,7 +43,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         //END SETTINGS
 
         // APPLICATIONS
-        Route::resource('application',SoftwareApplicationController::class)->names('application');
+        Route::delete('/application/bulk-destroy', [ApplicationController::class, 'bulkDestroy'])->name('application.bulk-destroy');
+        Route::resource('application',ApplicationController::class)->names('application');
+        
 });
 
 require __DIR__ . '/auth.php';

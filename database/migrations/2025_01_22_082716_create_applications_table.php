@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('frontend_framework')->nullable();
             $table->string('backend_language')->nullable(); 
             $table->string('backend_framework')->nullable(); 
-            $table->enum('sqa_status', ['pending', 'in_progress', 'passed', 'failed', 'flagged', 'not_applicable'])->default('pending');
+            $table->string('sqa_status')->nullable();
             $table->string('repository')->nullable(); 
             $table->string('is_pia')->nullable();
             $table->string('author')->nullable();
@@ -30,10 +30,7 @@ return new class extends Migration
             $table->string('region')->nullable(); 
             $table->string('url')->nullable(); 
             $table->date('deployment_date')->nullable(); 
-            $table->enum('status', [
-                'active',
-                'inactive',
-            ])->default('active');
+            $table->string('status')->nullable(); 
             $table->timestamps();
             $table->softdeletes();
         });

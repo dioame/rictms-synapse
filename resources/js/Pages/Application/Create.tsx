@@ -2,81 +2,390 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
+  SheetDescription
 } from "@/Components/ui/sheet";
 import { useForm } from "@inertiajs/react";
-import { Button } from "@/Components/ui/button";
+import { useEffect } from "react";
+import { Form } from "./Form";
+
 import { Input } from "@/Components/ui/input";
+import { Textarea } from "@/Components/ui/textarea";
 import { Label } from "@/Components/ui/label";
 import InputError from "@/Components/InputError";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ui/select";
-import { useEffect } from "react";
+import { toast } from "sonner";
+
+export function CreateSheet(props : any) {
 
 
+  const columns = [
+    {
+      name: "name",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            required
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "description",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Textarea
+              className="mt-1"
+              id={labelName}
+              value={formModel.data[labelName]}
+              onChange={(e) => formModel.setData(labelName, e.target.value)}
+              placeholder={labelName}
+              required
+            />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "frontend_language",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "frontend_framework",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "backend_language",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "backend_framework",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "sqa_status",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "repository",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "is_pia",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */} ?
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "author",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "developer",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "division",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "section",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "region",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "url",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "deployment_date",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            type="date"
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
+      name: "status",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+            
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    
+    // You can add more column definitions here
+  ];
 
-export function CreateSheet({ roles }: any) {
-  const { data, setData, post, processing, errors, reset, wasSuccessful } =
-    useForm({
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-      role: "",
-      avatar: {},
-    });
+
+  const columnNames = columns.reduce((acc:any, column) => {
+    acc[column.name] = "";
+    return acc;
+  }, {});
+
+  const form = useForm(columnNames);
 
   useEffect(() => {
-    if (wasSuccessful) {
+    if (form.wasSuccessful) {
       handleReset();
     }
-  }, [wasSuccessful]);
+  }, [form.wasSuccessful]);
 
   const handleReset = () => {
-    reset();
-    // Reset any other form-related state here if needed
+    form.reset();
   };
 
   const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // return;
-    post(route("users.store"));
+      e.preventDefault();
+      form.post(route(`${props.config.route}.store`));
+      toast.success(`Success!`, {
+        description: `${props.config.title} created successfully`,
+        position: "top-center",
+      });
   };
 
   return (
-    <SheetContent className="w-[400px] sm:w-[900px] sm:max-w-lg">
+    <SheetContent className="w-[400px] sm:w-[900px] sm:max-w-lg overflow-x-auto">
       <SheetHeader>
-        <SheetTitle>Create User</SheetTitle>
+        <SheetTitle>Create {props.config.title}</SheetTitle>
         <SheetDescription>
           <div>
-          <form onSubmit={submit} className="mt-4 space-y-6">
-            <div>
-              <Label className="text-primary" htmlFor="name">
-                Name
-              </Label>
-              <Input
-                className="mt-1"
-                id="name"
-                value={data.name}
-                onChange={(e) => setData("name", e.target.value)}
-                required
-              />
-              <InputError message={errors.name} className="mt-2" />
-            </div>
-
-            <Button type="submit" disabled={processing} className="mt-4">
-              {processing ? (
-                <div className="mr-2 w-4 h-4 animate-spin" />
-              ) : (
-                "Create User"
-              )}
-            </Button>
-          </form>
+            <Form 
+            columns={columns}
+            submit={submit}
+            form={form} 
+            method="POST" 
+            config={props.config}
+            />
           </div>
         </SheetDescription>
       </SheetHeader>

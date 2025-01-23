@@ -1,13 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, router, Link } from "@inertiajs/react";
-import { PageProps, User, UsersPageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { CustomDataTableWrapper } from "@/Components/DataTable/CustomDataTableWrapper";
-import { Badge } from "@/Components/ui/badge";
 import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
-import { CreateSheet } from "./Create";
+import { CreateSheet} from "./Create";
 import { EditSheet } from "./Edit";
-import { getInitials } from "@/hooks/helpers";
 import { RowActions } from "@/Components/DataTable/RowActions";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -22,54 +19,19 @@ import {
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 
+const config = {
+    title: 'Application',
+    route: 'application'
+}
+
 export default function Index({ auth }: any) {
-  const { results, message, roles, filters } = usePage().props;
+  const { results, message, roles, filters } = usePage<any>().props;
   const { delete: destroy } = useForm();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
 
-  const handleDelete = (item: any) => {
-    destroy(route("users.destroy", item.id), {
-      preserveScroll: true,
-      onSuccess: () => {
-        toast.success(`User ${item.name} deleted successfully`);
-      },
-    });
-  };
-
-  const handleEdit = (item: any) => {
-    setIsSheetOpen(true);
-    setEditData(item);
-  };
-
-  const handleSelectionChange = (ids: number[]) => {
-    setSelectedIds(ids);
-  };
-
-  const handleBulkDelete = () => {
-    console.log(selectedIds);
-
-    destroy(route("users.bulk-destroy", { ids: selectedIds }), {
-      preserveScroll: true,
-      onSuccess: () => {
-        toast.success("users deleted successfully", {
-          description: `${selectedIds.length} users deleted successfully`,
-          position: "top-center",
-        });
-        setSelectedIds([]);
-        setShowDeleteDialog(false);
-      },
-      onError: () => {
-        toast.error("Failed to delete users", {
-          description: "Failed to delete users",
-          position: "top-center",
-        });
-        setShowDeleteDialog(false);
-      },
-    });
-  };
 
   const columns = [
     {
@@ -77,29 +39,19 @@ export default function Index({ auth }: any) {
       label: "Name",
       className: "hidden sm:table-cell text-right",
     },
-    // {
-    //   key: "description",
-    //   label: "Description",
-    //   className: "hidden sm:table-cell text-right",
-    // },
+    {
+      key: "description",
+      label: "Description",
+      className: "hidden sm:table-cell text-right",
+    },
     {
       key: "version",
       label: "Version",
       className: "hidden sm:table-cell text-right",
     },
     {
-      key: "frontend_language",
-      label: "Frontend Language",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
       key: "frontend_framework",
       label: "Frontend Framework",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
-      key: "backend_language",
-      label: "Backend Language",
       className: "hidden sm:table-cell text-right",
     },
     {
@@ -166,24 +118,24 @@ export default function Index({ auth }: any) {
       key: "actions",
       label: "Actions",
       className: "text-right",
-      render: (user: User) => (
+      render: (value: any) => (
         <RowActions
-          item={user}
+          item={value}
           actions={[
             {
               label: "View More",
-              href: route('application.show',{id:user.id})
+              href: route('application.show',{id:value.id})
             },
             {
               label: "Edit",
-              onClick: () => handleEdit(user),
+              onClick: () => handleEdit(value),
             },
             {
               label: "Delete",
-              onClick: () => handleDelete(user),
+              onClick: () => handleDelete(value),
               variant: "destructive",
               requiresConfirmation: true,
-              confirmationMessage: `Are you sure you want to delete ${user.name}?`,
+              confirmationMessage: `Are you sure you want to delete ${value.name}?`,
             },
           ]}
         />
@@ -191,25 +143,73 @@ export default function Index({ auth }: any) {
     },
   ];
 
+
+  const handleDelete = (item: any) => {
+    destroy(route(`${config.route}.destroy`, item.id), {
+      preserveScroll: true,
+      onSuccess: () => {
+        // toast.success(`${config.title} ${item.name} deleted successfully`);
+        toast.success(`Success!`, {
+          description: `${config.title} deleted successfully`,
+          position: "top-center",
+        });
+      },
+    });
+  };
+
+  const handleEdit = (item: any) => {
+    setIsSheetOpen(true);
+    setEditData(item);
+  };
+
+  const handleSelectionChange = (ids: number[]) => {
+    setSelectedIds(ids);
+  };
+
+  const handleBulkDelete = () => {
+    console.log(selectedIds);
+
+    destroy(route(`${config.route}.bulk-destroy`, { ids: selectedIds }), {
+      preserveScroll: true,
+      onSuccess: () => {
+        toast.success(`Success!`, {
+          description: `${selectedIds.length} ${config.title} deleted successfully`,
+          position: "top-center",
+        });
+        setSelectedIds([]);
+        setShowDeleteDialog(false);
+      },
+      onError: () => {
+        toast.error(`Failed to delete ${config.title}`, {
+          description: `Failed to delete ${config.title}`,
+          position: "top-center",
+        });
+        setShowDeleteDialog(false);
+      },
+    });
+  };
+
+  
+
   return (
-    <AuthenticatedLayout auth_user={auth.user} header="Users">
-      <Head title="Users" />
+    <AuthenticatedLayout auth_user={auth.user} header={config.title}>
+      <Head title={config.title} />
       <CustomDataTableWrapper
         data={results}
         columns={columns}
-        searchPlaceholder="Search users..."
-        routePrefix="users"
+        searchPlaceholder={`Search ${config.title}...`}
+        routePrefix={config.route}
         filters={filters}
         selectable={true}
         onSelectionChange={handleSelectionChange}
         onBulkDelete={(ids:any) => setShowDeleteDialog(true)}
         createButton={{
-          label: "Add Applicaton",
-          sheet: <CreateSheet />,
+          label: `Add ${config.title}`,
+          sheet: <CreateSheet config={config}/>,
         }}
       />
 
-      {isSheetOpen && (
+        { editData && (
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
@@ -218,19 +218,20 @@ export default function Index({ auth }: any) {
             onClick={() => setIsSheetOpen(true)}
           >
             <Plus className="mr-2 size-4" />
-            Edit User
+            Edit {config.title}
           </Button>
         </SheetTrigger>
-        <EditSheet roles={roles} editData={editData}/>
+        <EditSheet config={config} editData={editData}/>
       </Sheet>
-      )}
+        )}
+ 
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Selected Users</DialogTitle>
+            <DialogTitle>Delete Selected {config.title}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete {selectedIds.length} users? This
+              Are you sure you want to delete {selectedIds.length} {config.title}? This
               action cannot be undone.
             </DialogDescription>
           </DialogHeader>
@@ -242,7 +243,7 @@ export default function Index({ auth }: any) {
               Cancel
             </Button>
             <Button variant="destructive" onClick={handleBulkDelete}>
-              Delete Users
+              Delete {config.title}
             </Button>
           </DialogFooter>
         </DialogContent>

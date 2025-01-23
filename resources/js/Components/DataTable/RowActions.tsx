@@ -77,13 +77,14 @@ export function RowActions({ item, actions }: RowActionsProps) {
               {actions.find((a) => a.requiresConfirmation)?.confirmationMessage}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <DialogClose>
-              <Button variant="secondary">Cancel</Button>
+          <DialogFooter >
+            <DialogClose asChild>
+              <Button variant="secondary" >Cancel</Button>
             </DialogClose>
             <Button
               onClick={actions.find((a) => a.requiresConfirmation)?.onClick}
               variant="destructive"
+              
             >
               Confirm
             </Button>
