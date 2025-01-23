@@ -34,7 +34,7 @@ class ApplicationsTableSeeder extends Seeder
                 'is_pia' => $faker->randomElement(['Yes', 'No']),
                 'author' => $faker->name,
                 'developer' => $faker->name,
-                'division' => $faker->word,
+                'division' => $faker->randomElement(['PPD', 'PSD', 'HRMDD', '4PS', 'DRMD']),
                 'section' => $faker->word,
                 'region' => $faker->state,
                 'url' => $faker->url,

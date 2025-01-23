@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Application\ApplicationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // DASHBOARD
-        Route::get('dashboard', function () {
-            return Inertia::render('Dashboard');
-        })->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // PROFILE
         Route::get('/profile', array( ProfileController::class, 'edit' ))->name('profile.edit');
