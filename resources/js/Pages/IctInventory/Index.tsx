@@ -20,8 +20,8 @@ import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 
 const config = {
-    title: 'Application',
-    route: 'application'
+    title: 'ICT Inventory',
+    route: 'ict-inventory'
 }
 
 export default function Index({ auth }: any) {
@@ -35,89 +35,54 @@ export default function Index({ auth }: any) {
 
   const columns = [
     {
-      key: "name",
-      label: "Name",
-      className: "hidden sm:table-cell text-right",
+      key: "equipment_name",
+      label: "Equipment Name",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "description",
-      label: "Description",
-      className: "hidden sm:table-cell text-right",
+      key: "serial_number",
+      label: "Serial Number",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "version",
-      label: "Version",
-      className: "hidden sm:table-cell text-right",
+      key: "model",
+      label: "Model",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "application_type",
-      label: "Type",
-      className: "hidden sm:table-cell text-right",
+      key: "manufacturer",
+      label: "Manufacturer",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "frontend_framework",
-      label: "Frontend Framework",
-      className: "hidden sm:table-cell text-right",
+      key: "location",
+      label: "Location",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "backend_framework",
-      label: "Backend Framework",
-      className: "hidden sm:table-cell text-right",
+      key: "status",
+      label: "Status",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "sqa_status",
-      label: "SQA Status",
-      className: "hidden sm:table-cell text-right",
-    },
-    // {
-    //   key: "repository",
-    //   label: "Repository",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    {
-      key: "is_pia",
-      label: "Is PIA?",
-      className: "hidden sm:table-cell text-right",
-    },
-    // {
-    //   key: "author",
-    //   label: "Author?",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "developer",
-    //   label: "Developer",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    {
-      key: "division",
-      label: "Division",
-      className: "hidden sm:table-cell text-right",
+      key: "purchase_date",
+      label: "Purchase Date",
+      className: "hidden sm:table-cell text-left",
     },
     {
-      key: "section",
-      label: "Section",
-      className: "hidden sm:table-cell text-right",
+      key: "purchase_price",
+      label: "Purchase Price",
+      className: "hidden sm:table-cell text-left",
     },
-    // {
-    //   key: "region",
-    //   label: "Region",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "url",
-    //   label: "Url",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "deployment_date",
-    //   label: "Deployment Date",
-    //   className: "hidden sm:table-cell text-right",
-    // },
     {
-      key: "request_status",
-      label: "Request Status",
-      className: "hidden sm:table-cell text-right",
+      key: "warranty_expiry",
+      label: "Warranty Expiry",
+      className: "hidden sm:table-cell text-left",
+    },
+    {
+      key: "remarks",
+      label: "Remarks",
+      className: "hidden sm:table-cell text-left",
     },
     {
       key: "actions",
@@ -132,14 +97,6 @@ export default function Index({ auth }: any) {
               href: route(`${config.route}.show`,{id:value.id})
             },
             {
-              label: "Print Request",
-              href: route(`${config.route}-request`,{id:value.id})
-            },
-            {
-              label: "",
-              separator: true
-            },
-            {
               label: "Edit",
               onClick: () => handleEdit(value),
             },
@@ -148,7 +105,7 @@ export default function Index({ auth }: any) {
               onClick: () => handleDelete(value),
               variant: "destructive",
               requiresConfirmation: true,
-              confirmationMessage: `Are you sure you want to delete ${value.name}?`,
+              confirmationMessage: `Are you sure you want to delete ${value.equipment_name}?`,
             },
           ]}
         />

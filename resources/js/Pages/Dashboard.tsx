@@ -12,7 +12,18 @@ export default function Dashboard({
   recentDeployments,
   pendingSQA,
   applicationsByFramework, // Add this line
+  equipment,
+  consolidatedEquipment
 }:any) {
+
+
+  const formatCurrency = (amount:any) => {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+    }).format(amount);
+};
+
   return (
     <AuthenticatedLayout auth_user={auth.user}>
       <div className="p-6 space-y-6">
@@ -120,6 +131,75 @@ export default function Dashboard({
           </div>
 
         </div>
+
+
+        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="bg-blue-500 text-white p-4 rounded">
+          <h2>Total Equipment</h2>
+          <p>{equipment.length}</p>
+        </div>
+        <div className="bg-green-500 text-white p-4 rounded">
+          <h2>Total Value</h2>
+          <p>
+            ₱
+            {equipment.reduce(
+              (total:any, item:any) => total + parseFloat(item.purchase_price || 0),
+              0
+            ).toLocaleString()}
+          </p>
+        </div>
+        <div className="bg-yellow-500 text-white p-4 rounded">
+          <h2>Warranty Expired</h2>
+          <p>
+            {
+              equipment.filter(
+                (item:any) => new Date(item.warranty_expiry) < new Date()
+              ).length
+            }
+          </p>
+        </div>
+        <div className="bg-red-500 text-white p-4 rounded">
+          <h2>Locations</h2>
+          <p>{[...new Set(equipment.map((item:any) => item.location))].length}</p>
+        </div>
+      </div>
+
+      {/* Data Table */}
+      <div className="container mx-auto py-8">
+            <h1 className="text-2xl font-bold mb-4">Consolidated ICT Inventory</h1>
+            <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr>
+                        <th className="border border-gray-300 px-4 py-2 text-left">
+                            Status
+                        </th>
+                        <th className="border border-gray-300 px-4 py-2 text-center">
+                            Total Equipment
+                        </th>
+                        <th className="border border-gray-300 px-4 py-2 text-center">
+                            Total Purchase Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {consolidatedEquipment.map((item:any, index:any) => (
+                        <tr key={index}>
+                  
+                            <td className="border border-gray-300 px-4 py-2">
+                                {item.status}
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2 text-center">
+                                {item.total_equipment}
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2 text-center">
+                                {formatCurrency(item.total_purchase_price)}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+
       </div>
     </AuthenticatedLayout>
   );

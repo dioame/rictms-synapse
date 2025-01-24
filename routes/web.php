@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
+use App\Http\Controllers\IctInventory\IctInventoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,7 +50,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/application/bulk-destroy', [ApplicationController::class, 'bulkDestroy'])->name('application.bulk-destroy');
         Route::resource('application',ApplicationController::class)->names('application');
 
+        //APPLICATION REQUEST
         Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request');
+
+        //ICT INVENTORY
+        Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');
+        Route::resource('ict-inventory',IctInventoryController::class)->names('ict-inventory');
         
 });
 

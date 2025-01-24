@@ -85,36 +85,20 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "SQA",
           url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#", 
         },
       ],
     },
     {
-      title: "Maintenance",
+      title: "ICT Equipments",
       url: "#",
       icon: Construction,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#", 
+          title: "Inventory",
+          url: route('ict-inventory.index'),
         },
       ],
     },
@@ -127,18 +111,6 @@ const data = {
         {
           title: "User",
           url: route('users.index'),
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
         },
       ],
     },

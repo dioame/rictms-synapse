@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Application; // Assuming this is the model for your table
+use App\Models\IctInventory;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -29,6 +31,16 @@ class DashboardController extends Controller
             ->groupBy('frontend_framework')
             ->get();
 
+        $inventory = IctInventory::all();
+        $consolidatedData = IctInventory::select(
+            'status',
+            DB::raw('COUNT(*) as total_equipment'),
+            DB::raw('SUM(purchase_price) as total_purchase_price')
+        )
+            ->groupBy('status')
+            ->orderBy('status')
+            ->get();
+
         // Return data to Inertia
         return Inertia::render('Dashboard', [
             'totalApplications' => $totalApplications,
@@ -38,6 +50,8 @@ class DashboardController extends Controller
             'recentDeployments' => $recentDeployments,
             'pendingSQA' => $pendingSQA,
             'applicationsByFramework' => $applicationsByFramework, // Add this line
+            'equipment' => $inventory,
+            'consolidatedEquipment' => $consolidatedData,
         ]);
     }
 }
