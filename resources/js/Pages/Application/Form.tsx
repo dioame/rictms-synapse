@@ -13,7 +13,7 @@
                 </div>
               ))}
 
-              <SheetClose asChild>
+              {/* <SheetClose asChild> */}
                 <Button type="submit" disabled={props.form.processing} className="mt-4">
                   {props.form.processing ? (
                     <div className="mr-2 w-4 h-4 animate-spin" />
@@ -21,7 +21,7 @@
                     `${props.method == 'POST' ? 'Create' : 'Update'} ${props.config.title}`
                   )}
                 </Button>
-              </SheetClose>
+              {/* </SheetClose> */}
             </form>
     );
   }

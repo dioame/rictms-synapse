@@ -5,7 +5,7 @@ import {
   SheetDescription
 } from "@/Components/ui/sheet";
 import { useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "./Form";
 
 import { Input } from "@/Components/ui/input";
@@ -16,7 +16,6 @@ import InputError from "@/Components/InputError";
 import { toast } from "sonner";
 
 export function CreateSheet(props : any) {
-
 
   const columns = [
     {
@@ -32,7 +31,6 @@ export function CreateSheet(props : any) {
             value={formModel.data[labelName]} // Dynamic value based on labelName
             onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
             placeholder={labelName}
-            required
           />
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
@@ -51,7 +49,6 @@ export function CreateSheet(props : any) {
               value={formModel.data[labelName]}
               onChange={(e) => formModel.setData(labelName, e.target.value)}
               placeholder={labelName}
-              required
             />
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
@@ -93,7 +90,6 @@ export function CreateSheet(props : any) {
               value={formModel.data[labelName]}
               onChange={(e) => formModel.setData(labelName, e.target.value)}
               placeholder={labelName}
-              required
             />
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
@@ -385,36 +381,62 @@ export function CreateSheet(props : any) {
         </div>
       ),
     },
+    {
+      name: "request_status",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Select
+           value={formModel.data[labelName]}
+            onValueChange={(value) => formModel.setData(labelName, value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
     
     // You can add more column definitions here
   ];
 
+  const [isSubmit,setIsSubmit] = useState(false);
 
   const columnNames = columns.reduce((acc:any, column) => {
     acc[column.name] = "";
     return acc;
   }, {});
+  columnNames['request_status'] = "pending";
 
   const form = useForm(columnNames);
 
   useEffect(() => {
-    if (form.wasSuccessful) {
-      handleReset();
-    }
-  }, [form.wasSuccessful]);
-
-  const handleReset = () => {
-    form.reset();
-  };
+      if (Object.keys(form.errors).length === 0) { 
+          toast.success(`Success!`, {
+              description: `${props.config.title} created successfully`,
+              position: "top-center",
+          });
+          props.setIsSheetOpen(false);
+      } else {
+          toast.error('There are errors in the form', {
+              description: 'Please fix them before submitting.',
+              position: "top-center",
+          });
+      }
+  }, [form.errors]);
 
   const submit = (e: React.FormEvent) => {
       e.preventDefault();
-      
       form.post(route(`${props.config.route}.store`));
-      toast.success(`Success!`, {
-        description: `${props.config.title} created successfully`,
-        position: "top-center",
-      });
   };
 
   return (

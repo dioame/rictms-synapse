@@ -61,15 +61,19 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Applications",
+          title: "All Apps",
           url: route('application.index'),
         },
         {
-          title: "Starred",
+          title: "Pending",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Approved",
+          url: "#", 
+        },
+        {
+          title: "Cancelled",
           url: "#", 
         },
       ],

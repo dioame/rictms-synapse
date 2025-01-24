@@ -42,7 +42,7 @@ interface DataTableProps<T> {
   searchPlaceholder?: string;
   routePrefix: string;
   filters?: Record<string, any>;
-  createButton?: {
+  createButton: {
     label: string;
     sheet: React.ReactNode;
   };
@@ -91,6 +91,8 @@ export function CustomDataTableWrapper({
     setSelectedRows(newSelectedRows);
     onSelectionChange?.(newSelectedRows);
   };
+
+  const sheetElement = createButton.sheet as React.ReactElement;
 
   return (
     <div className="space-y-4">
@@ -146,7 +148,8 @@ export function CustomDataTableWrapper({
                 {createButton.label}
               </Button>
             </SheetTrigger>
-            {createButton.sheet}
+            {/* {createButton.sheet} */}
+            {React.cloneElement(sheetElement, { setIsSheetOpen })}
           </Sheet>
         )}
       </div>

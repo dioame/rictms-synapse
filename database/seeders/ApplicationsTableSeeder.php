@@ -42,7 +42,7 @@ class ApplicationsTableSeeder extends Seeder
                 'url' => $faker->url,
                 'deployment_date' => $faker->date(),
                 'status' => $faker->randomElement(['active', 'inactive']),
-                'request_status' => $faker->randomElement(['pending', 'approve']),
+                'request_status' => $faker->randomElement(['pending', 'approved','cancelled']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

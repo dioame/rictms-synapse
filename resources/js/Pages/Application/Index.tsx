@@ -115,8 +115,8 @@ export default function Index({ auth }: any) {
     //   className: "hidden sm:table-cell text-right",
     // },
     {
-      key: "status",
-      label: "Status",
+      key: "request_status",
+      label: "Request Status",
       className: "hidden sm:table-cell text-right",
     },
     {
@@ -215,19 +215,9 @@ export default function Index({ auth }: any) {
       />
 
         { editData && (
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            className=""
-            onClick={() => setIsSheetOpen(true)}
-          >
-            <Plus className="mr-2 size-4" />
-            Edit {config.title}
-          </Button>
-        </SheetTrigger>
-        <EditSheet config={config} editData={editData}/>
-      </Sheet>
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+          <EditSheet config={config} editData={editData} setIsSheetOpen={setIsSheetOpen}/>
+        </Sheet>
         )}
  
 

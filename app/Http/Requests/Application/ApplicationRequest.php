@@ -19,6 +19,7 @@ class ApplicationRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
             'application_type' => ['required'],
+            'request_status' => ['required'],
         ];
     }
 }

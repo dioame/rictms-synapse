@@ -5,7 +5,7 @@ import {
   SheetDescription
 } from "@/Components/ui/sheet";
 import { useForm } from "@inertiajs/react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Form } from "./Form";
 
 import { Input } from "@/Components/ui/input";
@@ -31,7 +31,6 @@ export function EditSheet(props : any) {
             value={formModel.data[labelName]} // Dynamic value based on labelName
             onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
             placeholder={labelName}
-            required
           />
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
@@ -50,7 +49,7 @@ export function EditSheet(props : any) {
                   value={formModel.data[labelName]}
                   onChange={(e) => formModel.setData(labelName, e.target.value)}
                   placeholder={labelName}
-                  required
+              
                 />
               <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
             </div>
@@ -93,7 +92,7 @@ export function EditSheet(props : any) {
               value={formModel.data[labelName]}
               onChange={(e) => formModel.setData(labelName, e.target.value)}
               placeholder={labelName}
-              required
+              
             />
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
@@ -385,36 +384,76 @@ export function EditSheet(props : any) {
         </div>
       ),
     },
+
+    {
+      name: "request_status",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+          </Label>
+          <Select
+            value={formModel.data[labelName]}
+            onValueChange={(value) => formModel.setData(labelName, value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
     
     // You can add more column definitions here
   ];
 
-  const columnNames = columns.reduce((acc:any, column) => {
-    acc[column.name] = props.editData[column.name] || ""; // Default to an empty string if the key doesn't exist
-    return acc;
-  }, {});
+  // const columnNames = columns.reduce((acc:any, column) => {
+  //   acc[column.name] = props.editData[column.name] || ""; // Default to an empty string if the key doesn't exist
+  //   return acc;
+  // }, {});
+
+  // const form = useForm(columnNames);
+
+  const [isSubmit,setIsSubmit] = useState(false);
+
+  const columnNames = useMemo(() => {
+    return columns.reduce((acc: any, column) => {
+      acc[column.name] = props.editData[column.name] || ""; // Default to an empty string if the key doesn't exist
+      return acc;
+    }, {});
+  }, [props.editData]);
 
   const form = useForm(columnNames);
 
+  useEffect(() => {
+    form.setData(columnNames); // Update the form data with new `editData`
+  }, [props.editData, columnNames]);
 
   useEffect(() => {
-    if (form.wasSuccessful) {
-      handleReset();
+    if (form.wasSuccessful && isSubmit) { 
+        toast.success(`Success!`, {
+          description: `${props.config.title} updated successfully`,
+          position: "top-center",
+        });
+        props.setIsSheetOpen(false);
+    } else if(form.hasErrors) {
+        toast.error('There are errors in the form', {
+            description: 'Please fix them before submitting.',
+            position: "top-center",
+        });
     }
-  }, [form.wasSuccessful]);
-
-  const handleReset = () => {
-    form.reset();
-  };
+}, [form.errors]);
 
   const submit = (e: React.FormEvent) => {
       e.preventDefault();
       form.put(route(`${props.config.route}.update`,{id:props.editData.id}));
-      toast.success(`Success!`, {
-        description: `${props.config.title} updated successfully`,
-        position: "top-center",
-      });
-      form.reset();
+      setIsSubmit(true)
   };
 
   return (
