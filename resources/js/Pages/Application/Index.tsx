@@ -132,6 +132,14 @@ export default function Index({ auth }: any) {
               href: route('application.show',{id:value.id})
             },
             {
+              label: "Print Request",
+              href: route('application-request',{id:value.id})
+            },
+            {
+              label: "",
+              separator: true
+            },
+            {
               label: "Edit",
               onClick: () => handleEdit(value),
             },

@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
+  DropdownMenuSeparator
 } from "@/Components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "@inertiajs/react";
@@ -27,6 +28,7 @@ interface Action {
   variant?: "default" | "destructive";
   requiresConfirmation?: boolean;
   confirmationMessage?: string;
+  separator?: boolean;
 }
 
 interface RowActionsProps {
@@ -37,23 +39,24 @@ interface RowActionsProps {
 export function RowActions({ item, actions }: RowActionsProps) {
   return (
     <Dialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button aria-haspopup="true" size="icon" variant="ghost">
-            <MoreHorizontal className="w-4 h-4" />
-            <span className="sr-only">Actions</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {actions.map((action) => (
-            <DropdownMenuItem key={action.label}>
+     <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button aria-haspopup="true" size="icon" variant="ghost">
+          <MoreHorizontal className="w-4 h-4" />
+          <span className="sr-only">Actions</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        {actions.map((action, index) => (
+          <React.Fragment key={action.label}>
+            <DropdownMenuItem>
               {action.href ? (
                 <Link href={action.href} className="block w-full">
                   {action.label}
                 </Link>
               ) : action.requiresConfirmation ? (
-                <DialogTrigger className="block w-full text-left">
+                <DialogTrigger className="block w-full text-left text-red-500">
                   {action.label}
                 </DialogTrigger>
               ) : (
@@ -65,9 +68,13 @@ export function RowActions({ item, actions }: RowActionsProps) {
                 </button>
               )}
             </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+            {action.separator && index !== actions.length - 1 && (
+              <DropdownMenuSeparator />
+            )}
+          </React.Fragment>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
 
       {actions.find((a) => a.requiresConfirmation) && (
         <DialogContent>

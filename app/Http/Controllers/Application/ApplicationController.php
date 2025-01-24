@@ -36,6 +36,79 @@ class ApplicationController extends Controller
         );
     }
 
+
+    public function pending(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results = Application::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->where('request_status','pending')
+            ->orderBy('created_at','desc')
+            ->paginate(10);
+
+        return Inertia::render(
+            'Application/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search]
+            ]
+        );
+    }
+
+    public function approved(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results = Application::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->where('request_status','approved')
+            ->orderBy('created_at','desc')
+            ->paginate(10);
+
+        return Inertia::render(
+            'Application/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search]
+            ]
+        );
+    }
+
+
+    public function cancelled(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results = Application::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->where('request_status','cancelled')
+            ->orderBy('created_at','desc')
+            ->paginate(10);
+
+        return Inertia::render(
+            'Application/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search]
+            ]
+        );
+    }
+
+
+
     public function show($id)
     {
 
@@ -68,7 +141,8 @@ class ApplicationController extends Controller
         Application::destroy($id);
         // return json with response
         // redirect to route('users.index'); whit message and render inertia page
-        return Redirect::route('application.index', ['message' => 'Application deleted successfully']);
+        // return Redirect::route('application.index', ['message' => 'Application deleted successfully']);
+        return redirect()->back()->with('success', 'Application deleted.');
     }
 
     public function bulkDestroy(Request $request)
@@ -80,9 +154,23 @@ class ApplicationController extends Controller
 
         try {
             Application::whereIn('id', $request->ids)->delete();
-            return Redirect::route('application.index', ['message' => 'Application deleted successfully.']);
+            // return Redirect::route('application.index', ['message' => 'Application deleted successfully.']);
+            return redirect()->back()->with('success', 'Application deleted.');
         } catch (\Exception $e) {
-            return Redirect::route('application.index', ['message' => 'Application deletion Failed.']);
+            // return Redirect::route('application.index', ['message' => 'Application deletion Failed.']);
+            return redirect()->back()->with('success', 'Application deletion failed.');
         }
+    }
+
+
+
+    public function request($id)
+    {
+        return Inertia::render(
+            'Application/Index',
+            [
+                
+            ]
+        );
     }
 }

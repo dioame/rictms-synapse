@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Application\ApplicationController;
+use App\Http\Controllers\Application\ApplicationRequestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,8 +43,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         //END SETTINGS
 
         // APPLICATIONS
+        Route::get('/application/pending', [ApplicationController::class, 'pending'])->name('application.pending');
+        Route::get('/application/approved', [ApplicationController::class, 'approved'])->name('application.approved');
+        Route::get('/application/cancelled', [ApplicationController::class, 'cancelled'])->name('application.cancelled');
         Route::delete('/application/bulk-destroy', [ApplicationController::class, 'bulkDestroy'])->name('application.bulk-destroy');
         Route::resource('application',ApplicationController::class)->names('application');
+
+        Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request');
         
 });
 

@@ -66,15 +66,15 @@ const data = {
         },
         {
           title: "Pending",
-          url: "#",
+          url:route('application.pending'),
         },
         {
           title: "Approved",
-          url: "#", 
+          url:route('application.approved'), 
         },
         {
           title: "Cancelled",
-          url: "#", 
+          url:route('application.cancelled'), 
         },
       ],
     },

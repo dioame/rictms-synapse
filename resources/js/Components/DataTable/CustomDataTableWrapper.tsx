@@ -66,9 +66,10 @@ export function CustomDataTableWrapper({
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
+
+
   const handleSearch = useDebouncedCallback((term: string) => {
-    router.get(
-      route(`${routePrefix}.index`),
+    router.get(window.location.href,
       { search: term },
       {
         preserveState: true,
