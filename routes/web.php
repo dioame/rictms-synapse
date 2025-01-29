@@ -3,21 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Dxcloud\DxcloudController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -56,6 +50,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         //ICT INVENTORY
         Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');
         Route::resource('ict-inventory',IctInventoryController::class)->names('ict-inventory');
+
+        Route::get('/dxcloud', [DxcloudController::class, 'index'])->name('dxcloud');
+        Route::get('/dxcloud/download-psgc/{region_code}', [DxcloudController::class, 'download'])->name('dxcloud-download-psgc');
         
 });
 

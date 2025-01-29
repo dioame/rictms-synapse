@@ -37,92 +37,52 @@ export default function Index({ auth }: any) {
     {
       key: "name",
       label: "Name",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "description",
       label: "Description",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "version",
       label: "Version",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "application_type",
       label: "Type",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
-      key: "frontend_framework",
-      label: "Frontend Framework",
-      className: "hidden sm:table-cell text-right",
+      key: "tech_stack",
+      label: "Tech Stack",
+      className: "hidden sm:table-cell text-center",
     },
-    {
-      key: "backend_framework",
-      label: "Backend Framework",
-      className: "hidden sm:table-cell text-right",
-    },
-    {
-      key: "sqa_status",
-      label: "SQA Status",
-      className: "hidden sm:table-cell text-right",
-    },
-    // {
-    //   key: "repository",
-    //   label: "Repository",
-    //   className: "hidden sm:table-cell text-right",
-    // },
     {
       key: "is_pia",
       label: "Is PIA?",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
-    // {
-    //   key: "author",
-    //   label: "Author?",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "developer",
-    //   label: "Developer",
-    //   className: "hidden sm:table-cell text-right",
-    // },
     {
       key: "division",
       label: "Division",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "section",
       label: "Section",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
-    // {
-    //   key: "region",
-    //   label: "Region",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "url",
-    //   label: "Url",
-    //   className: "hidden sm:table-cell text-right",
-    // },
-    // {
-    //   key: "deployment_date",
-    //   label: "Deployment Date",
-    //   className: "hidden sm:table-cell text-right",
-    // },
     {
       key: "request_status",
       label: "Request Status",
-      className: "hidden sm:table-cell text-right",
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "actions",
       label: "Actions",
-      className: "text-right",
+      className: "text-center",
       render: (value: any) => (
         <RowActions
           item={value}

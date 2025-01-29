@@ -16,10 +16,13 @@ class ApplicationRequestController extends Controller
     
     public function generateForm($id)
     {
+
+        $results = Application::find($id);
+        
         return Inertia::render(
             'ApplicationRequest/Form',
             [
-                
+                'results' => $results
             ]
         );
     }

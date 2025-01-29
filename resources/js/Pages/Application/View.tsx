@@ -27,9 +27,6 @@ export default function Index({ auth, results }: any) {
                 <span className="font-bold">Version:</span> {results.version}
               </div>
               <div>
-                <span className="font-bold">Type:</span> {results.application_type}
-              </div>
-              <div>
                 <span className="font-bold">Author:</span> {results.author}
               </div>
               <div>
@@ -44,6 +41,12 @@ export default function Index({ auth, results }: any) {
               <div>
                 <span className="font-bold">Region:</span> {results.region}
               </div>
+              <div>
+                <span className="font-bold">System Owner:</span> {results.system_owner}
+              </div>
+              <div>
+                <span className="font-bold">Location of Deployment:</span> {results.location_of_deployment}
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -57,10 +60,7 @@ export default function Index({ auth, results }: any) {
           <CardContent>
             <div className="space-y-4">
               <div>
-                <span className="font-bold">Frontend:</span> {results.frontend_language} ({results.frontend_framework})
-              </div>
-              <div>
-                <span className="font-bold">Backend:</span> {results.backend_language} ({results.backend_framework})
+                <span className="font-bold">Tech Stack</span> {results.tech_stack}
               </div>
               <div>
                 <span className="font-bold">Repository:</span> <a href={results.repository} className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">{results.repository}</a>
@@ -101,17 +101,53 @@ export default function Index({ auth, results }: any) {
               <div>
                 <span className="font-bold">SQA Status:</span>
                 <Badge
-                  variant={results.sqa_status === "approved" ? "default" : "secondary"}
+                  variant={results.sqa_tested === "Yes" ? "default" : "secondary"}
                   className="ml-2"
                 >
-                  {results.sqa_status}
+                  {results.sqa_tested}
                 </Badge>
               </div>
               <div>
                 <span className="font-bold">PIA Compliance:</span> {results.is_pia}
               </div>
               <div>
-                <span className="font-bold">Is presented KM:</span> {results.is_pia}
+                <span className="font-bold">KM Compliance:</span> {results.is_km}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Additional Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Additional Information</CardTitle>
+            <CardDescription>Further details on the system and its usage</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <span className="font-bold">Internal Users:</span> {results.internal_users}
+              </div>
+              <div>
+                <span className="font-bold">Number of Internal Users:</span> {results.no_of_internal_users}
+              </div>
+              <div>
+                <span className="font-bold">External Users:</span> {results.external_users}
+              </div>
+              <div>
+                <span className="font-bold">Number of External Users:</span> {results.no_of_external_users}
+              </div>
+              <div>
+                <span className="font-bold">Data Archiving:</span> {results.data_archiving}
+              </div>q
+              <div>
+                <span className="font-bold">Computing Scheme:</span> {results.computing_scheme}
+              </div>
+              <div>
+                <span className="font-bold">Description (General Contents):</span> {results.description_general_contents}
+              </div>
+              <div>
+                <span className="font-bold">Information Systems Served:</span> {results.information_systems_served}
               </div>
             </div>
           </CardContent>

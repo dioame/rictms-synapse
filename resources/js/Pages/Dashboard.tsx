@@ -11,18 +11,17 @@ export default function Dashboard({
   piaCompliance,
   recentDeployments,
   pendingSQA,
-  applicationsByFramework, // Add this line
+  applicationsByFramework, // Added
   equipment,
-  consolidatedEquipment
-}:any) {
+  consolidatedEquipment, // Added
+}: any) {
 
-
-  const formatCurrency = (amount:any) => {
+  const formatCurrency = (amount: any) => {
     return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
+      style: "currency",
+      currency: "USD",
     }).format(amount);
-};
+  };
 
   return (
     <AuthenticatedLayout auth_user={auth.user}>
@@ -49,7 +48,7 @@ export default function Dashboard({
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-lg font-bold text-gray-800">Applications by Status</h2>
             <ul className="mt-4 space-y-2">
-              {applicationsByStatus.map((status:any, index:any) => (
+              {applicationsByStatus.map((status: any, index: any) => (
                 <li
                   key={index}
                   className="flex justify-between text-gray-600 hover:text-indigo-500"
@@ -65,7 +64,7 @@ export default function Dashboard({
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-lg font-bold text-gray-800">Applications per Division</h2>
             <ul className="mt-4 space-y-2">
-              {applicationsByRegion.map((region:any, index:any) => (
+              {applicationsByRegion.map((region: any, index: any) => (
                 <li
                   key={index}
                   className="flex justify-between text-gray-600 hover:text-teal-500"
@@ -89,29 +88,27 @@ export default function Dashboard({
             <p className="text-4xl font-extrabold mt-2">{pendingSQA}</p>
           </div>
 
-         
-
           {/* Applications by Framework */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-lg font-bold text-gray-800">Applications by Framework</h2>
             <ul className="mt-4 space-y-2">
-              {applicationsByFramework.map((framework:any, index:any) => (
+              {applicationsByFramework.map((framework: any, index: any) => (
                 <li
                   key={index}
                   className="flex justify-between text-gray-600 hover:text-purple-500"
                 >
-                  <span>{framework.frontend_framework || "Unknown Framework"}</span>
+                  <span>{framework.tech_stack || "Unknown Framework"}</span>
                   <span className="font-semibold">{framework.count}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-           {/* Recent Deployments */}
-           <div className="bg-white rounded-lg shadow-lg p-6 col-span-1 md:col-span-2 lg:col-span-3">
+          {/* Recent Deployments */}
+          <div className="bg-white rounded-lg shadow-lg p-6 col-span-1 md:col-span-2 lg:col-span-3">
             <h2 className="text-lg font-bold text-gray-800">Recent Deployments</h2>
             <ul className="mt-4 space-y-3">
-              {recentDeployments.map((deployment:any, index:any) => (
+              {recentDeployments.map((deployment: any, index: any) => (
                 <li
                   key={index}
                   className="flex justify-between items-center text-gray-600 hover:text-blue-500"
@@ -129,77 +126,65 @@ export default function Dashboard({
               ))}
             </ul>
           </div>
-
         </div>
 
-
+        {/* Equipment Summary */}
         <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-500 text-white p-4 rounded">
-          <h2>Total Equipment</h2>
-          <p>{equipment.length}</p>
-        </div>
-        <div className="bg-green-500 text-white p-4 rounded">
-          <h2>Total Value</h2>
-          <p>
-            ₱
-            {equipment.reduce(
-              (total:any, item:any) => total + parseFloat(item.purchase_price || 0),
-              0
-            ).toLocaleString()}
-          </p>
-        </div>
-        <div className="bg-yellow-500 text-white p-4 rounded">
-          <h2>Warranty Expired</h2>
-          <p>
-            {
-              equipment.filter(
-                (item:any) => new Date(item.warranty_expiry) < new Date()
-              ).length
-            }
-          </p>
-        </div>
-        <div className="bg-red-500 text-white p-4 rounded">
-          <h2>Locations</h2>
-          <p>{[...new Set(equipment.map((item:any) => item.location))].length}</p>
-        </div>
-      </div>
-
-      {/* Data Table */}
-      <div className="container mx-auto py-8">
-            <h1 className="text-2xl font-bold mb-4">Consolidated ICT Inventory</h1>
-            <table className="min-w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr>
-                        <th className="border border-gray-300 px-4 py-2 text-left">
-                            Status
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2 text-center">
-                            Total Equipment
-                        </th>
-                        <th className="border border-gray-300 px-4 py-2 text-center">
-                            Total Purchase Price
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {consolidatedEquipment.map((item:any, index:any) => (
-                        <tr key={index}>
-                  
-                            <td className="border border-gray-300 px-4 py-2">
-                                {item.status}
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center">
-                                {item.total_equipment}
-                            </td>
-                            <td className="border border-gray-300 px-4 py-2 text-center">
-                                {formatCurrency(item.total_purchase_price)}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+          <div className="bg-blue-500 text-white p-4 rounded">
+            <h2>Total Equipment</h2>
+            <p>{equipment.length}</p>
+          </div>
+          <div className="bg-green-500 text-white p-4 rounded">
+            <h2>Total Value</h2>
+            <p>
+              ₱
+              {equipment
+                .reduce(
+                  (total: any, item: any) =>
+                    total + parseFloat(item.purchase_price || 0),
+                  0
+                )
+                .toLocaleString()}
+            </p>
+          </div>
+          <div className="bg-yellow-500 text-white p-4 rounded">
+            <h2>Warranty Expired</h2>
+            <p>
+              {
+                equipment.filter(
+                  (item: any) => new Date(item.warranty_expiry) < new Date()
+                ).length
+              }
+            </p>
+          </div>
+          <div className="bg-red-500 text-white p-4 rounded">
+            <h2>Locations</h2>
+            <p>{[...new Set(equipment.map((item: any) => item.location))].length}</p>
+          </div>
         </div>
 
+        {/* Consolidated ICT Inventory Table */}
+        <div className="container mx-auto py-8">
+          <h1 className="text-2xl font-bold mb-4">Consolidated ICT Inventory</h1>
+          <table className="min-w-full border-collapse border border-gray-300">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-4 py-2 text-left">Status</th>
+                <th className="border border-gray-300 px-4 py-2 text-center">Total Equipment</th>
+                <th className="border border-gray-300 px-4 py-2 text-center">Total Purchase Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {consolidatedEquipment.map((item: any, index: any) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2">{item.status}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">{item.total_equipment}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">{formatCurrency(item.total_purchase_price)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AuthenticatedLayout>
   );

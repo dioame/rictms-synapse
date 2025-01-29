@@ -117,7 +117,7 @@ const data = {
   ],
   projects: [
     {
-      name: "Documentation",
+      name: "Developers Area",
       url: "#",
       icon: Frame,
     },

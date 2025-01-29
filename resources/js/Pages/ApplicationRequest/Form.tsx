@@ -1,120 +1,97 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/Components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 
-const DeploymentRequestForm = () => {
-  // Static form data based on the structure provided
-  const formData = {
-    id: 1,
-    name: "Project Management System",
-    description: "A tool to manage and monitor project progress effectively.",
-    version: "v2.0.1",
-    application_type: "Web Application",
-    frontend_language: "JavaScript",
-    frontend_framework: "React",
-    backend_language: "PHP",
-    backend_framework: "Laravel",
-    sqa_status: "Approved",
-    repository: "https://github.com/example/project-management-system",
-    is_pia: true,
-    is_km: false,
-    author: "Jane Doe",
-    developer: "John Smith",
-    division: "IT Division",
-    section: "Development",
-    region: "Region 5",
-    url: "https://example.com/project-management",
-    deployment_date: "2025-01-25",
-    request_status: "Pending",
-    status: "Active",
-  };
-
+const DeploymentRequestForm = ({ results } : any) => {
   return (
-    <div className="container mx-auto p-4">
-      <Card className="shadow-lg">
+    <div className="container mx-auto p-6">
+      <Card className="shadow-lg border-2 border-gray-200 rounded-lg">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold mb-6 text-center">Deployment Request Form</CardTitle>
+          <CardTitle className="text-3xl font-bold mb-6 text-center text-gray-800">Deployment Request Form</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             {/* Basic Information */}
-            <section>
-              <h3 className="font-semibold text-xl mb-2">Basic Information:</h3>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Name:</strong> {formData.name}</div>
-                <div><strong>Description:</strong> {formData.description}</div>
+            <section className="border-b-2 border-gray-300 pb-6 mb-6">
+              <h3 className="font-semibold text-xl mb-4 text-gray-700">Basic Information:</h3>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Name:</strong> {results.name}</div>
+                <div><strong className="text-gray-600">Description:</strong> {results.description}</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Version:</strong> {formData.version}</div>
-                <div><strong>Application Type:</strong> {formData.application_type}</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Version:</strong> {results.version}</div>
+                <div><strong className="text-gray-600">Tech Stack:</strong> {results.tech_stack}</div>
               </div>
             </section>
 
             {/* Technical Information */}
-            <section>
-              <h3 className="font-semibold text-xl mb-2">Technical Information:</h3>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Frontend Language:</strong> {formData.frontend_language}</div>
-                <div><strong>Frontend Framework:</strong> {formData.frontend_framework}</div>
-              </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Backend Language:</strong> {formData.backend_language}</div>
-                <div><strong>Backend Framework:</strong> {formData.backend_framework}</div>
-              </div>
-            </section>
-
-            {/* Deployment Details */}
-            <section>
-              <h3 className="font-semibold text-xl mb-2">Deployment Details:</h3>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>SQA Status:</strong> {formData.sqa_status}</div>
-                <div>
-                  <strong>Repository:</strong>
-                  <a href={formData.repository} className="text-blue-600 underline">{formData.repository}</a>
+            <section className="border-b-2 border-gray-300 pb-6 mb-6">
+              <h3 className="font-semibold text-xl mb-4 text-gray-700">Technical Information:</h3>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Repository:</strong>
+                  <a href={results.repository} className="text-blue-600 underline">{results.repository}</a>
                 </div>
+                <div><strong className="text-gray-600">SQA Tested:</strong> {results.sqa_tested}</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Deployment Date:</strong> {formData.deployment_date}</div>
-                <div><strong>Status:</strong> {formData.status}</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Deployment Date:</strong> {results.deployment_date}</div>
+                <div><strong className="text-gray-600">Status:</strong> {results.status}</div>
               </div>
             </section>
 
             {/* Administrative Details */}
-            <section>
-              <h3 className="font-semibold text-xl mb-2">Administrative Details:</h3>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Author:</strong> {formData.author}</div>
-                <div><strong>Developer:</strong> {formData.developer}</div>
+            <section className="border-b-2 border-gray-300 pb-6 mb-6">
+              <h3 className="font-semibold text-xl mb-4 text-gray-700">Administrative Details:</h3>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Author:</strong> {results.author}</div>
+                <div><strong className="text-gray-600">Developer:</strong> {results.developer}</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Division:</strong> {formData.division}</div>
-                <div><strong>Section:</strong> {formData.section}</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Division:</strong> {results.division}</div>
+                <div><strong className="text-gray-600">Section:</strong> {results.section}</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Region:</strong> {formData.region}</div>
-                <div><strong>PIA Compliance:</strong> {formData.is_pia ? "Yes" : "No"}</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Region:</strong> {results.region}</div>
+                <div><strong className="text-gray-600">PIA Compliance:</strong> {results.is_pia ? "Yes" : "No"}</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>KM Compliance:</strong> {formData.is_km ? "Yes" : "No"}</div>
-                <div><strong>Request Status:</strong> {formData.request_status}</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">KM Compliance:</strong> {results.is_km ? "Yes" : "No"}</div>
+                <div><strong className="text-gray-600">Request Status:</strong> {results.request_status}</div>
+              </div>
+            </section>
+
+            {/* Deployment Information */}
+            <section className="border-b-2 border-gray-300 pb-6 mb-6">
+              <h3 className="font-semibold text-xl mb-4 text-gray-700">Deployment Information:</h3>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Platform:</strong> {results.platform}</div>
+                <div><strong className="text-gray-600">Computing Scheme:</strong> {results.computing_scheme}</div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Internal Users:</strong> {results.no_of_internal_users}</div>
+                <div><strong className="text-gray-600">External Users:</strong> {results.no_of_external_users}</div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">System Owner:</strong> {results.system_owner}</div>
+                <div><strong className="text-gray-600">Location of Deployment:</strong> {results.location_of_deployment}</div>
               </div>
             </section>
 
             {/* Signatures Section */}
-            <section>
-              <h3 className="font-semibold text-xl mb-2">Signatures:</h3>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Requestor:</strong> __________________________</div>
-                <div><strong>Supervisor Approval:</strong> __________________________</div>
+            <section className="border-t-2 border-gray-300 pt-6">
+              <h3 className="font-semibold text-xl mb-4 text-gray-700">Signatures:</h3>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Requestor:</strong> __________________________</div>
+                <div><strong className="text-gray-600">Supervisor Approval:</strong> __________________________</div>
               </div>
-              <div className="grid grid-cols-2 gap-x-6 mb-4">
-                <div><strong>Department Head:</strong> __________________________</div>
-                <div><strong>Date:</strong> __________________________</div>
+              <div className="grid grid-cols-2 gap-x-8 mb-4">
+                <div><strong className="text-gray-600">Department Head:</strong> __________________________</div>
+                <div><strong className="text-gray-600">Date:</strong> __________________________</div>
               </div>
             </section>
 
             {/* Print Instructions */}
             <div className="text-center mt-8">
-              <p className="italic text-sm">Please print this form and submit it for approval.</p>
+              <p className="italic text-sm text-gray-600">Please print this form and submit it for approval.</p>
             </div>
           </div>
         </CardContent>

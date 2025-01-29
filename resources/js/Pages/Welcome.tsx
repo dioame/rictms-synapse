@@ -1,29 +1,101 @@
-
+import { useState } from 'react';
 import { Button } from "@/Components/ui/button";
-import { Link } from "@inertiajs/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
-export default function LandingPage() {
+export default function LandingPage({apps}:any) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Toggle the mobile menu visibility
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Smooth Scroll Function
+  const handleScroll = (event:any, targetId:any) => {
+    event.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  };
+
+
+  const generateRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   return (
     <div className="bg-gray-50 text-gray-900">
       {/* Hero Section */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-bold text-primary">RICTMS-SyNAPSE</h1>
-          <div className="space-x-4">
-            <Button variant="ghost">Features</Button>
-            <Button variant="ghost">Pricing</Button>
-            <Button variant="ghost">About</Button>
-            <Link href="/login">
+          <div className="hidden md:flex space-x-4">
+            <a href="#features" onClick={(e) => handleScroll(e, 'features')}>
+              <Button variant="ghost">Features</Button>
+            </a>
+            <a href="#deployed-apps" onClick={(e) => handleScroll(e, 'deployed-apps')}>
+              <Button variant="ghost">Apps</Button>
+            </a>
+            <a href="#pricing" onClick={(e) => handleScroll(e, 'pricing')}>
+              <Button variant="ghost">Pricing</Button>
+            </a>
+            <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
+              <Button variant="ghost">About</Button>
+            </a>
+           
+            <a href="/login">
               <Button>Sign In</Button>
-            </Link>
+            </a>
           </div>
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden p-2" 
+            onClick={toggleMenu} 
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6 text-gray-800" />
+            ) : (
+              <Menu className="h-6 w-6 text-gray-800" />
+            )}
+          </button>
         </nav>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white shadow-md">
+            <div className="flex flex-col items-center py-4">
+              <a href="#features" onClick={(e) => handleScroll(e, 'features')}>
+                <Button variant="ghost">Features</Button>
+              </a>
+              <a href="#pricing" onClick={(e) => handleScroll(e, 'pricing')}>
+                <Button variant="ghost">Pricing</Button>
+              </a>
+              <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
+                <Button variant="ghost">About</Button>
+              </a>
+              <a href="#deployed-apps" onClick={(e) => handleScroll(e, 'deployed-apps')}>
+                <Button variant="ghost">Deployed Apps</Button>
+              </a>
+              <a href="/login">
+                <Button>Sign In</Button>
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="container mx-auto px-4">
         {/* Hero Section */}
-        <section className="min-h-[80vh] flex flex-col justify-center items-center text-center space-y-6">
+        <section id="hero" className="min-h-[80vh] flex flex-col justify-center items-center text-center space-y-6">
           <h2 className="text-4xl font-extrabold text-gray-800 md:text-6xl">
             Systems Nexus Architecture and Platform System Exchange
           </h2>
@@ -42,7 +114,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20">
+        <section id="features" className="py-20">
           <h3 className="text-center text-3xl font-bold mb-10 text-gray-800">Features You'll Love</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {features.map((feature, index) => (
@@ -58,6 +130,67 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+        </section>
+
+       {/* Deployed Apps Section */}
+        <section id="deployed-apps" className="py-20 bg-gray-100">
+          <h3 className="text-center text-3xl font-bold mb-10 text-gray-800">Our Deployed Applications</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
+            {apps.map((app: any, index: any) => (
+              <div
+                key={index}
+                className="bg-white shadow-md p-6 rounded-lg text-center hover:shadow-lg"
+              >
+                {/* Avatar Section */}
+                <div className="flex justify-center mb-4">
+                  <div
+                    className="w-16 h-16 flex items-center justify-center text-white text-xl font-semibold rounded-full"
+                    style={{ backgroundColor: generateRandomColor() }} // Avatar also has random background
+                  >
+                    {/* Display first 2 letters of the app's name */}
+                    {app.name.slice(0, 2).toUpperCase()}
+                  </div>
+                </div>
+
+                <h4 className="text-xl font-semibold text-gray-800 mb-4">{app.name}</h4>
+                <p className="text-gray-600 mb-6">{app.description}</p>
+                <a href={app.url} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline">Visit App</Button>
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section id="pricing" className="py-20">
+          <h3 className="text-center text-3xl font-bold mb-10 text-gray-800">Affordable Pricing</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Pricing Cards */}
+            <div className="bg-white shadow-md p-6 rounded-lg text-center">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">Basic Plan</h4>
+              <p className="text-gray-600 mb-6">$19/month</p>
+              <Button variant="outline">Choose Plan</Button>
+            </div>
+            <div className="bg-white shadow-md p-6 rounded-lg text-center">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">Pro Plan</h4>
+              <p className="text-gray-600 mb-6">$49/month</p>
+              <Button variant="outline">Choose Plan</Button>
+            </div>
+            <div className="bg-white shadow-md p-6 rounded-lg text-center">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">Enterprise Plan</h4>
+              <p className="text-gray-600 mb-6">$99/month</p>
+              <Button variant="outline">Choose Plan</Button>
+            </div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-20">
+          <h3 className="text-center text-3xl font-bold mb-10 text-gray-800">About Us</h3>
+          <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto">
+            We provide the best platform for building modern, scalable, and secure applications with a focus on user experience.
+          </p>
         </section>
 
         {/* Call to Action */}
@@ -79,6 +212,8 @@ export default function LandingPage() {
     </div>
   );
 }
+
+
 
 const features = [
   {

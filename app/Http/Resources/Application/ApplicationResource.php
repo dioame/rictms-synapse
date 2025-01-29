@@ -15,17 +15,12 @@ class ApplicationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'tech_stack' => $this->tech_stack,
             'version' => $this->version,
-            'application_type' => $this->application_type,
-            'frontend_language' => $this->frontend_language,
-            'frontend_framework' => $this->frontend_framework,
-            'backend_language' => $this->backend_language,
-            'backend_framework' => $this->backend_framework,
-            'sqa_status' => $this->sqa_status,
             'repository' => $this->repository,
             'is_pia' => $this->is_pia,
             'is_km' => $this->is_km,
@@ -36,8 +31,24 @@ class ApplicationResource extends JsonResource
             'region' => $this->region,
             'url' => $this->url,
             'deployment_date' => $this->deployment_date,
-            'request_status' => $this->request_status,
             'status' => $this->status,
-         ];
+            'request_status' => $this->request_status,
+            'accessibility' => $this->accessibility,
+            'development_strategy' => $this->development_strategy,
+            'platform' => $this->platform,
+            'computing_scheme' => $this->computing_scheme,
+            'internal_users' => $this->internal_users,
+            'no_of_internal_users' => $this->no_of_internal_users,
+            'external_users' => $this->external_users,
+            'no_of_external_users' => $this->no_of_external_users,
+            'system_owner' => $this->system_owner,
+            'location_of_deployment' => $this->location_of_deployment,
+            'hostname_of_database' => $this->hostname_of_database,
+            'database_ip_address' => $this->database_ip_address,
+            'description_general_contents' => $this->description_general_contents,
+            'information_systems_served' => $this->information_systems_served,
+            'data_archiving' => $this->data_archiving,
+            'sqa_tested' => $this->sqa_tested,
+        ];
     }
 }
