@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use App\Models\LibDeploymentAttachment;
 use App\Http\Resources\Application\ApplicationResource;
 use App\Http\Requests\Application\ApplicationRequest;
 use App\Http\Services\Application\ApplicationService;
@@ -31,7 +32,8 @@ class ApplicationController extends Controller
             'Application/Index',
             [
                 'results' => ApplicationResource::collection($results),
-                'filters' => ['search' => $search]
+                'filters' => ['search' => $search],
+                'lib_deployment_req' => LibDeploymentAttachment::all()
             ]
         );
     }

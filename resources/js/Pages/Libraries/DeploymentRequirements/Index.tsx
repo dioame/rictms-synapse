@@ -5,7 +5,6 @@ import { CustomDataTableWrapper } from "@/Components/DataTable/CustomDataTableWr
 import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
 import { CreateSheet} from "./Create";
 import { EditSheet } from "./Edit";
-import { AttachmentSheet } from "./attachment";
 import { RowActions } from "@/Components/DataTable/RowActions";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -19,79 +18,32 @@ import {
 } from "@/Components/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
-import { getInitials } from "@/hooks/helpers";
 
 const config = {
-    title: 'Application',
-    route: 'application'
+    title: 'Deployment Requirements Library',
+    route: 'lib-deployment-req'
 }
 
 export default function Index({ auth }: any) {
-  const { results, message, roles, filters, lib_deployment_req } = usePage<any>().props;
+  const { results, message, roles, filters } = usePage<any>().props;
   const { delete: destroy } = useForm();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
-  
+
+  console.log(results)
 
 
   const columns = [
     {
       key: "name",
       label: "Name",
-      render: (value: any) => (
-        <div className="flex gap-4 items-center">
-          <div className="flex overflow-hidden justify-center items-center font-semibold rounded-full size-10 bg-muted text-primary/80">
-            { getInitials(value.name)}
-          </div>
-          <div>
-            <div className="font-medium">
-              <Link className="hover:underline" href="#">
-                {value.name}
-              </Link>
-            </div>
-            <div className="hidden text-sm text-muted-foreground md:inline">
-              {value.version}
-            </div>
-          </div>
-        </div>
-      ),
+      className: "hidden sm:table-cell text-center",
     },
     {
       key: "description",
       label: "Description",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "platform",
-      label: "Platform",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "tech_stack",
-      label: "Tech Stack",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "is_pia",
-      label: "Is PIA?",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "division",
-      label: "Division",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "section",
-      label: "Section",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "request_status",
-      label: "Request Status",
       className: "hidden sm:table-cell text-center",
     },
     {
@@ -107,24 +59,8 @@ export default function Index({ auth }: any) {
               href: route(`${config.route}.show`,{id:value.id})
             },
             {
-              label: "Print Request",
-              href: route(`${config.route}-request`,{id:value.id})
-            },
-            {
-              label: "",
-              separator: true
-            },
-            {
               label: "Edit",
               onClick: () => handleEdit(value),
-            },
-            {
-              label: "Attachment",
-              onClick: () => handleEditAttachment(value),
-            },
-            {
-              label: "",
-              separator: true
             },
             {
               label: "Delete",
@@ -157,11 +93,6 @@ export default function Index({ auth }: any) {
     setIsSheetOpen(true);
     setEditData(item);
   };
-
-  const handleEditAttachment = (item: any) => {
-    setIsAttachmentSheetOpen(true);
-    setEditData(item);
-  }
 
   const handleSelectionChange = (ids: number[]) => {
     setSelectedIds(ids);
@@ -215,12 +146,6 @@ export default function Index({ auth }: any) {
           <EditSheet config={config} editData={editData} setIsSheetOpen={setIsSheetOpen}/>
         </Sheet>
         )}
-
-        { editData && (
-        <Sheet open={isAttachmentSheetOpen} onOpenChange={setIsAttachmentSheetOpen}>
-          <AttachmentSheet config={config} editData={editData} setIsSheetOpen={setIsAttachmentSheetOpen} LibDeploymentReq={lib_deployment_req}/>
-        </Sheet>
-         )}
  
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

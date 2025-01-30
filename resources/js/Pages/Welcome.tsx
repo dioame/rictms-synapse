@@ -31,6 +31,19 @@ export default function LandingPage({apps}:any) {
     return color;
   };
 
+
+  const deploymentRequirements = [
+    'Installation Manual',
+    'Concept Paper',
+    'Test Report',
+    'BPRA',
+    'Data Elements',
+    'ERD',
+    'Use Case',
+    'User Manual',
+    'Wireframe'
+  ];
+
   return (
     <div className="bg-gray-50 text-gray-900">
       {/* Hero Section */}
@@ -44,8 +57,8 @@ export default function LandingPage({apps}:any) {
             <a href="#deployed-apps" onClick={(e) => handleScroll(e, 'deployed-apps')}>
               <Button variant="ghost">Apps</Button>
             </a>
-            <a href="#pricing" onClick={(e) => handleScroll(e, 'pricing')}>
-              <Button variant="ghost">Pricing</Button>
+            <a href="#requirements" onClick={(e) => handleScroll(e, 'requirements')}>
+              <Button variant="ghost">Requirements</Button>
             </a>
             <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
               <Button variant="ghost">About</Button>
@@ -76,8 +89,8 @@ export default function LandingPage({apps}:any) {
               <a href="#features" onClick={(e) => handleScroll(e, 'features')}>
                 <Button variant="ghost">Features</Button>
               </a>
-              <a href="#pricing" onClick={(e) => handleScroll(e, 'pricing')}>
-                <Button variant="ghost">Pricing</Button>
+              <a href="#pricing" onClick={(e) => handleScroll(e, 'requirements')}>
+                <Button variant="ghost">Requirements</Button>
               </a>
               <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
                 <Button variant="ghost">About</Button>
@@ -162,28 +175,29 @@ export default function LandingPage({apps}:any) {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="py-20">
-          <h3 className="text-center text-3xl font-bold mb-10 text-gray-800">Affordable Pricing</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {/* Pricing Cards */}
-            <div className="bg-white shadow-md p-6 rounded-lg text-center">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">Basic Plan</h4>
-              <p className="text-gray-600 mb-6">$19/month</p>
-              <Button variant="outline">Choose Plan</Button>
+        {/* Requirements Section */}
+        <section id="requirements" className="py-16 px-8 bg-gradient-to-b from-gray-50 to-gray-100">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-8">Deployment Requirements</h2>
+        <p className="text-lg text-gray-600 mb-12">
+          Ensure all prerequisites are met for a smooth deployment experience.
+        </p>
+      </div>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {deploymentRequirements.map((item, index) => (
+          <div 
+            key={index} 
+            className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 flex items-center space-x-5 transition-transform transform hover:-translate-y-2 hover:shadow-2xl"
+          >
+            <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-700 text-white flex items-center justify-center rounded-full text-xl font-bold shadow-md">
+              {index + 1}
             </div>
-            <div className="bg-white shadow-md p-6 rounded-lg text-center">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">Pro Plan</h4>
-              <p className="text-gray-600 mb-6">$49/month</p>
-              <Button variant="outline">Choose Plan</Button>
-            </div>
-            <div className="bg-white shadow-md p-6 rounded-lg text-center">
-              <h4 className="text-xl font-semibold text-gray-800 mb-4">Enterprise Plan</h4>
-              <p className="text-gray-600 mb-6">$99/month</p>
-              <Button variant="outline">Choose Plan</Button>
-            </div>
+            <span className="text-lg font-semibold text-gray-900">{item}</span>
           </div>
-        </section>
+        ))}
+      </div>
+    </section>
 
         {/* About Section */}
         <section id="about" className="py-20">

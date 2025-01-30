@@ -3,12 +3,12 @@ import { Head } from "@inertiajs/react";
 
 export default function Index({ auth, results }: any) {
   return (
-    <AuthenticatedLayout auth_user={auth.user} header="ICT Inventory Details">
-      <Head title="ICT Inventory Details" />
+    <AuthenticatedLayout auth_user={auth.user} header="Deployment Requirement Details">
+      <Head title="Deployment Requirement Details" />
 
       <div className="p-6">
         <div className="max-w-4xl mx-auto border border-gray-300 rounded-lg shadow-lg p-6">
-          <h1 className="text-2xl font-semibold text-center mb-6">ICT Inventory Details</h1>
+          <h1 className="text-2xl font-semibold text-center mb-6">Deployment Requirement Details</h1>
 
           <div className="space-y-4">
             {Object.entries(results).map(([key, item]: [string, any]) => (

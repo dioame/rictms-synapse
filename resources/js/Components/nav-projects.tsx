@@ -79,7 +79,7 @@ export function NavProjects({
               >
                 <DropdownMenuItem>
                   <Forward className="text-muted-foreground" />
-                  <span>DXCloud Realtime API</span>
+                  <span>DXCloud PSGC API</span>
                 </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

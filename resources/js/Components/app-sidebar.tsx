@@ -103,6 +103,18 @@ const data = {
       ],
     },
     {
+      title: "Libraries",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "Deployment Requirements",
+          url: route('lib-deployment-req.index'),
+        },
+      ],
+    },
+    {
       title: "Settings",
       url: "#",
       icon: Settings2,

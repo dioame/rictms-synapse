@@ -710,7 +710,7 @@ export function EditSheet(props : any) {
   return (
     <SheetContent className="w-[400px] sm:w-[900px] sm:max-w-lg overflow-x-auto">
       <SheetHeader>
-        <SheetTitle>Create {props.config.title}</SheetTitle>
+        <SheetTitle>Edit {props.config.title}</SheetTitle>
         <SheetDescription>
           <div>
             <Form 

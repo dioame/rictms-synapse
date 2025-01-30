@@ -10,13 +10,13 @@ const config = {
   route: "dxcloud"
 };
 
-export default function Index({ auth, dxcloud_url, regions }) {
+export default function Index({ auth, dxcloud_url, regions } :any) {
   // Initialize useForm
   const { data, setData, post, processing, errors } = useForm({
     region_code: "",  // Default form data for region_code
   });
 
-  const handleRegionChange = (value) => {
+  const handleRegionChange = (value:any) => {
     setData("region_code", value);  // Update the region_code value when a region is selected
   };
 
@@ -55,7 +55,7 @@ export default function Index({ auth, dxcloud_url, regions }) {
             <SelectValue placeholder="Select a Region" />
           </SelectTrigger>
           <SelectContent>
-            {regions.map((region) => (
+            {regions.map((region:any) => (
               <SelectItem key={region.reg_id} value={region.code.toString()}>
                 {region.name}
               </SelectItem>

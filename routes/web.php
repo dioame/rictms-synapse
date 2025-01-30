@@ -8,6 +8,7 @@ use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
 use App\Http\Controllers\Dxcloud\DxcloudController;
+use App\Http\Controllers\Libraries\DeploymentRequirementsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,8 +52,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');
         Route::resource('ict-inventory',IctInventoryController::class)->names('ict-inventory');
 
+        // DXCLOUD
         Route::get('/dxcloud', [DxcloudController::class, 'index'])->name('dxcloud');
         Route::get('/dxcloud/download-psgc/{region_code}', [DxcloudController::class, 'download'])->name('dxcloud-download-psgc');
+
+        // LIBRARIES
+        Route::delete('/libraries/deployment-requirements/bulk-destroy', [DeploymentRequirementsController::class, 'bulkDestroy'])->name('lib-deployment-req.bulk-destroy');
+        Route::resource('libraries/deployment-requirements',DeploymentRequirementsController::class)->names('lib-deployment-req');
         
 });
 

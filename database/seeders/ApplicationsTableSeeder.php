@@ -40,7 +40,6 @@ class ApplicationsTableSeeder extends Seeder
                     'Phoenix Stack (Elixir, Phoenix, PostgreSQL)',
                 ]),
                 'version' => $faker->randomElement(['1.0.0', '1.1.0', '2.0.0', '2.1.0', '3.0.0']),
-                'application_type' => $faker->randomElement(['web', 'mobile', 'desktop']),
                 'repository' => $faker->url,
                 'is_pia' => $faker->randomElement(['Yes', 'No']),
                 'is_km' => $faker->randomElement(['Yes', 'No']),

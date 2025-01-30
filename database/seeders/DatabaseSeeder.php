@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ApplicationsTableSeeder::class,
-            IctInventorySeeder::class
+            IctInventorySeeder::class,
+            LibDeploymentAttachmentSeeder::class
         ]);
     }
 }

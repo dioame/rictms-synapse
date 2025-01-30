@@ -49,7 +49,7 @@ export function RowActions({ item, actions }: RowActionsProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         {actions.map((action, index) => (
-          <React.Fragment key={action.label}>
+          <React.Fragment key={index}>
             <DropdownMenuItem>
               {action.href ? (
                 <Link href={action.href} className="block w-full">
