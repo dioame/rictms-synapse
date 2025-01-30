@@ -126,6 +126,9 @@ export default function Index({ auth }: any) {
   return (
     <AuthenticatedLayout auth_user={auth.user} header={config.title}>
       <Head title={config.title} />
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-blue-500 pb-2 pl-5 mb-5">
+        { config.title }
+      </h1>
       <CustomDataTableWrapper
         data={results}
         columns={columns}

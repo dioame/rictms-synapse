@@ -23,7 +23,7 @@ export function CreateSheet(props : any) {
       render: (labelName:any, formModel:any) => (
         <div key={labelName}>
           <Label className="text-primary" htmlFor={labelName}>
-            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */} *
           </Label>
           <Input
             className="mt-1"
@@ -41,7 +41,7 @@ export function CreateSheet(props : any) {
           render: (labelName:any, formModel:any) => (
             <div key={labelName}>
               <Label className="text-primary" htmlFor={labelName}>
-                {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */} * 
+                {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
               </Label>
               <Textarea
                   className="mt-1"

@@ -1,6 +1,7 @@
 import {
   Folder,
   Forward,
+  
   MoreHorizontal,
   Trash2,
   type LucideIcon,
@@ -22,6 +23,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/Components/ui/sidebar"
+import { Head, useForm, router, Link } from "@inertiajs/react";
 
 export function NavProjects({
   projects,
@@ -78,8 +80,11 @@ export function NavProjects({
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
+                  
                   <Forward className="text-muted-foreground" />
-                  <span>DXCloud PSGC API</span>
+                  <Link className="hover:underline" href={route('dxcloud')}>
+                    <span>DXCloud PSGC API</span>
+                  </Link>
                 </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

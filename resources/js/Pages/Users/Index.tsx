@@ -148,6 +148,9 @@ export default function Users({ auth }: PageProps) {
   return (
     <AuthenticatedLayout auth_user={auth.user} header="Users">
       <Head title="Users" />
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-blue-500 pb-2 pl-5 mb-5">
+        User Management
+      </h1>
       <DataTableWrapper<User>
         data={users}
         columns={columns}

@@ -85,7 +85,11 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "SQA",
+          title: "Test Cases",
+          url: route('application.sqa.test-case.index'),
+        },
+        {
+          title: "UAT",
           url: "#",
         },
       ],
@@ -99,6 +103,10 @@ const data = {
         {
           title: "Inventory",
           url: route('ict-inventory.index'),
+        },
+        {
+          title: "ICT Inventory",
+          url: '#',
         },
       ],
     },

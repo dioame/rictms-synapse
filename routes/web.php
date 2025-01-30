@@ -9,6 +9,7 @@ use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
 use App\Http\Controllers\Dxcloud\DxcloudController;
 use App\Http\Controllers\Libraries\DeploymentRequirementsController;
+use App\Http\Controllers\SQA\TestCaseController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,6 +39,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
         //END SETTINGS
 
+        //SQA
+        Route::get('/application/{id}/sqa/test-case/view', array( TestCaseController::class, 'testCaseView' ))->name('application.sqa.test-case.view');
+        Route::resource('application/sqa/test-case',TestCaseController::class)->names('application.sqa.test-case');
+        
+       
+        
         // APPLICATIONS
         Route::get('/application/pending', [ApplicationController::class, 'pending'])->name('application.pending');
         Route::get('/application/approved', [ApplicationController::class, 'approved'])->name('application.approved');
@@ -61,6 +68,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         // LIBRARIES
         Route::delete('/libraries/deployment-requirements/bulk-destroy', [DeploymentRequirementsController::class, 'bulkDestroy'])->name('lib-deployment-req.bulk-destroy');
         Route::resource('libraries/deployment-requirements',DeploymentRequirementsController::class)->names('lib-deployment-req');
+
+       
         
 });
 

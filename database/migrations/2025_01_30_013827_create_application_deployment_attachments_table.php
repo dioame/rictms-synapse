@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('application_deployment_attachments', function (Blueprint $table) {
             $table->id()->primary();
-            $table->uuid('application_id');
-            $table->unsignedBigInteger('lib_deployment_attachments_id');
-            $table->string('path');
+            $table->uuid('application_id')->nullable();
+            $table->unsignedBigInteger('lib_deployment_attachments_id')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }

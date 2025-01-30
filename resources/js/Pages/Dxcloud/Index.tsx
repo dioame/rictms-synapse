@@ -46,6 +46,9 @@ export default function Index({ auth, dxcloud_url, regions } :any) {
   return (
     <AuthenticatedLayout auth_user={auth.user} header={config.title}>
       <Head title={config.title} />
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-blue-500 pb-2 pl-5 mb-5">
+        { config.title }
+      </h1>
       <p>DXCLOUD URL: {dxcloud_url}</p>
 
       <div className="mt-4 space-y-4 max-w-sm mx-auto border border-gray-300 rounded-lg p-10">

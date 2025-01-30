@@ -33,6 +33,7 @@ class DxcloudController extends Controller
             'X-CSRF-TOKEN' => csrf_token(),
         ])->post($dxcloud_url . '/api/auth/login', $data);
 
+    
         if (!$response->successful()) {
             return Inertia::render('Dxcloud/Index', [
                 'message' => 'Failed to authenticate with DXCLOUD',
