@@ -158,24 +158,30 @@ export function CreateSheet(props: any) {
         </div>
       ),
     },
-    {
-      name: "test_status",
-      render: (labelName: any, formModel: any) => (
-        <div key={labelName}>
-          <Label className="text-primary" htmlFor={labelName}>
-            {labelName.replace(/_/g, " ").toUpperCase()}
-          </Label>
-          <Input
-            className="mt-1"
-            id={labelName}
-            value={formModel.data[labelName]}
-            onChange={(e) => formModel.setData(labelName, e.target.value)}
-            placeholder={labelName}
-          />
-          <InputError message={formModel.errors[labelName]} className="mt-2" />
-        </div>
-      ),
-    },
+      {
+          name: "test_status",
+          render: (labelName:any, formModel:any) => (
+            <div key={labelName}>
+              <Label className="text-primary" htmlFor={labelName}>
+                {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+              </Label>
+              <Select
+               value={formModel.data[labelName]}
+                onValueChange={(value) => formModel.setData(labelName, value)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="passed">Passed</SelectItem>
+                  <SelectItem value="failed">Failed</SelectItem>
+                  <SelectItem value="conditional_passed">Conditional Passed</SelectItem>
+                </SelectContent>
+              </Select>
+              <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+            </div>
+          ),
+        },
         {
           name: "remarks",
           render: (labelName:any, formModel:any) => (
@@ -200,7 +206,7 @@ export function CreateSheet(props: any) {
     acc[column.name] = "";
     return acc;
   }, {});
-  console.log(props)
+
   columnNames['application_id'] = props.appId;
 
   const form = useForm(columnNames);

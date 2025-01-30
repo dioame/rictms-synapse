@@ -21,7 +21,8 @@ class TestCaseResource extends JsonResource
             'test_procedure' => $this->test_procedure ? json_decode($this->test_procedure,true) : null,
             'expected_result' => $this->test_procedure ? json_decode($this->expected_result,true) : null,
             'test_status' => $this->test_status,
-            'remarks' => $this->remarks
+            'remarks' => $this->remarks,
+            'application' => $this->application
         ];
     }
 }

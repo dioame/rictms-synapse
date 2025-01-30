@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lib_deployment_attachments_id')->nullable();
             $table->string('path')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -47,10 +47,6 @@ export default function Index({ auth }: any) {
   const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
 
-  console.log(results)
-  
-
-
   const columns = [
     {
       key: "name",
@@ -126,8 +122,8 @@ export default function Index({ auth }: any) {
                 <a href={`storage/deployment-files/${val.path}`} target="_blank" key={index}>
                   <div className="flex justify-between items-center p-2 hover:bg-gray-200 rounded-md transition-all duration-200 ease-in-out">
                     <div className="flex flex-col">
-                      <h6 className="text-xs font-semibold text-gray-800">{val.lib_deployment_attachment.name}</h6>
-                      <p className="text-xs text-gray-500 truncate">{val.path}</p>
+                      <h6 className="text-xs font-semibold text-gray-800">{val.lib_deployment_attachment?.name}</h6>
+                      <p className="text-xs text-gray-500 truncate">{val?.path}</p>
                     </div>
                   </div>
                 </a>

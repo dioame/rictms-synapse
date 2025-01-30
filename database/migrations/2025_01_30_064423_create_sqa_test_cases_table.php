@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('test_status')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

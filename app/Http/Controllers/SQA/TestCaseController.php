@@ -58,12 +58,14 @@ class TestCaseController extends Controller
                 })
                 ->orderBy('created_at','desc')
                 ->paginate(10);
+        $application = Application::find($id);
 
         return Inertia::render(
             'SQA/TestCase/ViewTestCase',[
                 'results' => TestCaseResource::collection($results),
                 'filters' => ['search' => $search],
-                'appId' => $id
+                'appId' => $application->id,
+                'appName' => $application->name
             ]
         );
     }
@@ -79,6 +81,13 @@ class TestCaseController extends Controller
     {
         $service->update($id, $request->all());
         return redirect()->back()->with('success', 'Test Case Updated.');
+    }
+
+    public function destroy($id)
+    {
+
+        SqaTestCase::destroy($id);
+        return redirect()->back()->with('success', 'Application deleted.');
     }
 
 }

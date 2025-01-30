@@ -18,7 +18,7 @@ const config = {
 }
 
 export default function Index({ auth }: any) {
-      const { results, message, roles, filters, lib_deployment_req, appId } = usePage<any>().props;
+      const { results, message, roles, filters, lib_deployment_req, appId, appName } = usePage<any>().props;
       const { delete: destroy } = useForm();
       const [selectedIds, setSelectedIds] = useState<number[]>([]);
       const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -67,7 +67,7 @@ export default function Index({ auth }: any) {
                 <ul className="text-left list-inside">
                   {Object.entries(value.expected_result).map(([key, step], index) => (
                     <li key={key} className="">
-                      <strong>Step {index + 1}:</strong> {String(step)}
+                      <strong>Step {index + 1}:</strong> {step ? String(step) : 'N/A'}
                     </li>
                   ))}
                 </ul>
@@ -103,7 +103,7 @@ export default function Index({ auth }: any) {
                   onClick: () => handleDelete(value),
                   variant: "destructive",
                   requiresConfirmation: true,
-                  confirmationMessage: `Are you sure you want to delete ${value.name}?`,
+                  confirmationMessage: `Are you sure you want to delete Module ${value.module}?`,
                 },
               ]}
             />
@@ -117,18 +117,13 @@ export default function Index({ auth }: any) {
     setEditData(item);
     };
 
-    const handleEditAttachment = (item: any) => {
-    setIsAttachmentSheetOpen(true);
-    setEditData(item);
-    }
-
     const handleDelete = (item: any) => {
-        destroy(route(`${config.route}.destroy`, item.id), {
+        destroy(route(`${config.route}.sqa.test-case.destroy`, item.id), {
         preserveScroll: true,
         onSuccess: () => {
             // toast.success(`${config.title} ${item.name} deleted successfully`);
             toast.success(`Success!`, {
-            description: `${config.title} deleted successfully`,
+            description: `${config.title} Test Case deleted successfully`,
             position: "top-center",
             });
         },
@@ -142,9 +137,19 @@ export default function Index({ auth }: any) {
   return (
     <AuthenticatedLayout auth_user={auth.user} header="Application Details">
       <Head title="Application Details" />
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white border-b-4 border-blue-500 pb-2 pl-5 mb-5">
-        { config.title }
-      </h1>
+      <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white border-b-4 border-blue-500 pb-3 px-6 mb-6 shadow-md">
+        {config.title}
+        </h1>
+
+        <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md mb-5">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+            Application Name
+        </h2>
+        <p className="text-lg text-blue-700 dark:text-blue-300 font-bold">
+          {appName}
+        </p>
+        </div>
+
     <CustomDataTableWrapper
         data={results}
         columns={columns}
