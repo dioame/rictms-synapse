@@ -5,19 +5,19 @@ namespace App\Http\Controllers\SQA;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\SqaTestCase;
+use App\Models\SqaUat;
 use App\Models\Application;
 use App\Models\ApplicationDeploymentAttachment;
 use App\Models\LibDeploymentAttachment;
-use App\Http\Resources\SQA\TestCaseResource;
-use App\Http\Requests\SQA\TestCaseRequest;
-use App\Http\Services\SQA\TestCaseService;
+use App\Http\Resources\SQA\UatResource;
+use App\Http\Requests\SQA\UatRequest;
+use App\Http\Services\SQA\UatService;
 use App\Http\Resources\Application\ApplicationResource;
 use App\Http\Requests\Application\ApplicationRequest;
 use App\Http\Services\Application\ApplicationService;
 use Illuminate\Support\Facades\Redirect;
 
-class TestCaseController extends Controller
+class UatController extends Controller
 {
     //
     public function index(Request $request)
@@ -34,7 +34,7 @@ class TestCaseController extends Controller
             ->paginate(10);
 
         return Inertia::render(
-            'SQA/TestCase/Index',
+            'SQA/Uat/Index',
             [
                 'results' => ApplicationResource::collection($results),
                 'filters' => ['search' => $search],
@@ -44,12 +44,10 @@ class TestCaseController extends Controller
     }
 
 
-
-
     public function sqaView($id, Request $request){
         $search = $request->input('search');
 
-        $results = SqaTestCase::query()
+        $results = SqaUat::query()
                 ->where('application_id', $id)
                 ->when($search, function ($query, $search) {
                     $query->where(function ($query) use ($search) {
@@ -61,8 +59,8 @@ class TestCaseController extends Controller
         $application = Application::find($id);
 
         return Inertia::render(
-            'SQA/TestCase/ViewSQA',[
-                'results' => TestCaseResource::collection($results),
+            'SQA/Uat/ViewSQA',[
+                'results' => UatResource::collection($results),
                 'filters' => ['search' => $search],
                 'appId' => $application->id,
                 'appName' => $application->name
@@ -71,22 +69,22 @@ class TestCaseController extends Controller
     }
 
 
-    public function store(TestCaseRequest $request, TestCaseService $service)
+    public function store(UatRequest $request, UatService $service)
     {
         $service->store($request->all());
-        return redirect()->back()->with('success', 'Test Case Created.');
+        return redirect()->back()->with('success', 'UAT Created.');
     }
 
-    public function update($id, TestCaseRequest $request, TestCaseService $service)
+    public function update($id, UatRequest $request, UatService $service)
     {
         $service->update($id, $request->all());
-        return redirect()->back()->with('success', 'Test Case Updated.');
+        return redirect()->back()->with('success', 'UAT Updated.');
     }
 
     public function destroy($id)
     {
 
-        SqaTestCase::destroy($id);
+        SqaUat::destroy($id);
         return redirect()->back()->with('success', 'Application deleted.');
     }
 

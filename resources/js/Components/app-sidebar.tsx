@@ -12,7 +12,8 @@ import {
   SquareTerminal,
   Dock,
   ShieldCheck,
-  Construction
+  Construction,
+  GitGraphIcon
 } from "lucide-react"
 
 import { NavMain } from "@/Components/nav-main"
@@ -90,7 +91,7 @@ const data = {
         },
         {
           title: "UAT",
-          url: "#",
+          url: route('application.sqa.uat.index'),
         },
       ],
     },
@@ -105,8 +106,20 @@ const data = {
           url: route('ict-inventory.index'),
         },
         {
-          title: "ICT Inventory",
+          title: "CCTV",
           url: '#',
+        },
+      ],
+    },
+    {
+      title: "Reports",
+      url: "#",
+      icon: GitGraphIcon,
+      isActive: true,
+      items: [
+        {
+          title: "SQA Test Plan",
+          url: route('reports.sqa-test-plan'),
         },
       ],
     },

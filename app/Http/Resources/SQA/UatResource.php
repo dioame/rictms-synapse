@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class TestCaseResource extends JsonResource
+class UatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +18,11 @@ class TestCaseResource extends JsonResource
         return [
             'id' => $this->id,
             'module' => $this->module,
-            'test_procedure' => $this->test_procedure ? json_decode($this->test_procedure,true) : null,
-            'expected_result' => $this->expected_result ? json_decode($this->expected_result,true) : null,
-            'test_status' => $this->test_status,
+            'procedure' => $this->procedure ? json_decode($this->procedure,true) : null,
+            'requirements' => $this->requirements ? json_decode($this->requirements,true) : null,
+            'test_result' => $this->test_result,
             'remarks' => $this->remarks,
-            'application' => $this->application
+            'retesting_result' => $this->retesting_result
         ];
     }
 }
