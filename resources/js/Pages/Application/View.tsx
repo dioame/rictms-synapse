@@ -1,9 +1,59 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/Components/ui/card";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose, DialogFooter, DialogHeader } from "@/Components/ui/dialog";
+import { Button } from "@/Components/ui/button";
 import { Badge } from "@/Components/ui/badge";
+import { XCircleIcon } from "lucide-react";
+import { useState } from "react";
+import { RowActions } from "@/Components/DataTable/RowActions";
+import Swal from 'sweetalert2';
+import {  useForm  } from "@inertiajs/react";
+import { toast } from "sonner";
+
+const config = {
+  title: 'Application',
+  route: 'application'
+}
 
 export default function Index({ auth, results }: any) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+   const { delete: destroy } = useForm();
+
+  function handleDelete(val:any){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `Delete ${val.lib_deployment_attachment.name}. This action cannot be undone!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        customClass: {
+          popup: 'small-swal-popup',
+          confirmButton: 'small-swal-button',
+          cancelButton: 'small-swal-button'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          confirmDelete(val.id);
+        }
+      });
+  }
+
+  function confirmDelete(id:any){
+      destroy(route(`${config.route}-attachment.delete`, id), {
+        preserveScroll: true,
+        onSuccess: () => {
+          // toast.success(`${config.title} ${item.name} deleted successfully`);
+          toast.success(`Success!`, {
+            description: `${config.title} Attachment deleted successfully`,
+            position: "top-center",
+          });
+        },
+      });
+  }
   return (
     <AuthenticatedLayout auth_user={auth.user} header="Application Details">
       <Head title="Application Details" />
@@ -149,6 +199,47 @@ export default function Index({ auth, results }: any) {
               <div>
                 <span className="font-bold">Information Systems Served:</span> {results.information_systems_served}
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+         {/* Additional Information */}
+         <Card>
+          <CardHeader>
+            <CardTitle>Attachments</CardTitle>
+            <CardDescription>Deployment Attachments</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+
+           
+            {results.attachments && results.attachments.length > 0 ? (
+                results.attachments.map((val: any, index: any) => (
+                  <div key={index}>
+                    <span className="font-bold btn-primary btn text-decoration-underline">
+                          <button
+                            onClick={() => handleDelete(val)}
+                            className="text-red-500 mr-1 text-xs"
+                            aria-label="Delete"
+                          >
+                            <XCircleIcon className="w-4 h-4" />
+                          </button>
+                      {val.lib_deployment_attachment.name} :
+                    </span>
+                    <a
+                      href={`/storage/deployment-files/${val.path}`}
+                      className="text-blue-500 underline ml-2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {val.path}
+                    </a>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500 text-xs">No attachments available</p>
+              )} 
+
             </div>
           </CardContent>
         </Card>

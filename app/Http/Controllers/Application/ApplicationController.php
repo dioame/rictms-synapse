@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\LibDeploymentAttachment;
+use App\Models\ApplicationDeploymentAttachment;
 use App\Http\Resources\Application\ApplicationResource;
 use App\Http\Requests\Application\ApplicationRequest;
 use App\Http\Services\Application\ApplicationService;
@@ -19,7 +20,7 @@ class ApplicationController extends Controller
     {
         $search = $request->input('search');
 
-        $results = Application::query()
+        $results = Application::with(['attachments.libDeploymentAttachment'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
@@ -43,7 +44,7 @@ class ApplicationController extends Controller
     {
         $search = $request->input('search');
 
-        $results = Application::query()
+        $results =  Application::with(['attachments.libDeploymentAttachment'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
@@ -66,7 +67,7 @@ class ApplicationController extends Controller
     {
         $search = $request->input('search');
 
-        $results = Application::query()
+        $results =  Application::with(['attachments.libDeploymentAttachment'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
@@ -114,7 +115,7 @@ class ApplicationController extends Controller
     public function show($id)
     {
 
-        $results = Application::find($id);
+        $results = Application::with(['attachments.libDeploymentAttachment'])->where('id', $id)->first();
 
         return Inertia::render(
             'Application/View',
@@ -174,5 +175,39 @@ class ApplicationController extends Controller
                 
             ]
         );
+    }
+
+
+    
+    public function updateAttachment($id, Request $request)
+    {
+        $storagePath = storage_path('app/public/deployment-files');
+
+        // Ensure the directory exists
+        if (!file_exists($storagePath)) {
+            mkdir($storagePath, 0775, true);
+        }
+
+        foreach ($request->all() as $key => $value) {
+            if (isset($value['file'])) {
+           
+                $file = $value['file'];
+
+
+                $fileName = $value['id'].'-'.uniqid().'.'.$file->getClientOriginalExtension();
+                $file->storeAs('public/deployment-files', $fileName);
+                
+                ApplicationDeploymentAttachment::create([
+                    'application_id' => $id,
+                    'lib_deployment_attachments_id' => $value['id'],
+                    'path' => $fileName
+                ]);
+            }
+        }
+    }
+
+    public function attachmentDelete($id){
+        ApplicationDeploymentAttachment::destroy($id);
+        return redirect()->back()->with('success', 'Application deleted.');
     }
 }

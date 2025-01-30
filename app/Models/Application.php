@@ -62,4 +62,9 @@ class Application extends Model
     protected $casts = [
         'deployment_date' => 'datetime',
     ];
+
+    public function attachments()
+    {
+        return $this->hasMany(ApplicationDeploymentAttachment::class, 'application_id', 'id');
+    }
 }

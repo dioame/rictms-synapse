@@ -7,7 +7,19 @@ import { CreateSheet} from "./Create";
 import { EditSheet } from "./Edit";
 import { AttachmentSheet } from "./attachment";
 import { RowActions } from "@/Components/DataTable/RowActions";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon } from "lucide-react";
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/Components/ui/avatar"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/Components/ui/hover-card"
+
 import { toast } from "sonner";
 import {
   Dialog,
@@ -34,6 +46,8 @@ export default function Index({ auth }: any) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
+
+  console.log(results)
   
 
 
@@ -93,6 +107,38 @@ export default function Index({ auth }: any) {
       key: "request_status",
       label: "Request Status",
       className: "hidden sm:table-cell text-center",
+    },
+    {
+      key: "attachment",
+      label: "Attachment",
+      className: "text-center",
+      render: (value: any) => (
+        <HoverCard openDelay={50} closeDelay={50}>
+          <HoverCardTrigger asChild>
+            <Button variant="link" disabled={!value.attachments || value.attachments.length === 0}>
+              {value.attachments && <FileArchiveIcon />}
+            </Button>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-auto">
+          <div className="space-y-1">
+            {value.attachments && value.attachments.length > 0 ? (
+              value.attachments.map((val:any, index:any) => (
+                <a href={`storage/deployment-files/${val.path}`} target="_blank" key={index}>
+                  <div className="flex justify-between items-center p-2 hover:bg-gray-200 rounded-md transition-all duration-200 ease-in-out">
+                    <div className="flex flex-col">
+                      <h6 className="text-xs font-semibold text-gray-800">{val.lib_deployment_attachment.name}</h6>
+                      <p className="text-xs text-gray-500 truncate">{val.path}</p>
+                    </div>
+                  </div>
+                </a>
+              ))
+            ) : (
+              <p className="text-gray-500 text-xs">No attachments available</p>
+            )}
+          </div>
+          </HoverCardContent>
+        </HoverCard>
+      ),
     },
     {
       key: "actions",

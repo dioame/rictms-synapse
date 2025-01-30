@@ -42,7 +42,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/application/pending', [ApplicationController::class, 'pending'])->name('application.pending');
         Route::get('/application/approved', [ApplicationController::class, 'approved'])->name('application.approved');
         Route::get('/application/cancelled', [ApplicationController::class, 'cancelled'])->name('application.cancelled');
+        Route::post('/application/{id}/update-attachment', [ApplicationController::class, 'updateAttachment'])->name('application.update-attachment');
         Route::delete('/application/bulk-destroy', [ApplicationController::class, 'bulkDestroy'])->name('application.bulk-destroy');
+        Route::delete('/application/attachment/{id}/delete', [ApplicationController::class, 'attachmentDelete'])->name('application-attachment.delete');
         Route::resource('application',ApplicationController::class)->names('application');
 
         //APPLICATION REQUEST

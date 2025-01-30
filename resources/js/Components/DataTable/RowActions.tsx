@@ -91,7 +91,6 @@ export function RowActions({ item, actions }: RowActionsProps) {
             <Button
               onClick={actions.find((a) => a.requiresConfirmation)?.onClick}
               variant="destructive"
-              
             >
               Confirm
             </Button>

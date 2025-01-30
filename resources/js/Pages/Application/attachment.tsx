@@ -16,8 +16,6 @@ import {
   import { toast } from "sonner";
   
   export function AttachmentSheet(props : any) {
-
-    console.log(props.LibDeploymentReq)
     const columns:any = [];
     // Iterate over the keys in props.LibDeploymentReq
     for (let key in props.LibDeploymentReq) {
@@ -33,7 +31,10 @@ import {
                 className="mt-1"
                 type="file"
                 id={labelName} // Using the dynamic labelName as the id=
-                onChange={(e) => formModel.setData(labelName, {file: e.target.value, id: props.LibDeploymentReq[key]['id']})} // Dynamic setData based on labelName
+                onChange={(e) => {
+                  let files: any = e.target.files?.[0];
+                  formModel.setData(labelName, {file: files, id: props.LibDeploymentReq[key]['id']})
+                }} // Dynamic setData based on labelName
               />
               <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
             </div>
@@ -74,12 +75,9 @@ import {
   }, [form.errors]);
   
     const submit = (e: React.FormEvent) => {
-
-      console.log(form)
-      // return;
         e.preventDefault();
-      //   form.put(route(`${props.config.route}.update`,{id:props.editData.id}));
-      //   setIsSubmit(true)
+        form.post(route(`${props.config.route}.update-attachment`,{id:props.editData.id}));
+        setIsSubmit(true)
     };
   
     return (

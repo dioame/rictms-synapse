@@ -58,6 +58,7 @@ class DeploymentRequirementsController extends Controller
 
     public function update($id, DeploymentRequirementsRequest $request, DeploymentRequirementsService $service)
     {
+
         $service->update($id, $request->all());
         return redirect()->back()->with('success', 'Application Updated.');
     }

@@ -49,6 +49,7 @@ class ApplicationResource extends JsonResource
             'information_systems_served' => $this->information_systems_served,
             'data_archiving' => $this->data_archiving,
             'sqa_tested' => $this->sqa_tested,
+            'attachments' => $this->attachments,
         ];
     }
 }
