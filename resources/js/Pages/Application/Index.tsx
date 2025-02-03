@@ -112,7 +112,8 @@ export default function Index({ auth }: any) {
         <HoverCard openDelay={50} closeDelay={50}>
           <HoverCardTrigger asChild>
             <Button variant="link" disabled={!value.attachments || value.attachments.length === 0}>
-              {value.attachments && <FileArchiveIcon />}
+              {value.attachments && <FileArchiveIcon />} {value.attachments.length ? value.attachments.length : ''}
+
             </Button>
           </HoverCardTrigger>
           <HoverCardContent className="w-auto">
