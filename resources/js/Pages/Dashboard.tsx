@@ -32,7 +32,7 @@ export default function Dashboard({
     <AuthenticatedLayout auth_user={auth.user}>
       <div className="p-6 space-y-6">
         {/* Dashboard Header */}
-        <div className="text-center mb-8">
+        <div className="text-left mb-8">
           <h1 className="text-3xl font-extrabold text-gray-800">
             Welcome to your Dashboard
           </h1>

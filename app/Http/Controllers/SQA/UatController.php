@@ -30,6 +30,7 @@ class UatController extends Controller
                     $query->where('name', 'like', "%{$search}%");
                 });
             })
+            ->where('status','uat')
             ->orderBy('created_at','desc')
             ->paginate(10);
 

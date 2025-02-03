@@ -308,49 +308,56 @@ export function EditSheet(props : any) {
           </div>
         ),
       },
-      {
-        name: "status",
-        render: (labelName:any, formModel:any) => (
-          <div key={labelName}>
-            <Label className="text-primary" htmlFor={labelName}>
-              {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
-            </Label>
-            <Input
-              className="mt-1"
-              id={labelName} // Using the dynamic labelName as the id
-              value={formModel.data[labelName]} // Dynamic value based on labelName
-              onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
-              placeholder={labelName}
-              
-            />
-            <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
-          </div>
-        ),
-      },
-      {
-        name: "request_status",
-        render: (labelName:any, formModel:any) => (
-          <div key={labelName}>
-            <Label className="text-primary" htmlFor={labelName}>
-              {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
-            </Label>
-            <Select
-             value={formModel.data[labelName]}
-              onValueChange={(value) => formModel.setData(labelName, value)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="approved">Approved</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-            <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
-          </div>
-        ),
-      },
+        {
+            name: "status",
+            render: (labelName:any, formModel:any) => (
+              <div key={labelName}>
+                <Label className="text-primary" htmlFor={labelName}>
+                  {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+                </Label>
+                <Select
+                 value={formModel.data[labelName]}
+                  onValueChange={(value) => formModel.setData(labelName, value)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="development">Development</SelectItem>
+                    <SelectItem value="testing">Testing (QA/Regression)</SelectItem>
+                    <SelectItem value="uat">User Acceptance Testing (UAT)</SelectItem>
+                    <SelectItem value="staging">Staging</SelectItem>
+                    <SelectItem value="production">Production (Prod)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+              </div>
+            ),
+          },
+          {
+                name: "request_status",
+                render: (labelName:any, formModel:any) => (
+                  <div key={labelName}>
+                    <Label className="text-primary" htmlFor={labelName}>
+                      {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+                    </Label>
+                    <Select
+                     value={formModel.data[labelName]}
+                      onValueChange={(value) => formModel.setData(labelName, value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="approved">Approved</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+                  </div>
+                ),
+              },
       {
         name: "accessibility",
         render: (labelName:any, formModel:any) => (

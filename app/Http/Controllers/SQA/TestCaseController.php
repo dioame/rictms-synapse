@@ -30,6 +30,7 @@ class TestCaseController extends Controller
                     $query->where('name', 'like', "%{$search}%");
                 });
             })
+            ->where('status','testing')
             ->orderBy('created_at','desc')
             ->paginate(10);
 

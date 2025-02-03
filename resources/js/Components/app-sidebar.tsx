@@ -59,7 +59,7 @@ const data = {
       title: "Software Development",
       url: "#",
       icon: Dock,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "All Apps",
@@ -83,7 +83,7 @@ const data = {
       title: "SQA",
       url: "#",
       icon: ShieldCheck,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Test Cases",
@@ -99,7 +99,7 @@ const data = {
       title: "ICT Equipments",
       url: "#",
       icon: Construction,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Inventory",
@@ -115,7 +115,7 @@ const data = {
       title: "Reports",
       url: "#",
       icon: GitGraphIcon,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "SQA Test Plan",
@@ -127,7 +127,7 @@ const data = {
       title: "Libraries",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "Deployment Requirements",
@@ -139,7 +139,7 @@ const data = {
       title: "Settings",
       url: "#",
       icon: Settings2,
-      isActive: true,
+      isActive: false,
       items: [
         {
           title: "User",

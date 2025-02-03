@@ -55,7 +55,7 @@ export default function Index({ auth }: any) {
       label: "Name",
       render: (value: any) => (
         <div className="flex gap-4 items-center">
-          {value.uptime.is_up ?  <ChevronsUp size={20} className="text-green-500"/> : <ChevronsDown size={20} className="text-red-500"/>}       
+          {value.uptime?.is_up ?  <ChevronsUp size={20} className="text-green-500"/> : <ChevronsDown size={20} className="text-red-500"/>}       
           <div className="flex overflow-hidden justify-center items-center font-semibold rounded-full size-10 bg-muted text-primary/80">
             { getInitials(value.name)}
           </div>

@@ -51,7 +51,7 @@ class ApplicationsTableSeeder extends Seeder
                 'region' => $faker->state,
                 'url' => $faker->url,
                 'deployment_date' => $faker->date(),
-                'status' => $faker->randomElement(['active', 'inactive']),
+                'status' => $faker->randomElement(['development', 'testing', 'uat','staging','production']),
                 'request_status' => $faker->randomElement(['pending', 'approved', 'cancelled']),
                 'accessibility' => $faker->randomElement(['Public', 'Private']),
                 'development_strategy' => $faker->randomElement(['In-house', 'Outsourced']),

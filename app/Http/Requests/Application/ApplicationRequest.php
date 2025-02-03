@@ -18,6 +18,7 @@ class ApplicationRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
+            'abbr' => ['required'],
             'platform' => ['required'],
             'request_status' => ['required'],
         ];

@@ -315,14 +315,21 @@ export function CreateSheet(props : any) {
           <Label className="text-primary" htmlFor={labelName}>
             {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
           </Label>
-          <Input
-            className="mt-1"
-            id={labelName} // Using the dynamic labelName as the id
-            value={formModel.data[labelName]} // Dynamic value based on labelName
-            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
-            placeholder={labelName}
-            
-          />
+          <Select
+           value={formModel.data[labelName]}
+            onValueChange={(value) => formModel.setData(labelName, value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="development">Development</SelectItem>
+              <SelectItem value="testing">Testing (QA/Regression)</SelectItem>
+              <SelectItem value="uat">User Acceptance Testing (UAT)</SelectItem>
+              <SelectItem value="staging">Staging</SelectItem>
+              <SelectItem value="production">Production (Prod)</SelectItem>
+            </SelectContent>
+          </Select>
           <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
         </div>
       ),
@@ -700,6 +707,7 @@ export function CreateSheet(props : any) {
   columnNames['sqa_tested'] = "0";
   columnNames['is_pia'] = "0";
   columnNames['is_km'] = "0";
+  columnNames['status'] = "development";
 
   const form = useForm(columnNames);
 
