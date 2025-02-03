@@ -68,4 +68,9 @@ class Application extends Model
     {
         return $this->hasMany(ApplicationDeploymentAttachment::class, 'application_id', 'id');
     }
+
+    public function uptime()
+    {
+        return $this->hasOne(UptimeCheck::class, 'url', 'url');
+    }
 }

@@ -2,6 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
+import { Badge } from "@/Components/ui/badge"
+
 
 export default function Dashboard({
   auth,
@@ -14,6 +16,9 @@ export default function Dashboard({
   applicationsByFramework, // Added
   equipment,
   consolidatedEquipment, // Added
+  app_up,
+  app_down,
+  http_uptime_timeouts
 }: any) {
 
   const formatCurrency = (amount: any) => {
@@ -38,11 +43,35 @@ export default function Dashboard({
 
         {/* Dashboard Boxes */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+       {/* Total Applications */}
+      <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg shadow-lg p-6">
+        <h2 className="text-lg font-bold">Total Applications</h2>
+        
+        {/* Main Section */}
+        <div className="grid grid-cols-3 gap-4 mt-4">
           {/* Total Applications */}
-          <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg shadow-lg p-6">
-            <h2 className="text-lg font-bold">Total Applications</h2>
-            <p className="text-4xl font-extrabold mt-2">{totalApplications}</p>
+          <div className="flex flex-col items-center justify-center p-4 bg-white bg-opacity-20 rounded-lg">
+            <p className="text-4xl font-extrabold">{totalApplications}</p>
+            <p className="text-sm text-white">Total</p>
           </div>
+          
+          {/* App Up */}
+          <div className="flex flex-col items-center justify-center p-4 bg-gray-300 bg-opacity-20 rounded-lg">
+            <p className="text-4xl font-extrabold text-green-400">{app_up}</p>
+            <p className="text-sm text-white">Up</p>
+          </div>
+          
+          {/* App Down */}
+          <div className="flex flex-col items-center justify-center p-4 bg-gray-500  bg-opacity-20 rounded-lg">
+            <p className="text-4xl font-extrabold text-red-400">{app_down}</p>
+            <p className="text-sm text-white">Down</p>
+          </div>
+          
+        </div>
+        <Badge variant="secondary" className="mt-5 float-end">{http_uptime_timeouts} Seconds HTTP Request Timeout</Badge>
+
+      </div>
+
 
           {/* Applications by Status */}
           <div className="bg-white rounded-lg shadow-lg p-6">

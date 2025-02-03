@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ApplicationsTableSeeder::class,
             IctInventorySeeder::class,
             LibDeploymentAttachmentSeeder::class,
-            SqaTestCaseSeeder::class
+            SqaTestCaseSeeder::class,
+            SettingsTableSeeder::class
         ]);
     }
 }

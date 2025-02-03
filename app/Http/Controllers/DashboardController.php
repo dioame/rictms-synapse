@@ -7,6 +7,8 @@ use App\Models\Application; // Assuming this is the model for your table
 use App\Models\IctInventory;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Models\UptimeCheck;
+use App\Models\Setting;
 
 class DashboardController extends Controller
 {
@@ -32,6 +34,9 @@ class DashboardController extends Controller
     $consolidatedEquipment = IctInventory::select('status', DB::raw('COUNT(*) as total_equipment'), DB::raw('SUM(purchase_price) as total_purchase_price'))
         ->groupBy('status')
         ->get();
+    
+    $app_up = UptimeCheck::where('is_up',1)->count();
+    $app_down = UptimeCheck::where('is_up', 0)->count();
 
     // Pass data to the view
     return Inertia::render('Dashboard', [
@@ -44,6 +49,9 @@ class DashboardController extends Controller
         'applicationsByFramework' => $applicationsByFramework,
         'equipment' => $equipment,
         'consolidatedEquipment' => $consolidatedEquipment,
+        'app_up' => $app_up,
+        'app_down' => $app_down,
+        'http_uptime_timeouts' => Setting::UPTIME_HTTP_TIMEOUTS()
     ]);
 }
 }

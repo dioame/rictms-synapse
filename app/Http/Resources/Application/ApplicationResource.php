@@ -51,6 +51,7 @@ class ApplicationResource extends JsonResource
             'data_archiving' => $this->data_archiving,
             'sqa_tested' => $this->sqa_tested,
             'attachments' => $this->attachments,
+            'uptime' => $this->uptime,
         ];
     }
 }

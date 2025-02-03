@@ -7,7 +7,7 @@ import { CreateSheet} from "./Create";
 import { EditSheet } from "./Edit";
 import { AttachmentSheet } from "./attachment";
 import { RowActions } from "@/Components/DataTable/RowActions";
-import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon } from "lucide-react";
+import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon,ArrowUpCircle,ArrowDownCircle,ChevronUpSquare ,ChevronsUp,ChevronsDown} from "lucide-react";
 
 import {
   Avatar,
@@ -47,23 +47,27 @@ export default function Index({ auth }: any) {
   const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
 
+  console.log(results)
+
   const columns = [
     {
       key: "name",
       label: "Name",
       render: (value: any) => (
         <div className="flex gap-4 items-center">
+          {value.uptime.is_up ?  <ChevronsUp size={20} className="text-green-500"/> : <ChevronsDown size={20} className="text-red-500"/>}       
           <div className="flex overflow-hidden justify-center items-center font-semibold rounded-full size-10 bg-muted text-primary/80">
             { getInitials(value.name)}
           </div>
           <div>
             <div className="font-medium">
-              <Link className="hover:underline" href="#">
-                {value.name} ({value.abbr})
-              </Link>
+              
+              <a className="hover:underline" href={value.url} target="_blank">
+                {value.name} ({value.abbr}) 
+              </a>
             </div>
             <div className="hidden text-sm text-muted-foreground md:inline">
-              {value.version}
+            {value.version} 
             </div>
           </div>
         </div>
@@ -84,11 +88,12 @@ export default function Index({ auth }: any) {
       label: "Tech Stack",
       className: "hidden sm:table-cell text-center",
     },
-    {
-      key: "is_pia",
-      label: "Is PIA?",
-      className: "hidden sm:table-cell text-center",
-    },
+    
+    // {
+    //   key: "is_pia",
+    //   label: "Is PIA?",
+    //   className: "hidden sm:table-cell text-center",
+    // },
     {
       key: "division",
       label: "Division",
@@ -97,6 +102,11 @@ export default function Index({ auth }: any) {
     {
       key: "section",
       label: "Section",
+      className: "hidden sm:table-cell text-center",
+    },
+    {
+      key: "status",
+      label: "Status",
       className: "hidden sm:table-cell text-center",
     },
     {
