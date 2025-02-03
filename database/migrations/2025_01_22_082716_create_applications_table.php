@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name'); 
+            $table->string('abbr'); 
             $table->text('description')->nullable(); 
             $table->string('tech_stack')->nullable(); 
             $table->string('version')->nullable(); 

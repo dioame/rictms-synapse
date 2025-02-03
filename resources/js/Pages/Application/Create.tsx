@@ -37,6 +37,24 @@ export function CreateSheet(props : any) {
       ),
     },
     {
+      name: "abbr",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+          <Label className="text-primary" htmlFor={labelName}>
+            {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */} * 
+          </Label>
+          <Input
+            className="mt-1"
+            id={labelName} // Using the dynamic labelName as the id
+            value={formModel.data[labelName]} // Dynamic value based on labelName
+            onChange={(e) => formModel.setData(labelName, e.target.value)} // Dynamic setData based on labelName
+            placeholder={labelName}
+          />
+          <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+        </div>
+      ),
+    },
+    {
       name: "version",
       render: (labelName:any, formModel:any) => (
         <div key={labelName}>

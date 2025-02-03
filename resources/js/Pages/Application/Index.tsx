@@ -59,7 +59,7 @@ export default function Index({ auth }: any) {
           <div>
             <div className="font-medium">
               <Link className="hover:underline" href="#">
-                {value.name}
+                {value.name} ({value.abbr})
               </Link>
             </div>
             <div className="hidden text-sm text-muted-foreground md:inline">

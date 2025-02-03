@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/Components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/Components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,83 +12,92 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/Components/ui/command"
+} from "@/Components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/Components/ui/popover"
+} from "@/Components/ui/popover";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useForm,router } from "@inertiajs/react";
 
-export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+const config = {
+  title: "SQA Test Plan",
+};
+
+export default function Index({ auth, results }: any) {
+  const [open, setOpen] = React.useState(false);
+
+  const { data, setData, post, processing, errors, reset, wasSuccessful } =
+    useForm({
+      selected_id: "",
+    });
+
+  const selectedItem = results.find((result: any) => result.id === data.selected_id);
+  
+  const handleSubmit = () => {
+    if (selectedItem) {
+      const url = route("reports.sqa-test-plan-generate", { id: selectedItem.id });
+      window.open(url, "_blank");
+    }
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
-            <CommandGroup>
-              {frameworks.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {framework.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  )
+    <AuthenticatedLayout auth_user={auth.user} header={config.title}>
+      <div className="flex flex-col items-center justify-center p-10" >
+        <div className="space-y-4 border border-gray-300 rounded-lg p-6 w-[300px]">
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[250px] justify-between border border-gray-300 rounded-lg"
+              >
+                {selectedItem ? selectedItem.name : "Select Application"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[250px] p-0 border border-gray-300 shadow-lg bg-white rounded-lg">
+              <Command>
+                <CommandInput placeholder="Search Application" className="border-b border-gray-300" />
+                <CommandList>
+                  <CommandEmpty>No Data found.</CommandEmpty>
+                  <CommandGroup>
+                    {results.map((result: any) => (
+                      <CommandItem
+                        key={result.id}
+                        onSelect={() => {
+                          setData("selected_id", result.id);
+                          setOpen(false);
+                        }}
+                        className="hover:bg-gray-100 rounded-md px-2 border border-transparent hover:border-gray-300"
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            data.selected_id === result.id ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {result.name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+
+          <Button
+            className="w-[250px] border border-gray-300 rounded-lg"
+            onClick={handleSubmit}
+            disabled={!selectedItem || processing}
+          >
+            {processing ? "Submitting..." : "Confirm Selection"}
+          </Button>
+        </div>
+      </div>
+    </AuthenticatedLayout>
+  );
 }

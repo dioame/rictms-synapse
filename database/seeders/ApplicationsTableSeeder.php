@@ -23,6 +23,7 @@ class ApplicationsTableSeeder extends Seeder
             DB::table('applications')->insert([
                 'id' => Str::uuid()->toString(),
                 'name' => $faker->company,
+                'abbr' => strtoupper(Str::limit(preg_replace('/\b(\w)/', '$1', $faker->company), 3, '')),
                 'description' => $faker->sentence,
                 'tech_stack' => $faker->randomElement([
                     'LAMP (Linux, Apache, MySQL, PHP)',

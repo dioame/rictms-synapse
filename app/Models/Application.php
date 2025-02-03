@@ -22,6 +22,7 @@ class Application extends Model
     // Define the fillable attributes (the columns you can mass-assign)
     protected $fillable = [
         'name',
+        'abbr',
         'description',
         'tech_stack',
         'version',

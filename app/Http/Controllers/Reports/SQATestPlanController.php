@@ -10,11 +10,13 @@ use App\Models\Application;
 
 class SQATestPlanController extends Controller
 {
-    //
+
     public function index()
     {
+
         $results = Application::where('request_status','approved')->get();
 
+      
         return Inertia::render(
             'Reports/SQATestPlan/Index',
             [
@@ -22,4 +24,17 @@ class SQATestPlanController extends Controller
             ]
         );
     }
+
+    public function generate($id){
+        $results = Application::find($id);
+
+        return Inertia::render(
+            'Reports/SQATestPlan/Generate',
+            [
+                'results' => $results
+            ]
+        );
+    }
+
+    
 }

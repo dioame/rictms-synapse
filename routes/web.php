@@ -78,6 +78,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         //REPORTS
         Route::get('/reports/sqa-test-plan', [SQATestPlanController::class, 'index'])->name('reports.sqa-test-plan');
+        Route::get('/reports/sqa-test-plan/{id}', [SQATestPlanController::class, 'generate'])->name('reports.sqa-test-plan-generate');
+        
        
         
 });
