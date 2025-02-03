@@ -20,7 +20,7 @@ import { Link } from "@inertiajs/react";
 
 import {
   LayoutDashboard
-} from "lucide-react"
+} from "lucide-react";
 
 export function NavMain({
   items,
@@ -38,25 +38,29 @@ export function NavMain({
   }[];
   currentPath: string;
 }) {
-  
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Modules</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
-        <Link href={route('dashboard')} >
-          <SidebarMenuButton tooltip="Dashboard">
-            <LayoutDashboard />
-            <span>Dashboard</span>
-          </SidebarMenuButton>
+          <Link href={route('dashboard')}>
+            <SidebarMenuButton tooltip="Dashboard">
+              <LayoutDashboard />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
           </Link>
         </SidebarMenuItem>
         {items.map((item) => {
+          // Check if any subitem URL matches the current window location
+          const isCollapsibleOpen = item.items?.some(
+            (subItem) => window.location.href === subItem.url
+          );
+
           return (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive} 
+              defaultOpen={isCollapsibleOpen || item.isActive} // Open if any subitem matches the URL or item is active
               className="group/collapsible"
             >
               <SidebarMenuItem>
@@ -69,20 +73,21 @@ export function NavMain({
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items?.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title} 
-                      className={
-                        window.location.href === subItem.url
-                          ? "active" // Add your active class styling here
-                          : ""
-                      }>
-                        <SidebarMenuSubButton asChild>
-                          <Link href={subItem.url} preserveState={true}>
-                            <span>{subItem.title}</span>
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
+                    {item.items?.map((subItem) => {
+                      const isActive = window.location.href === subItem.url;
+                      return (
+                        <SidebarMenuSubItem
+                          key={subItem.title}
+                          className={isActive ? "active" : ""}
+                        >
+                          <SidebarMenuSubButton asChild>
+                            <Link href={subItem.url} preserveState={true}>
+                              <span>{subItem.title}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      );
+                    })}
                   </SidebarMenuSub>
                 </CollapsibleContent>
               </SidebarMenuItem>
