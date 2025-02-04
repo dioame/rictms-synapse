@@ -181,7 +181,7 @@ export default function Dashboard({
           <div className="bg-white rounded-2xl shadow-md p-6 col-span-1 md:col-span-2 lg:col-span-3">
             <h2 className="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Recent Deployments</h2>
             <ul className="divide-y divide-gray-200">
-              {recentDeployments.map((deployment, index) => (
+              {recentDeployments.map((deployment:any, index:any) => (
                 <li key={index} className="flex justify-between items-center py-3">
                   <a
                     href={deployment.url}
