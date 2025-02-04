@@ -18,6 +18,7 @@ class CheckUrlUptime extends Command
     {
         // $url = $this->argument('url');
         $urls = Application::whereNotNull('url')
+        ->orderBy('created_at','DESC')
         ->pluck('url')
         ->toArray();
         
