@@ -22,7 +22,7 @@ class TestCaseResource extends JsonResource
             'expected_result' => $this->expected_result ? json_decode($this->expected_result,true) : null,
             'test_status' => $this->test_status,
             'remarks' => $this->remarks,
-            'application' => $this->application
+            'application' => $this->application,
         ];
     }
 }

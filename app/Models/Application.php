@@ -73,4 +73,14 @@ class Application extends Model
     {
         return $this->hasOne(UptimeCheck::class, 'url', 'url');
     }
+
+    public function sqaTestCase()
+    {
+        return $this->hasMany(SqaTestCase::class, 'application_id', 'id');
+    }
+
+    public function sqaUat()
+    {
+        return $this->hasMany(SqaUat::class, 'application_id', 'id');
+    }
 }

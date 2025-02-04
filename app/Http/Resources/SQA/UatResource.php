@@ -22,7 +22,7 @@ class UatResource extends JsonResource
             'requirements' => $this->requirements ? json_decode($this->requirements,true) : null,
             'test_result' => $this->test_result,
             'remarks' => $this->remarks,
-            'retesting_result' => $this->retesting_result
+            'retesting_result' => $this->retesting_result,
         ];
     }
 }

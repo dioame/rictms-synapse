@@ -24,7 +24,7 @@ class TestCaseController extends Controller
     {
         $search = $request->input('search');
 
-        $results = Application::with(['attachments.libDeploymentAttachment'])
+        $results = Application::with(['attachments.libDeploymentAttachment','sqaTestCase'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");

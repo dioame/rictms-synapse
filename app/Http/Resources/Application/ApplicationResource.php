@@ -52,6 +52,8 @@ class ApplicationResource extends JsonResource
             'sqa_tested' => $this->sqa_tested,
             'attachments' => $this->attachments,
             'uptime' => $this->uptime,
+            'sqa_test_case' => $this->sqaTestCase,
+            'sqa_uat' => $this->sqaUat,
         ];
     }
 }

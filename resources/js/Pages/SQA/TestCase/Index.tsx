@@ -2,32 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, router, Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { DataTableReadOnlyWrapper } from "@/Components/DataTable/DataTableReadOnlyWrapper";
-import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
 import { RowActions } from "@/Components/DataTable/RowActions";
-import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon } from "lucide-react";
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/Components/ui/avatar"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/Components/ui/hover-card"
-
-import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/Components/ui/dialog";
 import { useState } from "react";
-import { Button } from "@/Components/ui/button";
 import { getInitials } from "@/hooks/helpers";
 
 const config = {
@@ -37,13 +13,8 @@ const config = {
 
 export default function Index({ auth }: any) {
   const { results, message, roles, filters, lib_deployment_req } = usePage<any>().props;
-  const { delete: destroy } = useForm();
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
-  const [editData, setEditData]  = useState();
 
+  console.log(results)
 
   const columns = [
     {
@@ -91,6 +62,14 @@ export default function Index({ auth }: any) {
       key: "section",
       label: "Section",
       className: "hidden sm:table-cell text-center",
+    },
+    {
+      key: "sqa_test_case",
+      label: "# Tests",
+      className: "text-center",
+      render: (value: any) => (
+        <p className="bg-teal-500 text-white font-semibold text-xs w-7 h-7 flex items-center justify-center rounded-full">{value.sqa_test_case.length}</p>
+      ),
     },
     {
       key: "actions",

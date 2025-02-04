@@ -93,6 +93,14 @@ export default function Index({ auth }: any) {
       className: "hidden sm:table-cell text-center",
     },
     {
+      key: "sqa_uat",
+      label: "# UATs",
+      className: "text-center",
+      render: (value: any) => (
+        <p className="bg-teal-500 text-white font-semibold text-xs w-7 h-7 flex items-center justify-center rounded-full">{value.sqa_uat.length}</p>
+      ),
+    },
+    {
       key: "actions",
       label: "Actions",
       className: "text-center",
