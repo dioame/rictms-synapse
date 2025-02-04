@@ -243,6 +243,35 @@ export default function Index({ auth, results }: any) {
             </div>
           </CardContent>
         </Card>
+
+
+        <Card>
+  <CardHeader>
+    <CardTitle>Features</CardTitle>
+    <CardDescription>List of features for this application</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <div className="space-y-4">
+      {results.features ? (
+        // Parse the JSON string into an array
+        JSON.parse(results.features).length > 0 ? (
+          JSON.parse(results.features).map((feature: any, index: any) => (
+            <div key={index}>
+              <span className="font-bold">{index+1}. {feature}</span>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500 text-xs">No features available</p>
+        )
+      ) : (
+        <p className="text-gray-500 text-xs">Features data not available</p>
+      )}
+    </div>
+  </CardContent>
+</Card>
+
+
+
       </div>
     </AuthenticatedLayout>
   );

@@ -6,6 +6,7 @@ import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
 import { CreateSheet} from "./Create";
 import { EditSheet } from "./Edit";
 import { AttachmentSheet } from "./attachment";
+import { FeatureSheet } from "./feature";
 import { RowActions } from "@/Components/DataTable/RowActions";
 import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon,ArrowUpCircle,ArrowDownCircle,ChevronUpSquare ,ChevronsUp,ChevronsDown} from "lucide-react";
 
@@ -45,6 +46,7 @@ export default function Index({ auth }: any) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
+  const [isFeatureSheetOpen, setIsFeatureSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
 
   console.log(results)
@@ -148,6 +150,14 @@ export default function Index({ auth }: any) {
       ),
     },
     {
+      key: "features",
+      label: "Features",
+      className: "text-center",
+      render: (value: any) => (
+        <p className="bg-teal-500 text-white font-semibold text-xs w-7 h-7 flex items-center justify-center rounded-full">{value.features_count}</p>
+      ),
+    },
+    {
       key: "actions",
       label: "Actions",
       className: "text-center",
@@ -168,12 +178,16 @@ export default function Index({ auth }: any) {
               separator: true
             },
             {
-              label: "Edit",
+              label: "Edit Details",
               onClick: () => handleEdit(value),
             },
             {
-              label: "Attachment",
+              label: "Add Attachment",
               onClick: () => handleEditAttachment(value),
+            },
+            {
+              label: "Add Features",
+              onClick: () => handleFeatures(value),
             },
             {
               label: "",
@@ -213,6 +227,11 @@ export default function Index({ auth }: any) {
 
   const handleEditAttachment = (item: any) => {
     setIsAttachmentSheetOpen(true);
+    setEditData(item);
+  }
+
+  const handleFeatures = (item: any) => {
+    setIsFeatureSheetOpen(true);
     setEditData(item);
   }
 
@@ -276,6 +295,14 @@ export default function Index({ auth }: any) {
           <AttachmentSheet config={config} editData={editData} setIsSheetOpen={setIsAttachmentSheetOpen} LibDeploymentReq={lib_deployment_req}/>
         </Sheet>
          )}
+
+        { editData && (
+        <Sheet open={isFeatureSheetOpen} onOpenChange={setIsFeatureSheetOpen}>
+          <FeatureSheet config={config} editData={editData} setIsSheetOpen={setIsFeatureSheetOpen}/>
+        </Sheet>
+         )}
+
+
  
 
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

@@ -46,6 +46,7 @@ return new class extends Migration
             $table->text('information_systems_served')->nullable(); 
             $table->string('data_archiving')->nullable(); 
             $table->string('sqa_tested')->nullable(); 
+            $table->json('features')->nullable(); 
             $table->timestamps();
             $table->softdeletes();
         });

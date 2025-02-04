@@ -54,6 +54,7 @@ class Application extends Model
         'information_systems_served',
         'data_archiving',
         'sqa_tested',
+        'features'
     ];
 
     // Define the dates (for casting to Carbon instances)

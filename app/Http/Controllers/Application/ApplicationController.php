@@ -206,6 +206,16 @@ class ApplicationController extends Controller
         }
     }
 
+
+    public function updateFeatures($id, Request $request)
+    {
+        $application = Application::updateOrCreate(
+            ['id' => $id], // Search condition
+            ['features' => json_encode($request->features)] // Update or insert values
+        );
+    }
+
+
     public function attachmentDelete($id){
         ApplicationDeploymentAttachment::destroy($id);
         return redirect()->back()->with('success', 'Application deleted.');
