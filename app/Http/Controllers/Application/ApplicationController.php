@@ -133,6 +133,7 @@ class ApplicationController extends Controller
 
     public function update($id, ApplicationRequest $request, ApplicationService $service)
     {
+
         $service->update($id, $request->all());
         return redirect()->back()->with('success', 'Application Updated.');
     }

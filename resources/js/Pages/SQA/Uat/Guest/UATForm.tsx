@@ -77,168 +77,188 @@ export default function UATForm() {
 
   return (
     <UatLayout>
-    <Card className="max-w-full sm:max-w-4xl mx-auto shadow-lg border border-gray-200 mt-10">
-      <CardHeader className="bg-gray-100 p-5 rounded-t-lg">
-        <CardTitle className="text-xl font-semibold text-gray-800">
-          🛠 User Acceptance Testing (UAT)
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <h1 className="flex justify-center items-center gap-2 text-center text-teal-500 font-bold text-lg md:text-2xl">
-          {application.name} ({application.abbr})
-        </h1>
-        <p className="mb-5 flex justify-center items-center gap-2 text-center text-sm md:text-base">{application.description}</p>
-  
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {testResults.map((item: any, index: any) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md border border-gray-300 space-y-4">
-              {/* Readonly Fields */}
-              <div>
-                <Label className="text-gray-700 font-medium">📌 Module</Label>
-                <Input value={item.module} readOnly className="bg-gray-100 w-full" />
-              </div>
-  
-              {/* Procedure (Parsed JSON) */}
-              <div>
-                <Label className="text-gray-700 font-medium">🔍 Procedure</Label>
-                <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-sm">
-                  {Array.isArray(item.procedure) ? (
-                    <ul className="list-disc pl-5">
-                      {item.procedure.map((step: any, i: any) => (
-                        <li key={i} className="text-gray-600 text-sm md:text-base">{step}</li>
-                      ))}
+     { application.status == 'uat' && 
+     <div>
+        <Card className="max-w-full sm:max-w-4xl mx-auto shadow-lg border border-gray-200 mt-10">
+          <CardHeader className="bg-gray-100 p-5 rounded-t-lg">
+            <CardTitle className="text-xl font-semibold text-gray-800">
+              🛠 User Acceptance Testing (UAT)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <h1 className="flex justify-center items-center gap-2 text-center text-teal-500 font-bold text-lg md:text-2xl">
+              {application.name} ({application.abbr})
+            </h1>
+            <p className="mb-5 flex justify-center items-center gap-2 text-center text-sm md:text-base">{application.description}</p>
+      
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {testResults.map((item: any, index: any) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md border border-gray-300 space-y-4">
+                  {/* Readonly Fields */}
+                  <div>
+                    <Label className="text-gray-700 font-medium">📌 Module</Label>
+                    <Input value={item.module} readOnly className="bg-gray-100 w-full" />
+                  </div>
+      
+                  {/* Procedure (Parsed JSON) */}
+                  <div>
+                    <Label className="text-gray-700 font-medium">🔍 Procedure</Label>
+                    <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-sm">
+                      {Array.isArray(item.procedure) ? (
+                        <ul className="list-disc pl-5">
+                          {item.procedure.map((step: any, i: any) => (
+                            <li key={i} className="text-gray-600 text-sm md:text-base">{step}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-gray-600 text-sm md:text-base">{item.procedure}</p>
+                      )}
+                    </div>
+                  </div>
+      
+                  {/* Requirements (Parsed JSON) */}
+                  <div>
+                    <Label className="text-gray-700 font-medium">⚙️ Requirements</Label>
+                    <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-sm">
+                      {Array.isArray(item.requirements) ? (
+                        <ul className="list-disc pl-5">
+                          {item.requirements.map((req: any, i: any) => (
+                            <li key={i} className="text-gray-600 text-sm md:text-base">{req}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-gray-600 text-sm md:text-base">{item.requirements}</p>
+                      )}
+                    </div>
+                  </div>
+      
+                  {/* Test Result, Remarks, and Retesting Result (Editable Fields) */}
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-gray-700 font-medium">TEST RESULT</Label>
+                      <Select
+                        value={item.test_result}
+                        onValueChange={(value) => handleChange(index, 'test_result', value)}
+                      >
+                        <SelectTrigger className="w-full border border-gray-300 rounded-md p-2">
+                          <SelectValue placeholder="Select Result" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="passed">Passed</SelectItem>
+                          <SelectItem value="failed">Failed</SelectItem>
+                          <SelectItem value="conditional_passed">Conditional Passed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+      
+                    <div>
+                      <Label className="text-gray-700 font-medium">Remarks</Label>
+                      <Textarea
+                        value={item.remarks}
+                        onChange={(e) => handleChange(index, 'remarks', e.target.value)}
+                        className="border border-gray-300 rounded-md p-2 w-full"
+                      />
+                    </div>
+      
+                    <div>
+                      <Label className="text-gray-700 font-medium">Retesting Result</Label>
+                      <Input
+                        type="text"
+                        value={item.retesting_result}
+                        onChange={(e) => handleChange(index, 'retesting_result', e.target.value)}
+                        className="border border-gray-300 rounded-md p-2 w-full"
+                      />
+                    </div>
+                  </div>
+      
+                  {/* Separator to distinguish between different test cases */}
+                  {index < testResults.length - 1 && <Separator />}
+                </div>
+              ))}
+      
+              {/* Submit Button */}
+              <Button type="submit" className="w-full py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
+                Submit UAT Responses
+              </Button>
+              <Button className="w-full py-3 bg-teal-600 text-white hover:bg-blue-700 rounded-lg" onClick={(e) => { e.preventDefault(); setIsOpen(true) }}>
+                View UAT Responses
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      
+        <Dialog open={isOpen} onOpenChange={toggleDialog}>
+      <DialogContent className="sm:max-w-[800px] max-w-full max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>UAT Submission</DialogTitle>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <div>
+          {results.map((item: any, index: any) => (
+            <div key={index} className="card border p-4 mb-4">
+              <h3 className="text-xl font-semibold">Module: {item.module}</h3>
+              <div className="text-md my-2">
+                <div className="space-y-4">
+                  <div className="text-md">
+                    <strong className="text-lg font-semibold">Procedure:</strong>
+                    <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
+                      {item.procedure &&
+                        JSON.parse(item.procedure).map((step: any, index: any) => (
+                          <li key={index}>{step}</li>
+                        ))}
                     </ul>
-                  ) : (
-                    <p className="text-gray-600 text-sm md:text-base">{item.procedure}</p>
-                  )}
-                </div>
-              </div>
-  
-              {/* Requirements (Parsed JSON) */}
-              <div>
-                <Label className="text-gray-700 font-medium">⚙️ Requirements</Label>
-                <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-sm">
-                  {Array.isArray(item.requirements) ? (
-                    <ul className="list-disc pl-5">
-                      {item.requirements.map((req: any, i: any) => (
-                        <li key={i} className="text-gray-600 text-sm md:text-base">{req}</li>
-                      ))}
+                  </div>
+
+                  <div className="text-md">
+                    <strong className="text-lg font-semibold">Requirements:</strong>
+                    <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
+                      {item.requirements &&
+                        JSON.parse(item.requirements).map((req: any, index: any) => (
+                          <li key={index}>{req}</li>
+                        ))}
                     </ul>
-                  ) : (
-                    <p className="text-gray-600 text-sm md:text-base">{item.requirements}</p>
-                  )}
+                  </div>
                 </div>
               </div>
-  
-              {/* Test Result, Remarks, and Retesting Result (Editable Fields) */}
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-gray-700 font-medium">TEST RESULT</Label>
-                  <Select
-                    value={item.test_result}
-                    onValueChange={(value) => handleChange(index, 'test_result', value)}
-                  >
-                    <SelectTrigger className="w-full border border-gray-300 rounded-md p-2">
-                      <SelectValue placeholder="Select Result" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="passed">Passed</SelectItem>
-                      <SelectItem value="failed">Failed</SelectItem>
-                      <SelectItem value="conditional_passed">Conditional Passed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-  
-                <div>
-                  <Label className="text-gray-700 font-medium">Remarks</Label>
-                  <Textarea
-                    value={item.remarks}
-                    onChange={(e) => handleChange(index, 'remarks', e.target.value)}
-                    className="border border-gray-300 rounded-md p-2 w-full"
-                  />
-                </div>
-  
-                <div>
-                  <Label className="text-gray-700 font-medium">Retesting Result</Label>
-                  <Input
-                    type="text"
-                    value={item.retesting_result}
-                    onChange={(e) => handleChange(index, 'retesting_result', e.target.value)}
-                    className="border border-gray-300 rounded-md p-2 w-full"
-                  />
-                </div>
+              <div className="text-md my-2">
+                <strong>Results:</strong> {item.test_result}
               </div>
-  
-              {/* Separator to distinguish between different test cases */}
-              {index < testResults.length - 1 && <Separator />}
+              <div className="text-md my-2">
+                <strong>Remarks:</strong> {item.remarks}
+              </div>
+              <div className="text-md my-2">
+                <strong>Re-testing:</strong> {item.retesting_result}
+              </div>
             </div>
           ))}
-  
-          {/* Submit Button */}
-          <Button type="submit" className="w-full py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-lg">
-            Submit UAT Responses
-          </Button>
-          <Button className="w-full py-3 bg-teal-600 text-white hover:bg-blue-700 rounded-lg" onClick={(e) => { e.preventDefault(); setIsOpen(true) }}>
-            View UAT Responses
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
-  
-    <Dialog open={isOpen} onOpenChange={toggleDialog}>
-  <DialogContent className="sm:max-w-[800px] max-w-full max-h-[80vh] overflow-y-auto">
-    <DialogHeader>
-      <DialogTitle>UAT Submission</DialogTitle>
-      <DialogDescription></DialogDescription>
-    </DialogHeader>
-    <div>
-      {results.map((item: any, index: any) => (
-        <div key={index} className="card border p-4 mb-4">
-          <h3 className="text-xl font-semibold">Module: {item.module}</h3>
-          <div className="text-md my-2">
-            <div className="space-y-4">
-              <div className="text-md">
-                <strong className="text-lg font-semibold">Procedure:</strong>
-                <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
-                  {item.procedure &&
-                    JSON.parse(item.procedure).map((step: any, index: any) => (
-                      <li key={index}>{step}</li>
-                    ))}
-                </ul>
-              </div>
-
-              <div className="text-md">
-                <strong className="text-lg font-semibold">Requirements:</strong>
-                <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
-                  {item.requirements &&
-                    JSON.parse(item.requirements).map((req: any, index: any) => (
-                      <li key={index}>{req}</li>
-                    ))}
-                </ul>
-              </div>
+        </div>
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Close
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+      </div>
+    }
+    
+    { application.status !== 'uat' && 
+        <div className=" font-sans flex items-center justify-center  ">
+          <div className="bg-white p-10 rounded-lg shadow-lg text-center max-w-lg w-full">
+            <div className="bg-gradient-to-r from-green-500 to-green-700 text-white p-4 rounded-lg">
+              <h1 className="text-3xl font-semibold">
+                This Application is No Longer Accepting UAT Responses.
+              </h1>
             </div>
-          </div>
-          <div className="text-md my-2">
-            <strong>Results:</strong> {item.test_result}
-          </div>
-          <div className="text-md my-2">
-            <strong>Remarks:</strong> {item.remarks}
-          </div>
-          <div className="text-md my-2">
-            <strong>Re-testing:</strong> {item.retesting_result}
+            <p className="mt-4 text-lg text-gray-700">
+              We have completed the User Acceptance Testing phase. Thank you for your participation.
+            </p>
           </div>
         </div>
-      ))}
-    </div>
-    <DialogFooter className="sm:justify-start">
-      <DialogClose asChild>
-        <Button type="button" variant="secondary">
-          Close
-        </Button>
-      </DialogClose>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
+    }
+    
 
   
   </UatLayout>
