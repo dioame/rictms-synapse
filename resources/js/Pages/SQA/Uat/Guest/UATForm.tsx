@@ -186,59 +186,60 @@ export default function UATForm() {
     </Card>
   
     <Dialog open={isOpen} onOpenChange={toggleDialog}>
-      <DialogContent className="sm:max-w-[800px] max-w-full">
-        <DialogHeader>
-          <DialogTitle>UAT Submission</DialogTitle>
-          <DialogDescription></DialogDescription>
-        </DialogHeader>
-        <div>
-        {results.map((item:any, index:any) => (
+  <DialogContent className="sm:max-w-[800px] max-w-full max-h-[80vh] overflow-y-auto">
+    <DialogHeader>
+      <DialogTitle>UAT Submission</DialogTitle>
+      <DialogDescription></DialogDescription>
+    </DialogHeader>
+    <div>
+      {results.map((item: any, index: any) => (
         <div key={index} className="card border p-4 mb-4">
-            <h3 className="text-xl font-semibold">Module: {item.module}</h3>
-            <div className="text-md my-2">
+          <h3 className="text-xl font-semibold">Module: {item.module}</h3>
+          <div className="text-md my-2">
             <div className="space-y-4">
-        <div className="text-md">
-            <strong className="text-lg font-semibold">Procedure:</strong>
-            <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
-            {item.procedure && JSON.parse(item.procedure).map((step:any, index:any) => (
-                <li key={index}>{step}</li>
-            ))}
-            </ul>
-        </div>
+              <div className="text-md">
+                <strong className="text-lg font-semibold">Procedure:</strong>
+                <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
+                  {item.procedure &&
+                    JSON.parse(item.procedure).map((step: any, index: any) => (
+                      <li key={index}>{step}</li>
+                    ))}
+                </ul>
+              </div>
 
-        <div className="text-md">
-            <strong className="text-lg font-semibold">Requirements:</strong>
-            <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
-            {item.requirements && JSON.parse(item.requirements).map((req:any, index:any) => (
-                <li key={index}>{req}</li>
-            ))}
-            </ul>
-        </div>
-        </div>
-
+              <div className="text-md">
+                <strong className="text-lg font-semibold">Requirements:</strong>
+                <ul className="list-disc pl-6 text-sm text-gray-800 space-y-2">
+                  {item.requirements &&
+                    JSON.parse(item.requirements).map((req: any, index: any) => (
+                      <li key={index}>{req}</li>
+                    ))}
+                </ul>
+              </div>
             </div>
-            <div className="text-md my-2">
+          </div>
+          <div className="text-md my-2">
             <strong>Results:</strong> {item.test_result}
-            </div>
-            <div className="text-md my-2">
+          </div>
+          <div className="text-md my-2">
             <strong>Remarks:</strong> {item.remarks}
-            </div>
-            <div className="text-md my-2">
+          </div>
+          <div className="text-md my-2">
             <strong>Re-testing:</strong> {item.retesting_result}
-            </div>
+          </div>
         </div>
-        ))}
+      ))}
+    </div>
+    <DialogFooter className="sm:justify-start">
+      <DialogClose asChild>
+        <Button type="button" variant="secondary">
+          Close
+        </Button>
+      </DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
 
-        </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
   
   </UatLayout>
   );
