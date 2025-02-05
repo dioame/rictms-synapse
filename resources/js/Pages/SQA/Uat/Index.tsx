@@ -2,22 +2,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, router, Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { DataTableReadOnlyWrapper } from "@/Components/DataTable/DataTableReadOnlyWrapper";
-import { Sheet, SheetTrigger } from "@/Components/ui/sheet";
 import { RowActions } from "@/Components/DataTable/RowActions";
-import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon } from "lucide-react";
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/Components/ui/avatar"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/Components/ui/hover-card"
-
+import { Button } from "@/Components/ui/button";
 import { toast } from "sonner";
+import QRCode from 'react-qr-code';
 import {
   Dialog,
   DialogContent,
@@ -25,9 +13,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/Components/ui/dialog";
+  DialogTrigger,
+  DialogClose
+} from "@/Components/ui/dialog"
 import { useState } from "react";
-import { Button } from "@/Components/ui/button";
 import { getInitials } from "@/hooks/helpers";
 
 const config = {
@@ -37,12 +26,13 @@ const config = {
 
 export default function Index({ auth }: any) {
   const { results, message, roles, filters, lib_deployment_req } = usePage<any>().props;
-  const { delete: destroy } = useForm();
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [isAttachmentSheetOpen, setIsAttachmentSheetOpen] = useState(false);
-  const [editData, setEditData]  = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState<any>([]);
+
+  const toggleDialog = (value:any) => {
+    setSelectedData(value)
+    setIsOpen(!isOpen);
+  };
 
 
   const columns = [
@@ -112,11 +102,17 @@ export default function Index({ auth }: any) {
               label: "View UAT",
               href: route(`${config.route}.sqa.uat.view`,{id:value.id})
             },
+            {
+              label: "Generate QR",
+              onClick: () => toggleDialog(value),
+            },
           ]}
         />
       ),
     },
   ];
+
+  
 
 
   return (
@@ -135,6 +131,42 @@ export default function Index({ auth }: any) {
         onSelectionChange={()=>{}}
         onBulkDelete={()=>{}}
       />
+    <Dialog open={isOpen} onOpenChange={toggleDialog}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Generated QR</DialogTitle>
+          <DialogDescription>
+            Please scan the QR code or download the image.
+          </DialogDescription>
+        </DialogHeader>
+        {selectedData?.id ? (
+          <div className="grid gap-4 py-4 justify-center items-center">
+            <h1 className="flex justify-center items-center gap-2 text-center text-teal-500">
+              <b>{selectedData.name}</b>
+            </h1>
+            <div className="flex justify-center">
+              <QRCode value={route('client-uat', { id: selectedData.id })} size={256} />
+            </div>
+            <a
+              href={route('client-uat', { id: selectedData.id })}
+              className="flex justify-center items-center gap-2 text-center text-blue-500"
+              target="_blank"
+            >
+              {route('client-uat', { id: selectedData.id })}
+            </a>
+          </div>
+        ) : (
+          <p className="text-red-500">ID is missing</p>
+        )}
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Close
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     </AuthenticatedLayout>
   );
 }

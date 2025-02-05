@@ -86,3 +86,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/guest.php';
