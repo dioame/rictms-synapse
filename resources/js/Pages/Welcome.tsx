@@ -49,7 +49,7 @@ export default function LandingPage({apps}:any) {
       {/* Hero Section */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-primary">RICTMS-SyNAPSE</h1>
+          <h1 className="text-xl font-bold text-primary">RICTMS-SyNAPS</h1>
           <div className="hidden md:flex space-x-4">
             <a href="#features" onClick={(e) => handleScroll(e, 'features')}>
               <Button variant="ghost">Features</Button>
@@ -110,7 +110,7 @@ export default function LandingPage({apps}:any) {
         {/* Hero Section */}
         <section id="hero" className="min-h-[80vh] flex flex-col justify-center items-center text-center space-y-6">
           <h2 className="text-4xl font-extrabold text-gray-800 md:text-6xl">
-            Systems Nexus Architecture and Platform System Exchange
+            Systems Nexus Archiving and Process Streamlining
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl">
             Effortlessly craft modern interfaces with a beautiful, accessible, and responsive design system. Perfect for startups, SaaS, and personal projects.

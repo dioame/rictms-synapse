@@ -56,65 +56,83 @@ const data = {
   ],
   navMain: [
     {
-      title: "Software Development",
+      title: "Software Deployment",
       url: "#",
       icon: Dock,
       isActive: false,
       items: [
-        {
-          title: "All Apps",
-          url: route('application.index'),
-        },
+    
         {
           title: "Requests",
           url: "#",
         },
         {
-          title: "Pending",
-          url:route('application.pending'),
+          title: "Applications",
+          url: route('application.index'),
         },
         {
-          title: "Approved",
-          url:route('application.approved'), 
-        },
-        {
-          title: "Cancelled",
-          url:route('application.cancelled'), 
-        },
-      ],
-    },
-    {
-      title: "SQA",
-      url: "#",
-      icon: ShieldCheck,
-      isActive: false,
-      items: [
-        {
-          title: "Test Cases",
+          title: "SQA Test Cases",
           url: route('application.sqa.test-case.index'),
         },
         {
-          title: "UAT",
+          title: "SQA UAT",
           url: route('application.sqa.uat.index'),
         },
-      ],
-    },
-    {
-      title: "ICT Equipments",
-      url: "#",
-      icon: Construction,
-      isActive: false,
-      items: [
         {
-          title: "Inventory",
-          url: route('ict-inventory.index'),
+          title: "Database Section",
+          url: "#",
         },
         {
-          title: "CCTV",
-          url: '#',
+          title: "Server Section",
+          url: "#",
         },
+        
+        // {
+        //   title: "Pending",
+        //   url:route('application.pending'),
+        // },
+        // {
+        //   title: "Approved",
+        //   url:route('application.approved'), 
+        // },
+        // {
+        //   title: "Cancelled",
+        //   url:route('application.cancelled'), 
+        // },
       ],
     },
+    // {
+    //   title: "SQA",
+    //   url: "#",
+    //   icon: ShieldCheck,
+    //   isActive: false,
+    //   items: [
+    //     {
+    //       title: "Test Cases",
+    //       url: route('application.sqa.test-case.index'),
+    //     },
+    //     {
+    //       title: "UAT",
+    //       url: route('application.sqa.uat.index'),
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "ICT Equipments",
+    //   url: "#",
+    //   icon: Construction,
+    //   isActive: false,
+    //   items: [
+    //     {
+    //       title: "Inventory",
+    //       url: route('ict-inventory.index'),
+    //     },
+    //     {
+    //       title: "CCTV",
+    //       url: '#',
+    //     },
+    //   ],
+    // },
     {
       title: "Reports",
       url: "#",
