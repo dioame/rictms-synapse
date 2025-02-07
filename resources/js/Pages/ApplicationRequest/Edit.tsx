@@ -7,19 +7,10 @@ import {
 import { useForm } from "@inertiajs/react";
 import { useEffect, useMemo, useState } from "react";
 import { Form } from "./Form";
-
-import { toast } from "sonner";
 import { columns } from "./Columns";
+import { toast } from "sonner";
 
 export function EditSheet(props : any) {
-  
-
-  // const columnNames = columns.reduce((acc:any, column) => {
-  //   acc[column.name] = props.editData[column.name] || ""; // Default to an empty string if the key doesn't exist
-  //   return acc;
-  // }, {});
-
-  // const form = useForm(columnNames);
 
   const [isSubmit,setIsSubmit] = useState(false);
 

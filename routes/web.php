@@ -62,7 +62,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('application',ApplicationController::class)->names('application');
 
         //APPLICATION REQUEST
-        Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request');
+        Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request-form');
+        Route::resource('application-request',ApplicationRequestController::class)->names('application-request');
 
         //ICT INVENTORY
         Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');

@@ -35,14 +35,12 @@ import { Button } from "@/Components/ui/button";
 import { getInitials } from "@/hooks/helpers";
 
 const config = {
-    title: 'Application',
+    title: 'Application Request',
     route: 'application'
 }
 
 export default function Index({ auth }: any) {
   const { results, message, roles, filters, lib_deployment_req } = usePage<any>().props;
-  const hasRole = (role: string) => auth.roles.includes(role);
-  
   const { delete: destroy } = useForm();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -51,7 +49,7 @@ export default function Index({ auth }: any) {
   const [isFeatureSheetOpen, setIsFeatureSheetOpen] = useState(false);
   const [editData, setEditData]  = useState();
 
-
+  console.log(results)
 
   const columns = [
     {
@@ -177,33 +175,27 @@ export default function Index({ auth }: any) {
             },
             {
               label: "",
-              separator: true,
-              visible: !hasRole('user')
+              separator: true
             },
             {
               label: "Edit Details",
               onClick: () => handleEdit(value),
-              visible: !hasRole('user')
             },
             {
               label: "Add Attachment",
               onClick: () => handleEditAttachment(value),
-              visible: !hasRole('user')
             },
             {
               label: "Add Features",
               onClick: () => handleFeatures(value),
-              visible: !hasRole('user')
             },
             {
               label: "",
-              separator: true,
-              visible: !hasRole('user')
+              separator: true
             },
             {
               label: "Delete",
               onClick: () => handleDelete(value),
-              visible: !hasRole('user'),
               variant: "destructive",
               requiresConfirmation: true,
               confirmationMessage: `Are you sure you want to delete ${value.name}?`,
@@ -289,7 +281,6 @@ export default function Index({ auth }: any) {
         createButton={{
           label: `Add ${config.title}`,
           sheet: <CreateSheet config={config}/>,
-          hasButton: !hasRole('user')
         }}
       />
 

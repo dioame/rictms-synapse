@@ -19,25 +19,28 @@ class ApplicationController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
-        $results = Application::with(['attachments.libDeploymentAttachment','uptime'])
+    
+        $results = Application::with(['attachments.libDeploymentAttachment', 'uptime'])
             ->when($search, function ($query, $search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%");
-                });
+                $query->where('name', 'like', "%{$search}%");
             })
-            ->orderBy('created_at','desc')
-            ->paginate(10);
-
+            ->when(auth()->user()->roles->contains('name', 'user'), function ($query) {
+                // Assuming 'encoded' is a field in the Application model
+                $query->where('status', 'encoded');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+    
         return Inertia::render(
             'Application/Index',
             [
                 'results' => ApplicationResource::collection($results),
                 'filters' => ['search' => $search],
-                'lib_deployment_req' => LibDeploymentAttachment::all()
+                'lib_deployment_req' => LibDeploymentAttachment::all(),
             ]
         );
     }
+    
 
 
     public function pending(Request $request)
@@ -52,7 +55,7 @@ class ApplicationController extends Controller
             })
             ->where('request_status','pending')
             ->orderBy('created_at','desc')
-            ->paginate(10);
+            ->paginate(15);
 
         return Inertia::render(
             'Application/Index',
@@ -75,7 +78,7 @@ class ApplicationController extends Controller
             })
             ->where('request_status','approved')
             ->orderBy('created_at','desc')
-            ->paginate(10);
+            ->paginate(15);
 
         return Inertia::render(
             'Application/Index',
@@ -99,7 +102,7 @@ class ApplicationController extends Controller
             })
             ->where('request_status','cancelled')
             ->orderBy('created_at','desc')
-            ->paginate(10);
+            ->paginate(15);
 
         return Inertia::render(
             'Application/Index',

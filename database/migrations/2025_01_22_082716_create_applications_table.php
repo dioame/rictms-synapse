@@ -47,6 +47,7 @@ return new class extends Migration
             $table->string('data_archiving')->nullable(); 
             $table->string('sqa_tested')->nullable(); 
             $table->json('features')->nullable(); 
+            $table->unsignedInteger('encoded_by')->nullable(); 
             $table->timestamps();
             $table->softdeletes();
         });

@@ -26,6 +26,7 @@ interface Action {
   href?: string;
   onClick?: () => void;
   variant?: "default" | "destructive";
+  visible?:boolean;
   requiresConfirmation?: boolean;
   confirmationMessage?: string;
   separator?: boolean;
@@ -49,29 +50,31 @@ export function RowActions({ item, actions }: RowActionsProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         {actions.map((action, index) => (
-          <React.Fragment key={index}>
-            <DropdownMenuItem>
-              {action.href ? (
-                <Link href={action.href} className="block w-full">
-                  {action.label}
-                </Link>
-              ) : action.requiresConfirmation ? (
-                <DialogTrigger className="block w-full text-left text-red-500">
-                  {action.label}
-                </DialogTrigger>
-              ) : (
-                <button
-                  onClick={action.onClick}
-                  className="block w-full text-left"
-                >
-                  {action.label}
-                </button>
+          action.visible !== false && ( // Check if action is visible
+            <React.Fragment key={index}>
+              <DropdownMenuItem>
+                {action.href ? (
+                  <Link href={action.href} className="block w-full">
+                    {action.label}
+                  </Link>
+                ) : action.requiresConfirmation ? (
+                  <DialogTrigger className="block w-full text-left text-red-500">
+                    {action.label}
+                  </DialogTrigger>
+                ) : (
+                  <button
+                    onClick={action.onClick}
+                    className="block w-full text-left"
+                  >
+                    {action.label}
+                  </button>
+                )}
+              </DropdownMenuItem>
+              {action.separator && index !== actions.length - 1 && (
+                <DropdownMenuSeparator />
               )}
-            </DropdownMenuItem>
-            {action.separator && index !== actions.length - 1 && (
-              <DropdownMenuSeparator />
-            )}
-          </React.Fragment>
+            </React.Fragment>
+          )
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

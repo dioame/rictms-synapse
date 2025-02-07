@@ -34,6 +34,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      visible?:boolean
     }[];
   }[];
   currentPath: string;
@@ -73,7 +74,9 @@ export function NavMain({
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items?.map((subItem) => {
+                  {item.items?.map((subItem) => {
+                      if (subItem.visible === false) return null; // Skip item if visible is false
+
                       const isActive = window.location.href === subItem.url;
                       return (
                         <SidebarMenuSubItem

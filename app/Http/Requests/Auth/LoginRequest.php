@@ -96,6 +96,8 @@ class LoginRequest extends FormRequest
             'avatar' => $employeeDetails['image_path'] ?? null,
             'password' => bcrypt($this->input('password')), // Store the password securely
         ]);
+
+        $user->assignRole('user');
         
 
         Auth::login($user); // Log in the newly created user

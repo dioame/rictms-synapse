@@ -45,6 +45,7 @@ interface DataTableProps<T> {
   createButton: {
     label: string;
     sheet: React.ReactNode;
+    hasButton: boolean;
   };
   selectable?: boolean;
   onSelectionChange?: (selectedIds: number[]) => void;
@@ -137,7 +138,7 @@ export function CustomDataTableWrapper({
             </Button>
           )}
         </div>
-        {createButton && (
+        {createButton.hasButton && (
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button

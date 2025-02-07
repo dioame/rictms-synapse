@@ -54,7 +54,8 @@ class Application extends Model
         'information_systems_served',
         'data_archiving',
         'sqa_tested',
-        'features'
+        'features',
+         'encoded_by'
     ];
 
     // Define the dates (for casting to Carbon instances)

@@ -69,6 +69,7 @@ class ApplicationsTableSeeder extends Seeder
                 'information_systems_served' => $faker->sentence,
                 'data_archiving' => $faker->randomElement(['Enabled', 'Disabled']),
                 'sqa_tested' => $faker->randomElement(['Yes', 'No']),
+                'encoded_by' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -31,159 +31,178 @@ import {
 import { route } from "ziggy-js"
 
 // This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "SyNAPSE",
-      logo: GalleryVerticalEnd,
-      plan: "Mabuhay!",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Software Deployment",
-      url: "#",
-      icon: Dock,
-      isActive: false,
-      items: [
-    
-        {
-          title: "Requests",
-          url: "#",
-        },
-        {
-          title: "Applications",
-          url: route('application.index'),
-        },
-        {
-          title: "SQA Test Cases",
-          url: route('application.sqa.test-case.index'),
-        },
-        {
-          title: "SQA UAT",
-          url: route('application.sqa.uat.index'),
-        },
-        {
-          title: "Database Section",
-          url: "#",
-        },
-        {
-          title: "Server Section",
-          url: "#",
-        },
-        
-        // {
-        //   title: "Pending",
-        //   url:route('application.pending'),
-        // },
-        // {
-        //   title: "Approved",
-        //   url:route('application.approved'), 
-        // },
-        // {
-        //   title: "Cancelled",
-        //   url:route('application.cancelled'), 
-        // },
-      ],
-    },
-    // {
-    //   title: "SQA",
-    //   url: "#",
-    //   icon: ShieldCheck,
-    //   isActive: false,
-    //   items: [
-    //     {
-    //       title: "Test Cases",
-    //       url: route('application.sqa.test-case.index'),
-    //     },
-    //     {
-    //       title: "UAT",
-    //       url: route('application.sqa.uat.index'),
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "ICT Equipments",
-    //   url: "#",
-    //   icon: Construction,
-    //   isActive: false,
-    //   items: [
-    //     {
-    //       title: "Inventory",
-    //       url: route('ict-inventory.index'),
-    //     },
-    //     {
-    //       title: "CCTV",
-    //       url: '#',
-    //     },
-    //   ],
-    // },
-    {
-      title: "Reports",
-      url: "#",
-      icon: GitGraphIcon,
-      isActive: false,
-      items: [
-        {
-          title: "SQA Test Plan",
-          url: route('reports.sqa-test-plan'),
-        },
-      ],
-    },
-    {
-      title: "Libraries",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: false,
-      items: [
-        {
-          title: "Deployment Requirements",
-          url: route('lib-deployment-req.index'),
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      isActive: false,
-      items: [
-        {
-          title: "User",
-          url: route('users.index'),
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Developers Area",
-      url: "#",
-      icon: Frame,
-    },
-  ],
-}
+
+
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: any;
 }
 
+
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const hasRole = (role: string) => user.roles.includes(role);
+
+  console.log(user.roles)
+  console.log(hasRole('user'))
+
+  const data = {
+    user: {
+      name: user.username,
+      email: "m@example.com",
+      avatar: user.avatar,
+    },
+    teams: [
+      {
+        name: 'SyNAPS',
+        logo: GalleryVerticalEnd,
+        plan: "Mabuhay!",
+      },
+      {
+        name: "Acme Corp.",
+        logo: AudioWaveform,
+        plan: "Startup",
+      },
+      {
+        name: "Evil Corp.",
+        logo: Command,
+        plan: "Free",
+      },
+    ],
+    navMain: [
+      {
+        title: "Software Deployment",
+        url: "#",
+        icon: Dock,
+        isActive: false,
+        items: [
+      
+          {
+            title: "Requests",
+            url: route('application-request.index'),
+          },
+          {
+            title: "Applications",
+            url: route('application.index'),
+          },
+          {
+            title: "For PIA",
+            url: "#",
+            visible: !hasRole('user'),
+          },
+          {
+            title: "SQA Test Cases",
+            url: route('application.sqa.test-case.index'),
+            visible: !hasRole('user'),
+          },
+          {
+            title: "SQA UAT",
+            url: route('application.sqa.uat.index'),
+            visible: !hasRole('user'),
+          },
+          {
+            title: "Database Section",
+            url: "#",
+            visible: !hasRole('user'),
+          },
+          {
+            title: "Server Section",
+            url: "#",
+            visible: !hasRole('user'),
+          },
+          
+          // {
+          //   title: "Pending",
+          //   url:route('application.pending'),
+          // },
+          // {
+          //   title: "Approved",
+          //   url:route('application.approved'), 
+          // },
+          // {
+          //   title: "Cancelled",
+          //   url:route('application.cancelled'), 
+          // },
+        ],
+      },
+      // {
+      //   title: "SQA",
+      //   url: "#",
+      //   icon: ShieldCheck,
+      //   isActive: false,
+      //   items: [
+      //     {
+      //       title: "Test Cases",
+      //       url: route('application.sqa.test-case.index'),
+      //     },
+      //     {
+      //       title: "UAT",
+      //       url: route('application.sqa.uat.index'),
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: "ICT Equipments",
+      //   url: "#",
+      //   icon: Construction,
+      //   isActive: false,
+      //   items: [
+      //     {
+      //       title: "Inventory",
+      //       url: route('ict-inventory.index'),
+      //     },
+      //     {
+      //       title: "CCTV",
+      //       url: '#',
+      //     },
+      //   ],
+      // },
+      {
+        title: "Reports",
+        url: "#",
+        icon: GitGraphIcon,
+        isActive: false,
+        items: [
+          {
+            title: "SQA Test Plan",
+            url: route('reports.sqa-test-plan'),
+          },
+        ],
+      },
+      {
+        title: "Libraries",
+        url: "#",
+        icon: SquareTerminal,
+        isActive: false,
+        items: [
+          {
+            title: "Deployment Requirements",
+            url: route('lib-deployment-req.index'),
+          },
+        ],
+      },
+      {
+        title: "Settings",
+        url: "#",
+        icon: Settings2,
+        isActive: false,
+        items: [
+          {
+            title: "User",
+            url: route('users.index'),
+          },
+        ],
+      },
+    ],
+    projects: [
+      {
+        name: "Developers Area",
+        url: "#",
+        icon: Frame,
+      },
+    ],
+  }
+
+
   const currentPath = window.location.pathname;
   return (
     <Sidebar collapsible="icon" {...props}>
