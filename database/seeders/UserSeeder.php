@@ -20,13 +20,16 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'Dioame Jade C. Rendon',
             'email' => 'admin@admin.com',
-            'password' => 'admin'
+            'username' => 'admin',
+            'password' => bcrypt('admin')
 
         ]);
         // assign role user to the users
         User::factory(50)->create()->each(function ($user) {
             $user->assignRole('user');
-            $user->created_at = fake()->dateTimeBetween('-1 year', 'now');
+            $faker = \Faker\Factory::create();
+            $user->username = $faker->username; 
+            $user->created_at = $faker->dateTimeBetween('-1 year', 'now');
             $user->save();
         });
 

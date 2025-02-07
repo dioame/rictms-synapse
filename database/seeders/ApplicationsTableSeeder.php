@@ -19,7 +19,7 @@ class ApplicationsTableSeeder extends Seeder
         $faker = Faker::create();
 
         // Create 100 entries
-        foreach (range(1, 100) as $index) {
+        foreach (range(1, 200) as $index) {
             DB::table('applications')->insert([
                 'id' => Str::uuid()->toString(),
                 'name' => $faker->company,

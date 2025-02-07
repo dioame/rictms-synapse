@@ -29,6 +29,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/Components/ui/sidebar"
+import { toast } from "sonner";
+
+import { useForm } from "@inertiajs/react"
 
 export function NavUser({
   user,
@@ -40,6 +43,18 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { post } = useForm()
+
+  const handleLogout = async () => {
+    post(route("logout"), {
+      onSuccess: () => {
+        toast.success(`Success!`, {
+          description: `Logout successful`,
+          position: "top-center",
+        });
+      },
+    })
+  }
 
   return (
     <SidebarMenu>
@@ -102,7 +117,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <LogOut />
               Log out
             </DropdownMenuItem>

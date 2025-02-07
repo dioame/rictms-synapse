@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('uptime_checks', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->integer('status_code')->nullable();
             $table->boolean('is_up')->default(false);
             $table->timestamps();

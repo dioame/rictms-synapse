@@ -26,7 +26,7 @@ export function CreateUserSheet({ roles }: CreateUserSheetProps) {
   const { data, setData, post, processing, errors, reset, wasSuccessful } =
     useForm({
       name: "",
-      email: "",
+      username: "",
       password: "",
       password_confirmation: "",
       role: "",
@@ -88,18 +88,18 @@ export function CreateUserSheet({ roles }: CreateUserSheetProps) {
             </div>
 
             <div className="mt-4">
-              <Label className="text-primary" htmlFor="email">
-                Email
+              <Label className="text-primary" htmlFor="username">
+                Username
               </Label>
               <Input
                 className="mt-1"
-                id="email"
-                type="email"
-                value={data.email}
-                onChange={(e) => setData("email", e.target.value)}
+                id="username"
+                type="username"
+                value={data.username}
+                onChange={(e) => setData("username", e.target.value)}
                 required
               />
-              <InputError message={errors.email} className="mt-2" />
+              <InputError message={errors.username} className="mt-2" />
             </div>
             <div className="mt-4">
               <Label className="text-primary" htmlFor="password">
