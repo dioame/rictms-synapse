@@ -16,6 +16,10 @@ class UserSeeder extends Seeder
     {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
+        Role::create(['name' => 'server_admin']);
+        Role::create(['name' => 'db_admin']);
+        Role::create(['name' => 'developers']);
+        Role::create(['name' => 'sqa']);
 
         User::factory()->create([
             'name' => 'Dioame Jade C. Rendon',

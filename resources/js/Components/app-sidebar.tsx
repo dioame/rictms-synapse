@@ -66,6 +66,10 @@ const data = {
           url: route('application.index'),
         },
         {
+          title: "Requests",
+          url: "#",
+        },
+        {
           title: "Pending",
           url:route('application.pending'),
         },

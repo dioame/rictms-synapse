@@ -6,6 +6,7 @@ import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { CircleArrowRight } from "lucide-react";
 
 
 export default function LoginForm({ status, canResetPassword }: { status?: string; canResetPassword: boolean }) {
@@ -32,7 +33,7 @@ export default function LoginForm({ status, canResetPassword }: { status?: strin
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your username below to login to your account.</CardDescription>
+          <CardDescription>Enter your SyNapse or MyPortal credential below to login to your account.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={submit}>
@@ -89,8 +90,8 @@ export default function LoginForm({ status, canResetPassword }: { status?: strin
                   </svg>
                 Login with Google
               </Button>
-              
 
+              
             </div>
           </form>
         </CardContent>

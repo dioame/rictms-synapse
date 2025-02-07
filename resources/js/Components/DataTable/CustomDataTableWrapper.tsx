@@ -195,6 +195,7 @@ export function CustomDataTableWrapper({
                 <TableCell
                   key={`${item.id}-${column.key}`}
                   className={column.className}
+                  style={{padding:"0px"}}
                   
                 >
                   {column.render ? column.render(item) : item[column.key]}

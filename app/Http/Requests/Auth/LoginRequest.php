@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Http;
 
 class LoginRequest extends FormRequest
 {
@@ -41,7 +43,21 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
+        // Attempt local authentication first
+        if (Auth::attempt($this->only('username', 'password'))) {
+            RateLimiter::clear($this->throttleKey());
+            return;
+        }
+
+        $portal_url = env('PORTAL_URL'); 
+
+        // Try external API authentication if local fails
+        $response = Http::post($portal_url.'/api/rest-auth/login/', [
+            'username' => $this->input('username'),
+            'password' => $this->input('password'),
+        ]);
+
+        if ($response->failed()) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -49,8 +65,43 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Get user details from the external API after successful authentication
+        $apiResponse = $response->json();
+
+
+   
+        $token = $apiResponse['key'];
+        
+        // $employeeResponse = Http::withToken($token)->get('https://caraga-portal.dswd.gov.ph/api/employee/list/search/?q=djcrendon');
+        $employeeResponse = Http::withHeaders([
+            'Authorization' => 'Token ' . $token, // Manually set the Token header
+        ])->get($portal_url.'/api/employee/list/search/', [
+            'q' => $this->input('username'),
+        ]);
+
+        if ($employeeResponse->failed() || empty($employeeResponse->json())) {
+            throw ValidationException::withMessages([
+                'username' => __('User not found in employee records.'),
+            ]);
+        }
+
+        $employeeDetails = $employeeResponse->json()[0];
+
+        // Create a new local user entry
+        $user = User::create([
+            'name' => $employeeDetails['first_name'].' '.($employeeDetails['middle_name'] ? $employeeDetails['middle_name'][0].'.' : '').' '.$employeeDetails['last_name'],
+            'username' => $employeeDetails['username'],
+            'email' => $employeeDetails['email'] ?? null,
+            'position' => $employeeDetails['position'] ?? null,
+            'avatar' => $employeeDetails['image_path'] ?? null,
+            'password' => bcrypt($this->input('password')), // Store the password securely
+        ]);
+        
+
+        Auth::login($user); // Log in the newly created user
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Ensure the login request is not rate limited.
