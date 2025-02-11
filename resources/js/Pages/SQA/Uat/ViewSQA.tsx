@@ -167,6 +167,7 @@ export default function Index({ auth }: any) {
         createButton={{
             label: `Add ${config.title}`,
             sheet: <CreateSheet config={config} appId={appId}/>,
+            hasButton: true
         }}
         />
 
