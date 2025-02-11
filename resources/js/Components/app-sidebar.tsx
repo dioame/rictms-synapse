@@ -40,10 +40,10 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
-  const hasRole = (role: string) => user.roles.includes(role);
+const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
 
-  console.log(user.roles)
-  console.log(hasRole('user'))
+console.log(user.roles);
+console.log(hasRole('user'));
 
   const data = {
     user: {
@@ -161,6 +161,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         url: "#",
         icon: GitGraphIcon,
         isActive: false,
+        visible: !hasRole('user'),
         items: [
           {
             title: "SQA Test Plan",
@@ -173,6 +174,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         url: "#",
         icon: SquareTerminal,
         isActive: false,
+        visible: !hasRole('user'),
         items: [
           {
             title: "Deployment Requirements",
@@ -185,6 +187,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         url: "#",
         icon: Settings2,
         isActive: false,
+        visible: !hasRole('user'),
         items: [
           {
             title: "User",

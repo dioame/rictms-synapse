@@ -26,8 +26,10 @@ class ApplicationRequestController extends Controller
                     $query->where('name', 'like', "%{$search}%");
                 });
             })
+            ->when(auth()->user()->roles->contains('name', 'user'), function ($query) {
+                $query->where('encoded_by', auth()->user()->id);
+            })
             ->where('request_status','pending')
-            ->where('encoded_by',auth()->user()->id)
             ->orderBy('created_at','desc')
             ->paginate(15);
 

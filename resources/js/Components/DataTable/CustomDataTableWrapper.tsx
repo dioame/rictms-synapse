@@ -179,32 +179,40 @@ export function CustomDataTableWrapper({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.data.map((item:any) => (
-            <TableRow key={item.id}>
-              {selectable && (
-                <TableCell className="w-12" >
-                  <Checkbox
-                    checked={selectedRows.includes(item.id)}
-                    onCheckedChange={(checked: boolean) =>
-                      handleSelectRow(checked, item.id)
-                    }
-                    aria-label={`Select row ${item.id}`}
-                  />
-                </TableCell>
-              )}
-              {columns.map((column:any) => (
-                <TableCell
-                  key={`${item.id}-${column.key}`}
-                  className={column.className}
-                  style={{padding:"0px"}}
-                  
-                >
-                  {column.render ? column.render(item) : item[column.key]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
+  {data.data.length > 0 ? (
+    data.data.map((item: any) => (
+      <TableRow key={item.id}>
+        {selectable && (
+          <TableCell className="w-12">
+            <Checkbox
+              checked={selectedRows.includes(item.id)}
+              onCheckedChange={(checked: boolean) =>
+                handleSelectRow(checked, item.id)
+              }
+              aria-label={`Select row ${item.id}`}
+            />
+          </TableCell>
+        )}
+        {columns.map((column: any) => (
+          <TableCell
+            key={`${item.id}-${column.key}`}
+            className={column.className}
+            style={{ padding: "0px" }}
+          >
+            {column.render ? column.render(item) : item[column.key]}
+          </TableCell>
+        ))}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columns.length + (selectable ? 1 : 0)} className="text-center py-4">
+        No data found
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
+
       </Table>
 
       {data.meta.last_page > 1 && <Paginations pagination={data.meta} />}

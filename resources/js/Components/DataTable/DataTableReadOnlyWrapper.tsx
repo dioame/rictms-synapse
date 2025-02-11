@@ -127,7 +127,6 @@ export function DataTableReadOnlyWrapper({
         <TableHeader style={{ backgroundColor: "black"}}>
           <TableRow>
          
-         
             {columns.map((column:any) => (
               <TableHead key={column.key} className={column.className} style={{color:"white",padding:"4px",textAlign: "center"}}>
                 {column.label}
@@ -135,23 +134,30 @@ export function DataTableReadOnlyWrapper({
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {data.data.map((item:any) => (
-            <TableRow key={item.id}>
+    <TableBody>
+  {data.data.length > 0 ? (
+    data.data.map((item: any) => (
+      <TableRow key={item.id}>
+        {columns.map((column: any) => (
+          <TableCell
+            key={`${item.id}-${column.key}`}
+            className={column.className}
+            style={{ padding: "0px" }}
+          >
+            {column.render ? column.render(item) : item[column.key]}
+          </TableCell>
+        ))}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columns.length + (selectable ? 1 : 0)} className="text-center py-4">
+        No data found
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
 
-
-              {columns.map((column:any) => (
-                <TableCell
-                  key={`${item.id}-${column.key}`}
-                  className={column.className}
-                  style={{padding:"0px"}}
-                >
-                  {column.render ? column.render(item) : item[column.key]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
       </Table>
 
       {data.meta.last_page > 1 && <Paginations pagination={data.meta} />}

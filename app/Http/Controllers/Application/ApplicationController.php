@@ -25,8 +25,7 @@ class ApplicationController extends Controller
                 $query->where('name', 'like', "%{$search}%");
             })
             ->when(auth()->user()->roles->contains('name', 'user'), function ($query) {
-                // Assuming 'encoded' is a field in the Application model
-                $query->where('status', 'encoded');
+                $query->where('encoded_by', auth()->user()->id);
             })
             ->orderBy('created_at', 'desc')
             ->paginate(15);
@@ -223,5 +222,12 @@ class ApplicationController extends Controller
     public function attachmentDelete($id){
         ApplicationDeploymentAttachment::destroy($id);
         return redirect()->back()->with('success', 'Application deleted.');
+    }
+
+    public function timeline()
+    {
+        return Inertia::render(
+            'Application/Timeline',
+        );
     }
 }

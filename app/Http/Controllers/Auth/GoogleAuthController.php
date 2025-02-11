@@ -36,6 +36,8 @@ class GoogleAuthController extends Controller
                     'password' => bcrypt(str()->random(16)), // Random password
                 ]
             );
+            
+            $user->assignRole('user');
 
             Auth::login($user);
 

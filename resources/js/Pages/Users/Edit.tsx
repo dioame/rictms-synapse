@@ -20,11 +20,12 @@ import {
   
 
   export function EditUserSheet({ roles, editData }: any) {
-    console.log(editData)
+
     const { data, setData, post, processing, errors, reset, wasSuccessful } =
       useForm({
         name: editData.name,
         email: editData.email,
+        username: editData.username,
         role: editData.roles[0],
         avatar: {},
       });
@@ -80,6 +81,22 @@ import {
                 />
   
                 <InputError message={errors.avatar} className="mt-2" />
+              </div>
+
+              <div className="mt-4">
+                <Label className="text-primary" htmlFor="username">
+                  Username
+                </Label>
+                <Input
+                  className="mt-1"
+                  id="username"
+                  type="username"
+                  value={data.username}
+                  onChange={(e) => setData("email", e.target.value)}
+                  required
+                  readOnly={true}
+                />
+                <InputError message={errors.email} className="mt-2" />
               </div>
   
               <div className="mt-4">

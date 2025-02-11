@@ -10,13 +10,19 @@ use App\Models\UptimeCheck;
 class ApplicationService
 {
    public function store($params){
-       Application::create($params);
-       $this->checkUptime($params['url']);
+        $params['encoded_by'] = auth()->user()->id;
+        Application::create($params);
+        if (isset($params['url'])) {
+            $this->checkUptime($params['url']);
+        }
    }
 
    public function update($id, $params){
-       Application::find($id)->update($params);
-       $this->checkUptime($params['url']);
+        $params['encoded_by'] = auth()->user()->id;
+        Application::find($id)->update($params);
+        if (isset($params['url'])) {
+            $this->checkUptime($params['url']);
+        }
    }
 
    private function checkUptime($url){

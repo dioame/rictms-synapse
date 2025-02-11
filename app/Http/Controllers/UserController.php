@@ -55,32 +55,53 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
-        // create user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Check if the user exists based on the username
+        $user = User::where('username', $request->username)->first();
 
-        // store avatar
-        $avatar = $request->file('avatar');
-        $avatarName = $user->id.'.'.$avatar->getClientOriginalExtension();
-        $avatar->storeAs('public/avatars', $avatarName);
-        $user->update(['avatar' => $avatarName]);
+        if ($user) {
+            // Update existing user
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+            $message = 'User ' . $user->name . ' updated successfully';
+        } else {
+            // Create new user
+            $user = User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            $message = 'User ' . $user->name . ' created successfully';
+        }
 
-        // assign role
-        $user->assignRole($request->role);
+        // Store avatar if provided
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarName = $user->id . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/avatars', $avatarName);
+            $user->update(['avatar' => $avatarName]);
+        }
 
-        // send verification email
-        $user->sendEmailVerificationNotification();
-        return Inertia::render('Users/Index', [
-            'users' => UserResource::collection(User::paginate(10)),
-            'roles' => Role::all()->pluck('name'),
-            'message' => 'User ' . $user->name . ' created successfully'
+        // Assign role
+        if ($request->role) {
+            $user->syncRoles([$request->role]);
+        }
+
+        // Send verification email only if the user is newly created
+        if (!$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+        }
+
+        return back()->with([
+            'status' => 'user-updated',
+            'user' => $user->fresh(),
         ]);
     }
+
 
     /**
      * Display the specified resource.

@@ -166,16 +166,8 @@ export default function Index({ auth }: any) {
           item={value}
           actions={[
             {
-              label: "View More",
-              href: route(`${config.route}.show`,{id:value.id})
-            },
-            {
               label: "Print Request",
               href: route(`${config.route}-request-form`,{id:value.id})
-            },
-            {
-              label: "",
-              separator: true
             },
             {
               label: "Edit Details",
@@ -281,6 +273,7 @@ export default function Index({ auth }: any) {
         createButton={{
           label: `Add ${config.title}`,
           sheet: <CreateSheet config={config}/>,
+          hasButton: true
         }}
       />
 

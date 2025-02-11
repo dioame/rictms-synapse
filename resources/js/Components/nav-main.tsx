@@ -31,6 +31,7 @@ export function NavMain({
     url: string;
     icon?: LucideIcon;
     isActive?: boolean;
+    visible?:boolean;
     items?: {
       title: string;
       url: string;
@@ -52,6 +53,7 @@ export function NavMain({
           </Link>
         </SidebarMenuItem>
         {items.map((item) => {
+          if (item.visible === false) return null;
           // Check if any subitem URL matches the current window location
           const isCollapsibleOpen = item.items?.some(
             (subItem) => window.location.href === subItem.url

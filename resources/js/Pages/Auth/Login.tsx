@@ -45,7 +45,7 @@ export default function LoginForm({ status, canResetPassword }: { status?: strin
                   type="text"
                   name="username"
                   value={data.username}
-                  placeholder="Username"
+                  placeholder="Username/Email"
                   autoComplete="username"
                   required
                   onChange={(e) => setData("username", e.target.value)}
@@ -66,6 +66,7 @@ export default function LoginForm({ status, canResetPassword }: { status?: strin
                   type="password"
                   required
                   value={data.password}
+                  placeholder="Password"
                   className="block mt-1 w-full"
                   autoComplete="current-password"
                   onChange={(e) => setData("password", e.target.value)}
