@@ -12,6 +12,7 @@ use App\Http\Resources\Application\ApplicationResource;
 use App\Http\Requests\Application\ApplicationRequest;
 use App\Http\Services\Application\ApplicationService;
 use Illuminate\Support\Facades\Redirect;
+use App\Helpers\Security;
 
 class ApplicationController extends Controller
 {
@@ -29,7 +30,12 @@ class ApplicationController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(15);
-    
+
+        // $results->getCollection()->transform(function ($application) {
+        //     $application->security_checks_passed = Security::countSecureChecks($application->url);
+        //     return $application;
+        // });
+
         return Inertia::render(
             'Application/Index',
             [
@@ -118,11 +124,12 @@ class ApplicationController extends Controller
     {
 
         $results = Application::with(['attachments.libDeploymentAttachment'])->where('id', $id)->first();
-
+        $security = Security::checkSecurity($results->url);
         return Inertia::render(
             'Application/View',
             [
                 'results' => $results,
+                'security' => $security
             ]
         );
     }
@@ -135,7 +142,7 @@ class ApplicationController extends Controller
 
     public function update($id, ApplicationRequest $request, ApplicationService $service)
     {
-
+        
         $service->update($id, $request->all());
         return redirect()->back()->with('success', 'Application Updated.');
     }

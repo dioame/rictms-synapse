@@ -10,15 +10,17 @@ import { RowActions } from "@/Components/DataTable/RowActions";
 import Swal from 'sweetalert2';
 import {  useForm  } from "@inertiajs/react";
 import { toast } from "sonner";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 const config = {
   title: 'Application',
   route: 'application'
 }
 
-export default function Index({ auth, results }: any) {
+export default function Index({ auth, results, security }: any) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
    const { delete: destroy } = useForm();
+
 
   function handleDelete(val:any){
       Swal.fire({
@@ -54,6 +56,7 @@ export default function Index({ auth, results }: any) {
         },
       });
   }
+
   return (
     <AuthenticatedLayout auth_user={auth.user} header="Application Details">
       <Head title="Application Details" />
@@ -246,33 +249,79 @@ export default function Index({ auth, results }: any) {
 
 
         <Card>
-  <CardHeader>
-    <CardTitle>Features</CardTitle>
-    <CardDescription>List of features for this application</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <div className="space-y-4">
-      {results.features ? (
-        // Parse the JSON string into an array
-        JSON.parse(results.features).length > 0 ? (
-          JSON.parse(results.features).map((feature: any, index: any) => (
-            <div key={index}>
-              <span className="font-bold">{index+1}. {feature}</span>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500 text-xs">No features available</p>
-        )
-      ) : (
-        <p className="text-gray-500 text-xs">Features data not available</p>
-      )}
-    </div>
-  </CardContent>
-</Card>
+      <CardHeader>
+        <CardTitle>Features</CardTitle>
+        <CardDescription>List of features for this application</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {results.features ? (
+            // Parse the JSON string into an array
+            JSON.parse(results.features).length > 0 ? (
+              JSON.parse(results.features).map((feature: any, index: any) => (
+                <div key={index}>
+                  <span className="font-bold">{index+1}. {feature}</span>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-xs">No features available</p>
+            )
+          ) : (
+            <p className="text-gray-500 text-xs">Features data not available</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+
+
+
+    
 
 
 
       </div>
+      
+      <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
+      <Card>
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold">
+          Vulnerability Assessment (Initial Review)
+        </CardTitle>
+        <CardDescription className="text-sm text-muted-foreground">
+          <strong>Disclaimer:</strong> The Initial Assessment does not represent the final Vulnerability Results. It serves as a preliminary evaluation and should not be interpreted as a confirmed security finding. The final results must be thoroughly analyzed and validated by the DSWD Cybersecurity and Vulnerability Assessment Team.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {security.map((check:any, index:any) => (
+            <div
+              key={index}
+              className={`p-4 rounded-lg border ${
+                check.isSecure ? "border-green-500 bg-green-50 dark:bg-green-900" : "border-red-500 bg-red-50 dark:bg-red-900"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <h3 className="font-medium">{check.name}</h3>
+                {check.isSecure ? (
+                  <ShieldCheck className="text-green-600 dark:text-green-400" size={20} />
+                ) : (
+                  <ShieldAlert className="text-red-600 dark:text-red-400" size={20} />
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{check.description}</p>
+              {!check.isSecure && (
+                <p className="text-sm mt-2 text-red-600 dark:text-red-300 font-medium">
+                  🔹 Recommendation: {check.recommendation}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+    </div>
+
+      
     </AuthenticatedLayout>
   );
 }

@@ -55,7 +55,8 @@ class ApplicationResource extends JsonResource
             'sqa_test_case' => $this->sqaTestCase,
             'sqa_uat' => $this->sqaUat,
             'features' => json_decode($this->features,true),
-            'features_count' => $this->features ? count(json_decode($this->features,true)) : 0
+            'features_count' => $this->features ? count(json_decode($this->features,true)) : 0,
+            'requirement_remarks'=>$this->requirement_remarks
         ];
     }
 }

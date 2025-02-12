@@ -8,6 +8,7 @@ use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
 use App\Http\Controllers\Dxcloud\DxcloudController;
+use App\Http\Controllers\Security\SecurityController;
 use App\Http\Controllers\Libraries\DeploymentRequirementsController;
 use App\Http\Controllers\SQA\TestCaseController;
 use App\Http\Controllers\SQA\UatController;
@@ -95,6 +96,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::get('/reports/sqa-test-plan', [SQATestPlanController::class, 'index'])->name('reports.sqa-test-plan');
             Route::get('/reports/sqa-test-plan/{id}', [SQATestPlanController::class, 'generate'])->name('reports.sqa-test-plan-generate');
         });
+
+        Route::post('/security/checks', [SecurityController::class, 'getSecurityChecksResult'])->name('security.checks');
+        Route::resource('security', SecurityController::class)->names('security');
         
 });
 

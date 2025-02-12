@@ -55,8 +55,16 @@ class Application extends Model
         'data_archiving',
         'sqa_tested',
         'features',
+        'requirement_remarks',
          'encoded_by'
     ];
+
+    public function setEncodedByAttribute($value)
+    {
+        if (!$this->exists) { // Allow setting only if the model is being created
+            $this->attributes['encoded_by'] = $value;
+        }
+    }
 
     // Define the dates (for casting to Carbon instances)
     protected $dates = ['deployment_date'];

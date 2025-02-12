@@ -10,6 +10,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  Shield,
   Dock,
   ShieldCheck,
   Construction,
@@ -179,6 +180,18 @@ console.log(hasRole('user'));
           {
             title: "Deployment Requirements",
             url: route('lib-deployment-req.index'),
+          },
+        ],
+      },
+      {
+        title: "Security/Assessment",
+        url: "#",
+        icon: Shield,
+        isActive: false,
+        items: [
+          {
+            title: "Security",
+            url: route('security.index'),
           },
         ],
       },

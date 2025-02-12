@@ -32,7 +32,7 @@ class UatController extends Controller
             })
             ->where('status', '<>', 'development')
             ->orderBy('created_at','desc')
-            ->paginate(10);
+            ->paginate(15);
 
         return Inertia::render(
             'SQA/Uat/Index',

@@ -347,6 +347,24 @@ export const columns = [
       ),
     },
     {
+      name: "requirement_remarks",
+      render: (labelName:any, formModel:any) => (
+        <div key={labelName}>
+        <Label className="text-primary" htmlFor={labelName}>
+          {labelName.replace(/_/g, " ").toUpperCase()} {/* Replace _ with space */}
+        </Label>
+        <Textarea
+            className="mt-1"
+            id={labelName}
+            value={formModel.data[labelName]}
+            onChange={(e) => formModel.setData(labelName, e.target.value)}
+            placeholder={labelName}
+          />
+        <InputError message={formModel.errors[labelName]} className="mt-2" /> {/* Dynamic error */}
+      </div>
+      ),
+    },
+    {
       name: "accessibility",
       render: (labelName:any, formModel:any) => (
         <div key={labelName}>

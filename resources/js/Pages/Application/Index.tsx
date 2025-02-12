@@ -8,7 +8,7 @@ import { EditSheet } from "./Edit";
 import { AttachmentSheet } from "./attachment";
 import { FeatureSheet } from "./feature";
 import { RowActions } from "@/Components/DataTable/RowActions";
-import { Plus, Trash2, FileArchive, FileArchiveIcon, Files,CalendarIcon,ArrowUpCircle,ArrowDownCircle,ChevronUpSquare ,ChevronsUp,ChevronsDown} from "lucide-react";
+import { CheckCircle, XCircle, FileArchiveIcon, Laptop, Smartphone, Globe ,ChevronsUp,ChevronsDown, BadgeCheck, FlaskConical, Bug, Wrench, Rocket} from "lucide-react";
 
 import {
   Avatar,
@@ -85,37 +85,82 @@ export default function Index({ auth }: any) {
     {
       key: "platform",
       label: "Platform",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
-      key: "tech_stack",
-      label: "Tech Stack",
-      className: "hidden sm:table-cell text-center",
+      className: "hidden sm:table-cell text-left",
+      render: (value: { platform: "web" | "desktop" | "mobile" }) => {
+        const platformIcons: Record<"web" | "desktop" | "mobile", JSX.Element> = {
+          web: <Globe className="w-5 h-5 text-blue-500" />,
+          desktop: <Laptop className="w-5 h-5 text-gray-500" />,
+          mobile: <Smartphone className="w-5 h-5 text-green-500" />,
+        };
+    
+        return (
+          <div className="flex items-left justify-left gap-2">
+            {platformIcons[value.platform] ?? <span className="text-gray-500">Unknown</span>}
+            <span className="font-medium capitalize">{value.platform}</span>
+          </div>
+        );
+      },
     },
     
-    // {
-    //   key: "is_pia",
-    //   label: "Is PIA?",
-    //   className: "hidden sm:table-cell text-center",
-    // },
     {
-      key: "division",
-      label: "Division",
+      key: "is_pia",
+      label: "Is PIA?",
       className: "hidden sm:table-cell text-center",
+      render: (value: { is_pia: number }) => {
+        const isYes = value.is_pia === 1;
+    
+        return (
+          <div className="flex items-center justify-center gap-2 ml-5 mr-5">
+            {isYes ? (
+              <CheckCircle className="w-5 h-5 text-green-500" />
+            ) : (
+              <XCircle className="w-5 h-5 text-red-500" />
+            )}
+            <span className={`font-medium ${isYes ? "text-green-600" : "text-red-600"}`}>
+              {isYes ? "Yes" : "No"}
+            </span>
+          </div>
+        );
+      },
     },
-    {
-      key: "section",
-      label: "Section",
-      className: "hidden sm:table-cell text-center",
-    },
+    
     {
       key: "status",
       label: "Status",
       className: "hidden sm:table-cell text-center",
+      render: (params: { status: "staging" | "testing" | "uat" | "development" | "production" }) => {
+        const statusConfig: Record<typeof params.status, { label: string; color: string; icon: JSX.Element }> = {
+          staging: { label: "Staging", color: "bg-yellow-500 text-white", icon: <FlaskConical className="w-3 h-3" /> },
+          testing: { label: "Testing", color: "bg-blue-500 text-white", icon: <Bug className="w-3 h-3" /> },
+          uat: { label: "UAT", color: "bg-purple-500 text-white", icon: <Wrench className="w-3 h-3" /> },
+          development: { label: "Development", color: "bg-gray-500 text-white", icon: <FlaskConical className="w-3 h-3" /> },
+          production: { label: "Production", color: "bg-green-500 text-white", icon: <Rocket className="w-3 h-3" /> },
+        };
+    
+        const { label, color, icon } = statusConfig[params.status] || {
+          label: "Unknown",
+          color: "bg-gray-300 text-gray-700",
+          icon: null,
+        };
+    
+        return (
+          <div className="flex items-left justify-left">
+            <span className={`flex items-center gap-2 px-3 py-1 rounded-full ${color}`}>
+              {icon}
+              <span className="font-medium">{label}</span>
+            </span>
+          </div>
+        );
+      },
     },
     {
       key: "request_status",
       label: "Request Status",
+      className: "hidden sm:table-cell text-center",
+    },
+    {
+      key: "requirement_remarks",
+      label: "Requirement Remarks",
       className: "hidden sm:table-cell text-center",
     },
     {

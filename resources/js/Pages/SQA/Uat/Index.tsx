@@ -83,6 +83,11 @@ export default function Index({ auth }: any) {
       className: "hidden sm:table-cell text-center",
     },
     {
+      key: "status",
+      label: "Status",
+      className: "hidden sm:table-cell text-center",
+    },
+    {
       key: "sqa_uat",
       label: "# UATs",
       className: "text-center",
