@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\Security;
 
+use GuzzleHttp\Client;
+use Symfony\Component\DomCrawler\Crawler;
+
 class SecurityController extends Controller
 {
     
@@ -31,5 +34,9 @@ class SecurityController extends Controller
         return Inertia::render('Security/Index', [
             "result" =>  $security
         ]);
+    }
+
+    public function show(){
+        return back();
     }
 }

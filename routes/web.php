@@ -13,6 +13,7 @@ use App\Http\Controllers\Libraries\DeploymentRequirementsController;
 use App\Http\Controllers\SQA\TestCaseController;
 use App\Http\Controllers\SQA\UatController;
 use App\Http\Controllers\Reports\SQATestPlanController;
+use App\Http\Controllers\SoftwareSubscription\SoftwareSubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -98,7 +99,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         });
 
         Route::post('/security/checks', [SecurityController::class, 'getSecurityChecksResult'])->name('security.checks');
+        Route::get('/security/test', [SecurityController::class, 'test'])->name('security.test');
         Route::resource('security', SecurityController::class)->names('security');
+        Route::resource('software-subscription', SoftwareSubscriptionController::class)->names('software-subscription');
+
+        
         
 });
 

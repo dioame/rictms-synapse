@@ -141,22 +141,26 @@ console.log(hasRole('user'));
       //     },
       //   ],
       // },
-      // {
-      //   title: "ICT Equipments",
-      //   url: "#",
-      //   icon: Construction,
-      //   isActive: false,
-      //   items: [
-      //     {
-      //       title: "Inventory",
-      //       url: route('ict-inventory.index'),
-      //     },
-      //     {
-      //       title: "CCTV",
-      //       url: '#',
-      //     },
-      //   ],
-      // },
+      {
+        title: "Inventory",
+        url: "#",
+        icon: Construction,
+        isActive: false,
+        items: [
+          {
+            title: "Software Subscription",
+            url: route('software-subscription.index'),
+          },
+          {
+            title: "ICT Equipments",
+            url: route('ict-inventory.index'),
+          },
+          {
+            title: "CCTV",
+            url: '#',
+          },
+        ],
+      },
       {
         title: "Reports",
         url: "#",
