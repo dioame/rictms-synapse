@@ -259,64 +259,67 @@ class Security
 
 
     public static function checkSecurity($url)
-    {
-        return [
-            self::formatSecurityCheck("CSP Headers", 
-                "Evaluating the effectiveness of Content Security Policy (CSP) headers to mitigate code injection attacks.",
-                self::checkCspHeaders($url),
-                "Implement strict CSP policies to prevent unauthorized script execution.",
-                [
-                    'https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy',
-                    'https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html',
-                    'https://www.w3.org/TR/CSP/',
-                    'https://w3c.github.io/webappsec-csp/',
-                    'https://web.dev/articles/csp',
-                    'https://caniuse.com/#feat=contentsecuritypolicy',
-                    'https://content-security-policy.com/'
-                ]
-            ),
-
-
-
-            self::formatSecurityCheck("Server Info Leaks", 
-                "Checking for exposed server information that could help attackers fingerprint the system.",
-                self::checkServerLeakers($url),
-                "Remove or obfuscate server-related headers to prevent information disclosure.",
-                [
-                    'https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework',
-                    'https://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html'
-                ]
-            ),
-
-            self::formatSecurityCheck("Insecure Cookies", 
-                "Assessing whether cookies have the proper security attributes (Secure and HttpOnly).",
-                self::checkInsecureCookies($url),
-                "Ensure all cookies are set with Secure and HttpOnly flags to prevent unauthorized access.",
-                [
-                    'https://owasp.org/www-community/HttpOnly',
-                    'https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html'
-                ]
-            ),
-
-            self::formatSecurityCheck("Clickjacking Protection", 
-                "Verifying the presence of headers that prevent clickjacking attacks.",
-                self::checkClickjackingProtection($url),
-                "Implement 'X-Frame-Options' or 'Content-Security-Policy: frame-ancestors' to mitigate clickjacking risks. Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.
-                If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's `frame-ancestors` directive",
-                [
-                    'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options'
-                ]
-            ),
-
-            self::formatSecurityCheck("Check Captcha", 
-                "Verifying the presence of CAPTCHA mechanisms to prevent automated abuse.",
-                self::checkCaptcha($url),
-                "Implement CAPTCHA mechanisms to prevent automated abuse.",
-                []
-            )
-
-  
-        ];
+    { 
+        if($url){
+            return [
+                self::formatSecurityCheck("CSP Headers", 
+                    "Evaluating the effectiveness of Content Security Policy (CSP) headers to mitigate code injection attacks.",
+                    self::checkCspHeaders($url),
+                    "Implement strict CSP policies to prevent unauthorized script execution.",
+                    [
+                        'https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy',
+                        'https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html',
+                        'https://www.w3.org/TR/CSP/',
+                        'https://w3c.github.io/webappsec-csp/',
+                        'https://web.dev/articles/csp',
+                        'https://caniuse.com/#feat=contentsecuritypolicy',
+                        'https://content-security-policy.com/'
+                    ]
+                ),
+    
+    
+    
+                self::formatSecurityCheck("Server Info Leaks", 
+                    "Checking for exposed server information that could help attackers fingerprint the system.",
+                    self::checkServerLeakers($url),
+                    "Remove or obfuscate server-related headers to prevent information disclosure.",
+                    [
+                        'https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework',
+                        'https://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html'
+                    ]
+                ),
+    
+                self::formatSecurityCheck("Insecure Cookies", 
+                    "Assessing whether cookies have the proper security attributes (Secure and HttpOnly).",
+                    self::checkInsecureCookies($url),
+                    "Ensure all cookies are set with Secure and HttpOnly flags to prevent unauthorized access.",
+                    [
+                        'https://owasp.org/www-community/HttpOnly',
+                        'https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html'
+                    ]
+                ),
+    
+                self::formatSecurityCheck("Clickjacking Protection", 
+                    "Verifying the presence of headers that prevent clickjacking attacks.",
+                    self::checkClickjackingProtection($url),
+                    "Implement 'X-Frame-Options' or 'Content-Security-Policy: frame-ancestors' to mitigate clickjacking risks. Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.
+                    If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's `frame-ancestors` directive",
+                    [
+                        'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options'
+                    ]
+                ),
+    
+                self::formatSecurityCheck("Check Captcha", 
+                    "Verifying the presence of CAPTCHA mechanisms to prevent automated abuse.",
+                    self::checkCaptcha($url),
+                    "Implement CAPTCHA mechanisms to prevent automated abuse.",
+                    []
+                )
+    
+      
+            ];
+        }
+       
     }
     
 

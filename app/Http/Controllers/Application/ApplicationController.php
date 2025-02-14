@@ -21,7 +21,7 @@ class ApplicationController extends Controller
     {
         $search = $request->input('search');
     
-        $results = Application::with(['attachments.libDeploymentAttachment', 'uptime'])
+        $results = Application::with(['attachments.libDeploymentAttachment', 'uptime', 'sqaTestCase', 'sqaUat'])
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
@@ -42,6 +42,104 @@ class ApplicationController extends Controller
                 'results' => ApplicationResource::collection($results),
                 'filters' => ['search' => $search],
                 'lib_deployment_req' => LibDeploymentAttachment::all(),
+            ]
+        );
+    }
+
+
+    public function pia(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results =  Application::with(['attachments.libDeploymentAttachment'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->where('is_pia',1)
+            ->orderBy('created_at','desc')
+            ->paginate(15);
+
+        return Inertia::render(
+            'Application/Pia/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search],
+                'lib_deployment_req' => LibDeploymentAttachment::where('name', 'LIKE', '%PIA%')->get()
+
+            ]
+        );
+    }
+
+    public function km(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results =  Application::with(['attachments.libDeploymentAttachment'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->where('is_km',1)
+            ->orderBy('created_at','desc')
+            ->paginate(15);
+
+        return Inertia::render(
+            'Application/Km/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search],
+                'lib_deployment_req' => LibDeploymentAttachment::where('name', 'LIKE', '%KM%')->get()
+
+            ]
+        );
+    }
+
+
+    public function db(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results =  Application::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('created_at','desc')
+            ->paginate(15);
+
+        return Inertia::render(
+            'Application/Db/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search],
+
+            ]
+        );
+    }
+
+    public function server(Request $request)
+    {
+        $search = $request->input('search');
+
+        $results =  Application::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('created_at','desc')
+            ->paginate(15);
+
+        return Inertia::render(
+            'Application/Server/Index',
+            [
+                'results' => ApplicationResource::collection($results),
+                'filters' => ['search' => $search],
+
             ]
         );
     }
@@ -123,7 +221,7 @@ class ApplicationController extends Controller
     public function show($id)
     {
 
-        $results = Application::with(['attachments.libDeploymentAttachment'])->where('id', $id)->first();
+        $results = Application::with(['attachments.libDeploymentAttachment', 'sqaTestCase', 'sqaUat'])->where('id', $id)->first();
         $security = Security::checkSecurity($results->url);
         return Inertia::render(
             'Application/View',
@@ -140,7 +238,7 @@ class ApplicationController extends Controller
         return redirect()->back()->with('success', 'Application Created.');
     }
 
-    public function update($id, ApplicationRequest $request, ApplicationService $service)
+    public function update($id, Request $request, ApplicationService $service)
     {
         
         $service->update($id, $request->all());

@@ -72,6 +72,13 @@ export default function UATForm() {
 
   return (
     <UatLayout>
+      {application.status !== 'uat' && (
+        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md">
+          <h1 className="font-bold text-lg">Application is not yet in User Acceptance Testing (UAT) or has already been completed.</h1>
+        </div>
+      )}
+
+
       { application.status == 'uat' && 
       <div>
         <Card className="max-w-full sm:max-w-4xl mx-auto shadow-lg border border-gray-200 mt-10 dark:border-gray-700">

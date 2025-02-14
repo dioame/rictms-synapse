@@ -78,11 +78,6 @@ export default function Index({ auth }: any) {
       ),
     },
     {
-      key: "description",
-      label: "Description",
-      className: "hidden sm:table-cell text-center",
-    },
-    {
       key: "platform",
       label: "Platform",
       className: "hidden sm:table-cell text-left",
@@ -106,8 +101,8 @@ export default function Index({ auth }: any) {
       key: "is_pia",
       label: "Is PIA?",
       className: "hidden sm:table-cell text-center",
-      render: (value: { is_pia: number }) => {
-        const isYes = value.is_pia === 1;
+      render: (value: { is_pia: any }) => {
+        const isYes = value.is_pia == 1;
     
         return (
           <div className="flex items-center justify-center gap-2 ml-5 mr-5">
@@ -194,6 +189,22 @@ export default function Index({ auth }: any) {
           </div>
           </HoverCardContent>
         </HoverCard>
+      ),
+    },
+    {
+      key: "sqa_test_case",
+      label: "# Tests",
+      className: "text-center",
+      render: (value: any) => (
+        <p className="bg-teal-500 text-white font-semibold text-xs w-7 h-7 flex items-center justify-center rounded-full">{value.sqa_test_case.length}</p>
+      ),
+    },
+    {
+      key: "sqa_uat",
+      label: "# UATs",
+      className: "text-center",
+      render: (value: any) => (
+        <p className="bg-teal-500 text-white font-semibold text-xs w-7 h-7 flex items-center justify-center rounded-full">{value.sqa_uat.length}</p>
       ),
     },
     {
@@ -338,12 +349,14 @@ export default function Index({ auth }: any) {
         }}
       />
 
-        { editData && (
-        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-          <EditSheet config={config} editData={editData} setIsSheetOpen={setIsSheetOpen}/>
-        </Sheet>
-        )}
 
+       { editData && (
+                       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                         <EditSheet config={config} editData={editData} setIsSheetOpen={setIsSheetOpen}/>
+                       </Sheet>
+                       )}
+
+  
         { editData && (
         <Sheet open={isAttachmentSheetOpen} onOpenChange={setIsAttachmentSheetOpen}>
           <AttachmentSheet config={config} editData={editData} setIsSheetOpen={setIsAttachmentSheetOpen} LibDeploymentReq={lib_deployment_req}/>

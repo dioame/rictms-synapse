@@ -20,7 +20,7 @@ class ApplicationRequestController extends Controller
     {
         $search = $request->input('search');
 
-        $results = Application::with(['attachments.libDeploymentAttachment','uptime'])
+        $results = Application::with(['attachments.libDeploymentAttachment','uptime', 'sqaTestCase', 'sqaUat'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");

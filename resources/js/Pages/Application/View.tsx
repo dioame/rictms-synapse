@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import {  useForm  } from "@inertiajs/react";
 import { toast } from "sonner";
 import { ShieldAlert, ShieldCheck } from "lucide-react";
+import StaticTable from "@/Components/DataTable/StaticTable";
 
 const config = {
   title: 'Application',
@@ -20,6 +21,8 @@ const config = {
 export default function Index({ auth, results, security }: any) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
    const { delete: destroy } = useForm();
+
+   console.log(results)
 
 
   function handleDelete(val:any){
@@ -217,7 +220,7 @@ export default function Index({ auth, results, security }: any) {
 
            
             {results.attachments && results.attachments.length > 0 ? (
-                results.attachments.map((val: any, index: any) => (
+                results.attachments?.map((val: any, index: any) => (
                   <div key={index}>
                     <span className="font-bold btn-primary btn text-decoration-underline">
                           <button
@@ -258,7 +261,7 @@ export default function Index({ auth, results, security }: any) {
           {results.features ? (
             // Parse the JSON string into an array
             JSON.parse(results.features).length > 0 ? (
-              JSON.parse(results.features).map((feature: any, index: any) => (
+              JSON.parse(results.features)?.map((feature: any, index: any) => (
                 <div key={index}>
                   <span className="font-bold">{index+1}. {feature}</span>
                 </div>
@@ -281,7 +284,47 @@ export default function Index({ auth, results, security }: any) {
 
       </div>
       
-      <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
+    
+
+    <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
+    <Card>
+      <CardHeader className="bg-blue-100 mb-5 text-blue-500">
+        <CardTitle className="text-lg font-semibold">
+          SQA Test Cases
+        </CardTitle>
+        <CardDescription className="text-sm text-muted-foreground">
+        An SQA test case is a structured set of steps, inputs, and expected outcomes used to verify that a software application functions correctly.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+      <StaticTable data={results.sqa_test_case} excludedColumns={['id','application_id','created_at','updated_at','deleted_at']}/>
+      </CardContent>
+      </Card>
+
+    </div>
+
+    <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
+    <Card>
+      
+      <CardHeader className="bg-green-100 mb-5 text-green-500">
+      <CardTitle className="text-lg font-semibold">
+          SQA UAT
+        </CardTitle>
+        <CardDescription className="text-sm text-muted-foreground">
+        SQA UAT (User Acceptance Testing) is the final phase of software testing where end users validate whether the system meets business requirements before deployment.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+      <StaticTable data={results.sqa_uat} excludedColumns={['id','application_id','created_at','updated_at','deleted_at']}/>
+      </CardContent>
+      </Card>
+    </div>
+
+        
+    
+
+    
+    <div className="container mx-auto mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
       <Card>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
@@ -293,7 +336,7 @@ export default function Index({ auth, results, security }: any) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {security.map((check:any, index:any) => (
+          {security?.map((check:any, index:any) => (
             <div
               key={index}
               className={`p-4 rounded-lg border ${
@@ -320,7 +363,6 @@ export default function Index({ auth, results, security }: any) {
       </CardContent>
     </Card>
     </div>
-
       
     </AuthenticatedLayout>
   );

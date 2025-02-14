@@ -43,9 +43,6 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
 const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
 
-console.log(user.roles);
-console.log(hasRole('user'));
-
   const data = {
     user: {
       name: user.username,
@@ -87,7 +84,12 @@ console.log(hasRole('user'));
           },
           {
             title: "For PIA",
-            url: "#",
+            url: route('application.pia'),
+            visible: !hasRole('user'),
+          },
+          {
+            title: "For KM",
+            url: route('application.km'),
             visible: !hasRole('user'),
           },
           {
@@ -102,12 +104,12 @@ console.log(hasRole('user'));
           },
           {
             title: "Database Section",
-            url: "#",
+            url:route('application.db'),
             visible: !hasRole('user'),
           },
           {
             title: "Server Section",
-            url: "#",
+            url: route('application.server'),
             visible: !hasRole('user'),
           },
           
@@ -193,6 +195,10 @@ console.log(hasRole('user'));
         icon: Shield,
         isActive: false,
         items: [
+          {
+            title: "Secured Message",
+            url: route('secured-message.index'),
+          },
           {
             title: "Security",
             url: route('security.index'),

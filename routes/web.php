@@ -14,10 +14,15 @@ use App\Http\Controllers\SQA\TestCaseController;
 use App\Http\Controllers\SQA\UatController;
 use App\Http\Controllers\Reports\SQATestPlanController;
 use App\Http\Controllers\SoftwareSubscription\SoftwareSubscriptionController;
+use App\Http\Controllers\SecuredMessage\SecuredMessageController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::resource('secured-message', SecuredMessageController::class)
+->only(['show'])
+->names('secured-message');
+Route::post('/secured-message/verify/{id}', [SecuredMessageController::class, 'verify'])->name('secured-message.verify');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -71,10 +76,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::get('/application/timeline', [ApplicationController::class, 'timeline'])->name('application.timeline');
 
+        Route::get('/application/km', [ApplicationController::class, 'km'])->name('application.km');
+        Route::get('/application/pia', [ApplicationController::class, 'pia'])->name('application.pia');
+        Route::get('/application/db', [ApplicationController::class, 'db'])->name('application.db');
+        Route::get('/application/server', [ApplicationController::class, 'server'])->name('application.server');
         Route::resource('application', ApplicationController::class)
             ->only(['index', 'show'])
             ->names('application');
 
+        
         Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request-form');
         Route::resource('application-request',ApplicationRequestController::class)->names('application-request');
 
@@ -102,10 +112,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/security/test', [SecurityController::class, 'test'])->name('security.test');
         Route::resource('security', SecurityController::class)->names('security');
         Route::resource('software-subscription', SoftwareSubscriptionController::class)->names('software-subscription');
-
-        
+        // Route::resource('secured-message', SecuredMessageController::class)->names('secured-message');       
+        Route::resource('secured-message', SecuredMessageController::class)
+        ->except(['show']) // Exclude GET routes
+        ->names('secured-message');
         
 });
+
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/guest.php';
