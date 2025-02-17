@@ -14,15 +14,12 @@ class Security
         try {
       
     
-            $response = Http::timeout(10)->get($url);
+            $response = Http::timeout(10)->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer' => $url,
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            ])->get($url);
 
-      
-            if ($response->failed()) {
-                return [
-                    "message" => "Error: Unable to reach the URL ($url). Status Code: " . $response->status(),
-                    "is_secure" => false
-                ];
-            }
     
             // Get CSP Header
             $cspHeader = $response->header('Content-Security-Policy');
@@ -48,14 +45,11 @@ class Security
     public static function checkServerLeakers($url)
     {
         try {
-            $response = Http::timeout(10)->get($url);
-
-            if ($response->failed()) {
-                return [
-                    "message" => "Error: Unable to reach the URL ($url). Status Code: " . $response->status(),
-                    "is_secure" => false
-                ];
-            }
+            $response = Http::timeout(10)->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer' => $url,
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            ])->get($url);
 
             // Check for Potentially Leaked Server Information
             $leakedInfo = [];
@@ -64,15 +58,21 @@ class Security
             foreach ($headersToCheck as $header) {
                 $headerValue = $response->header($header);
 
-                if ($headerValue) {
-                    // If it's the "Server" header, ensure it doesn't contain a version number
-                    if ($header === 'Server' && !preg_match('/\d/', $headerValue)) {
-                        continue; // Skip adding it if no version is present
-                    }
+            
 
-                    $leakedInfo[$header] = $headerValue;
+                if ($headerValue) {
+                    // If it's the "Server" header, ensure it contains a version number (digits after a slash)
+                    if ($header === 'Server' && preg_match('/\/\d/', $headerValue)) {
+                        // This checks if there is a server version number like "nginx/1.18.0"
+                        $leakedInfo[$header] = $headerValue;
+                    }
+                    // If the header is one of the others, just add it directly
+                    else if ($header !== 'Server') {
+                        $leakedInfo[$header] = $headerValue;
+                    }
                 }
             }
+            
 
             return [
                 "message" => empty($leakedInfo) ? "No Server Info Leaked!" : "Leaked Info Found",
@@ -95,14 +95,11 @@ class Security
     public static function checkInsecureCookies($url)
     {
         try {
-            $response = Http::timeout(10)->get($url);
-
-            if ($response->failed()) {
-                return [
-                    "message" => "Error: Unable to reach the URL ($url). Status Code: " . $response->status(),
-                    "is_secure" => false
-                ];
-            }
+            $response = Http::timeout(10)->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer' => $url,
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            ])->get($url);
 
             // ✅ Extract cookies from response headers
             $cookieHeader = $response->header('Set-Cookie');
@@ -145,14 +142,11 @@ class Security
     public static function checkClickjackingProtection($url)
     {
         try {
-            $response = Http::timeout(10)->get($url);
-
-            if ($response->failed()) {
-                return [
-                    "message" => "❌ Error: Unable to reach the URL ($url). Status Code: " . $response->status(),
-                    "is_secure" => false
-                ];
-            }
+            $response = Http::timeout(10)->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer' => $url,
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            ])->get($url);
 
             // ✅ Check for 'X-Frame-Options' Header
             $xFrameOptions = $response->header('X-Frame-Options');
@@ -189,17 +183,11 @@ class Security
     public static function checkCaptcha($url)
     {
         try {
-            $response = Http::withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            $response = Http::timeout(10)->withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
+                'Referer' => $url,
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             ])->get($url);
-
-            if ($response->failed()) {
-                return [
-                    'status' => false,
-                    'message' => 'Failed to fetch URL',
-                    'is_secure' => false
-                ];
-            }
 
             $body = $response->body();
             $headers = $response->headers();
