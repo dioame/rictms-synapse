@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\VirusTotalController;
 use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
@@ -116,6 +117,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('secured-message', SecuredMessageController::class)
         ->except(['show']) // Exclude GET routes
         ->names('secured-message');
+
+
+        Route::get('/virus-total', [VirusTotalController::class, 'index'])->name('virus-total.index');
+        Route::post('/virus-total/check', [VirusTotalController::class, 'check'])->name('virus-total.check');
+
+        // Route::post('/check-file', [VirusTotalController::class, 'checkFile']);
+        // Route::post('/check-url', [VirusTotalController::class, 'checkUrl']);
         
 });
 

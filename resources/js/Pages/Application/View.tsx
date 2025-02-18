@@ -328,7 +328,7 @@ export default function Index({ auth, results, security }: any) {
       <Card>
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
-          Vulnerability Assessment (Initial Review)
+          Vulnerability Assessment (Initial Review) : {results.name}
         </CardTitle>
         <CardDescription className="text-sm text-muted-foreground">
           <strong>Disclaimer:</strong> The Initial Assessment does not represent the final Vulnerability Results. It serves as a preliminary evaluation and should not be interpreted as a confirmed security finding. The final results must be thoroughly analyzed and validated by the DSWD Cybersecurity and Vulnerability Assessment Team.

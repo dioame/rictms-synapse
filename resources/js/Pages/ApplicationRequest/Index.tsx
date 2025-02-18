@@ -69,16 +69,11 @@ export default function Index({ auth }: any) {
               </a>
             </div>
             <div className="hidden text-sm text-muted-foreground md:inline">
-            {value.version} 
+            Ver. {value.version} 
             </div>
           </div>
         </div>
       ),
-    },
-    {
-      key: "description",
-      label: "Description",
-      className: "hidden sm:table-cell text-center",
     },
     {
       key: "platform",

@@ -200,8 +200,12 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
             url: route('secured-message.index'),
           },
           {
-            title: "Security",
+            title: "App Vulnerability",
             url: route('security.index'),
+          },
+          {
+            title: "URL Scanner",
+            url: route('virus-total.index'),
           },
         ],
       },
