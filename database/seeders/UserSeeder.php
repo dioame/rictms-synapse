@@ -22,20 +22,20 @@ class UserSeeder extends Seeder
         Role::create(['name' => 'sqa']);
 
         User::factory()->create([
-            'name' => 'Dioame Jade C. Rendon',
+            'name' => 'Admin',
             'email' => 'admin@admin.com',
             'username' => 'admin',
             'password' => bcrypt('admin')
 
         ]);
         // assign role user to the users
-        User::factory(50)->create()->each(function ($user) {
-            $user->assignRole('user');
-            $faker = \Faker\Factory::create();
-            $user->username = $faker->username; 
-            $user->created_at = $faker->dateTimeBetween('-1 year', 'now');
-            $user->save();
-        });
+        // User::factory(50)->create()->each(function ($user) {
+        //     $user->assignRole('user');
+        //     $faker = \Faker\Factory::create();
+        //     $user->username = $faker->username; 
+        //     $user->created_at = $faker->dateTimeBetween('-1 year', 'now');
+        //     $user->save();
+        // });
 
 
 
