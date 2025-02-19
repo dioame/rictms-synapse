@@ -148,6 +148,7 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
         url: "#",
         icon: Construction,
         isActive: false,
+        visible: !hasRole('user'),
         items: [
           {
             title: "Software Subscription",
@@ -198,6 +199,7 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
           {
             title: "Data Center Access Form",
             url: route('security.data-center-access.index'),
+            visible: !hasRole('user'),
           },
           {
             title: "App Vulnerability",

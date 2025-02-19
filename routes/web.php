@@ -90,10 +90,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/application-request/{id}', [ApplicationRequestController::class, 'generateForm'])->name('application-request-form');
         Route::resource('application-request',ApplicationRequestController::class)->names('application-request');
 
-        //ICT INVENTORY
-        Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');
-        Route::resource('ict-inventory',IctInventoryController::class)->names('ict-inventory');
-
         // DXCLOUD
         Route::get('/dxcloud', [DxcloudController::class, 'index'])->name('dxcloud');
         Route::get('/dxcloud/download-psgc/{region_code}', [DxcloudController::class, 'download'])->name('dxcloud-download-psgc');
@@ -110,23 +106,33 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::get('/reports/sqa-test-plan/{id}', [SQATestPlanController::class, 'generate'])->name('reports.sqa-test-plan-generate');
         });
 
+
+        
+
+        Route::group(['middleware' => ['exclude_role:user']], function () { 
+
+            //ICT INVENTORY
+            Route::delete('/ict-inventory/bulk-destroy', [IctInventoryController::class, 'bulkDestroy'])->name('ict-inventory.bulk-destroy');
+            Route::resource('ict-inventory',IctInventoryController::class)->names('ict-inventory');
+            
+            Route::resource('software-subscription', SoftwareSubscriptionController::class)->names('software-subscription');
+            Route::get('/security/data-center/access/form/{id}', [DataCenterAccessController::class, 'form'])->name('security.data-center-access.form');
+            Route::resource('security/data-center/access', DataCenterAccessController::class)->names('security.data-center-access');
+        });
+
         Route::post('/security/checks', [SecurityController::class, 'getSecurityChecksResult'])->name('security.checks');
         Route::get('/security/test', [SecurityController::class, 'test'])->name('security.test');
         Route::resource('security', SecurityController::class)->names('security');
-        Route::resource('software-subscription', SoftwareSubscriptionController::class)->names('software-subscription');
+       
         // Route::resource('secured-message', SecuredMessageController::class)->names('secured-message');       
         Route::resource('secured-message', SecuredMessageController::class)
-        ->except(['show']) // Exclude GET routes
+        ->except(['show'])
         ->names('secured-message');
 
 
         Route::get('/virus-total', [VirusTotalController::class, 'index'])->name('virus-total.index');
         Route::post('/virus-total/check', [VirusTotalController::class, 'check'])->name('virus-total.check');
-
-        // Route::post('/check-file', [VirusTotalController::class, 'checkFile']);
-        // Route::post('/check-url', [VirusTotalController::class, 'checkUrl']);
-        Route::get('/security/data-center/access/form/{id}', [DataCenterAccessController::class, 'form'])->name('security.data-center-access.form');
-        Route::resource('security/data-center/access', DataCenterAccessController::class)->names('security.data-center-access');
+        
         
 });
 
