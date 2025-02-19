@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.17",
         "laravel/tinker": "^2.9",
+        "openai-php/client": "^0.10.3",
         "spatie/laravel-permission": "^6.9",
         "symfony/css-selector": "^7.2",
         "symfony/dom-crawler": "^7.2",

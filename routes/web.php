@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\VirusTotalController;
+use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
@@ -132,6 +133,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::get('/virus-total', [VirusTotalController::class, 'index'])->name('virus-total.index');
         Route::post('/virus-total/check', [VirusTotalController::class, 'check'])->name('virus-total.check');
+
+        Route::post('/openai/generate-text', [OpenAIController::class, 'generate'])->name('openai.generate-text');
+        Route::resource('openai', OpenAIController::class)->names('openai');
         
         
 });
