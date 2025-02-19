@@ -157,10 +157,10 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
             title: "ICT Equipments",
             url: route('ict-inventory.index'),
           },
-          {
-            title: "CCTV",
-            url: '#',
-          },
+          // {
+          //   title: "CCTV",
+          //   url: '#',
+          // },
         ],
       },
       {
