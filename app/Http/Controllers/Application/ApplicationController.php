@@ -19,6 +19,7 @@ class ApplicationController extends Controller
     //
     public function index(Request $request)
     {   
+
         $search = $request->input('search');
     
         $results = Application::with(['attachments.libDeploymentAttachment', 'uptime', 'sqaTestCase', 'sqaUat'])

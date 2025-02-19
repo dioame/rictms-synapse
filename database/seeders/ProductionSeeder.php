@@ -17,6 +17,7 @@ class ProductionSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ActualApplicationSeeder::class,
+            LibDeploymentAttachmentSeeder::class,
             SettingsTableSeeder::class
         ]);
     }
