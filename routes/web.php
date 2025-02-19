@@ -10,6 +10,7 @@ use App\Http\Controllers\Application\ApplicationRequestController;
 use App\Http\Controllers\IctInventory\IctInventoryController;
 use App\Http\Controllers\Dxcloud\DxcloudController;
 use App\Http\Controllers\Security\SecurityController;
+use App\Http\Controllers\Security\DataCenterAccessController;
 use App\Http\Controllers\Libraries\DeploymentRequirementsController;
 use App\Http\Controllers\SQA\TestCaseController;
 use App\Http\Controllers\SQA\UatController;
@@ -124,6 +125,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // Route::post('/check-file', [VirusTotalController::class, 'checkFile']);
         // Route::post('/check-url', [VirusTotalController::class, 'checkUrl']);
+        Route::get('/security/data-center/access/form/{id}', [DataCenterAccessController::class, 'form'])->name('security.data-center-access.form');
+        Route::resource('security/data-center/access', DataCenterAccessController::class)->names('security.data-center-access');
         
 });
 

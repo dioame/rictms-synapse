@@ -196,8 +196,8 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
         isActive: false,
         items: [
           {
-            title: "Secured Message",
-            url: route('secured-message.index'),
+            title: "Data Center Access Form",
+            url: route('security.data-center-access.index'),
           },
           {
             title: "App Vulnerability",
@@ -206,6 +206,10 @@ const hasRole = (role: string) => user.roles.some((r: any) => r.name === role);
           {
             title: "URL Scanner",
             url: route('virus-total.index'),
+          },
+          {
+            title: "Secured Message",
+            url: route('secured-message.index'),
           },
         ],
       },
