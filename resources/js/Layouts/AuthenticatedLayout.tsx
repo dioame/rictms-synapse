@@ -84,7 +84,7 @@ export default function Authenticated({ auth_user, header, children }: PropsWith
         initial={{ opacity: 0, scale: 0.9 }}
         animate={isChatOpen ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.3 }}
-        className={`fixed bottom-16 right-6 w-96 h-[500px] bg-white shadow-xl rounded-lg p-4 border flex flex-col ${
+        className={`fixed bottom-16 right-6 w-[1000px] h-[800px] bg-white shadow-xl rounded-lg p-4 border flex flex-col ${
           isChatOpen ? "block" : "hidden"
         }`}
       >

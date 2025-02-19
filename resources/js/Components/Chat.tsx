@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
-  const [chat, setChat] = useState<{ sender: string; text: string; typing?: boolean }[]>([]);
+  const [chat, setChat] = useState<{ sender: string; text: string; typing?: boolean }[]>([
+    { sender: "Marwen AI", text: "Hello, I'm Marwen. How can I help you today?" }
+  ]);
   const [isTyping, setIsTyping] = useState(false);
   const [model, setModel] = useState("gemini"); // Default model
   const chatEndRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +51,7 @@ const Chat = () => {
   }, [chat]);
 
   return (
-    <div className="flex flex-col w-full h-[400px] max-w-md mx-auto bg-white rounded-lg p-4">
+    <div className="flex flex-col w-full h-full mx-auto bg-white rounded-lg p-4">
       {/* Model Selection */}
       <div className="mb-2">
         <label className="block text-gray-700 font-medium text-sm">Choose AI Model:</label>
@@ -75,7 +77,9 @@ const Chat = () => {
               msg.sender === "You" ? "bg-blue-500 text-white self-end ml-auto" : "bg-gray-200 text-gray-900"
             }`}
           >
-            <strong>{msg.sender}:</strong>
+            <strong>
+              
+              {msg.sender}:</strong>
             <div className="whitespace-pre-wrap mt-1 text-sm leading-relaxed">{msg.text}</div>
           </motion.div>
         ))}
@@ -85,7 +89,6 @@ const Chat = () => {
       {/* Input & Send Button */}
       <form onSubmit={sendMessage} className="flex mt-2">
         <textarea
-        
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
